@@ -17,9 +17,18 @@ bool	GLDevice::Create()
 	return true;
 }
 //!@brief	‰ğ•úˆ—
-bool	GLDevice::Release()
+void	GLDevice::Run()
+{
+	
+}
+//!@brief I—¹
+bool	GLDevice::CleanUp()
 {
 	return true;
 }
-
+//!@brief Á¸
+bool	GLDevice::Remove()
+{
+	return true;
+}
 

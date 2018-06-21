@@ -52,9 +52,6 @@
     <Filter Include="Device\DXDevice">
       <UniqueIdentifier>{45dce1b9-2856-4cc4-b525-03ee8df0f865}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EngienCreator">
-      <UniqueIdentifier>{48d42cb3-0b35-4a7a-a80a-1c9861f3f6c5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Screen">
       <UniqueIdentifier>{1bf18357-a814-4d65-8e76-5c17343f1db7}</UniqueIdentifier>
     </Filter>
@@ -109,6 +106,9 @@
     <Filter Include="Device\GLDevice">
       <UniqueIdentifier>{2a90a02d-4057-4135-8dd9-5e8550a07717}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DeviceFactory">
+      <UniqueIdentifier>{48d42cb3-0b35-4a7a-a80a-1c9861f3f6c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Device\Device.cpp">
@@ -152,9 +152,6 @@
     </ClCompile>
     <ClCompile Include="src\Device\DXDevice\DXDevice.cpp">
       <Filter>Device\DXDevice</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EngineCreator\EngineCreator.cpp">
-      <Filter>EngienCreator</Filter>
     </ClCompile>
     <ClCompile Include="src\Screen\Screen.cpp">
       <Filter>Screen</Filter>
@@ -207,6 +204,9 @@
     <ClCompile Include="src\Device\GLDevice\GLDevice.cpp">
       <Filter>Device\GLDevice</Filter>
     </ClCompile>
+    <ClCompile Include="src\EngineCreator\DeviceFactory.cpp">
+      <Filter>DeviceFactory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Device\Device.h">
@@ -250,9 +250,6 @@
     </ClInclude>
     <ClInclude Include="src\Device\DXDevice\DXDevice.h">
       <Filter>Device\DXDevice</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EngineCreator\EngineCreator.h">
-      <Filter>EngienCreator</Filter>
     </ClInclude>
     <ClInclude Include="src\Screen\Screen.h">
       <Filter>Screen</Filter>
@@ -307,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="src\Device\GLDevice\GLDevice.h">
       <Filter>Device\GLDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EngineCreator\DeviceFactory.h">
+      <Filter>DeviceFactory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

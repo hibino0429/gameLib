@@ -102,7 +102,7 @@ bool	DXDevice::Create()
 	return true;
 }
 
-void	DXDevice::UpDate()
+void	DXDevice::Run()
 {
 	
 }

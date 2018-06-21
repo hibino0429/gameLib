@@ -34,7 +34,7 @@
 //!@brief	そのあとで、Engineに作成したデータを渡す
 //!@brief	DirectXの機能などを提供します
 //-------------------------------------------------------------
-class DXDevice
+class DXDevice : public Device
 {
 public:
 	//!@brief コンストラクタ
@@ -56,7 +56,7 @@ public:
 	//!@brief 生成
 	bool	Create();
 	//!@brief 更新
-	void	UpDate();
+	void	Run();
 	//!@brief 終了
 	bool	CleanUp();
 	//!@brief 消失

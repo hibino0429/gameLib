@@ -96,12 +96,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\Desktop\DirectX11\directX11\include\Texture;E:\Desktop\DirectX11\directX11\include\Collision;E:\Desktop\DirectX11\directX11\include\Fbx;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Desktop\GameLibrary\gameLib\include\Texture;E:\Desktop\GameLibrary\gameLib\include\Collision;E:\Desktop\GameLibrary\gameLib\include\Fbx;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>E:\Desktop\DirectX11\directX11\lib\Fbx\vs2015\x86\debug;E:\Desktop\DirectX11\directX11\lib\Collision\Debug;E:\Desktop\DirectX11\directX11\lib\Texture\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\Desktop\GameLibrary\gameLib\lib\Fbx\vs2015\x86\debug;E:\Desktop\GameLibrary\gameLib\lib\Collision\Debug;E:\Desktop\GameLibrary\gameLib\lib\Texture\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libfbxsdk-md.lib;oded.lib;drawstuffd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -167,7 +167,7 @@
     <ClCompile Include="src\Device\Device.cpp" />
     <ClCompile Include="src\Device\DXDevice\DXDevice.cpp" />
     <ClCompile Include="src\Device\GLDevice\GLDevice.cpp" />
-    <ClCompile Include="src\EngineCreator\EngineCreator.cpp" />
+    <ClCompile Include="src\EngineCreator\DeviceFactory.cpp" />
     <ClCompile Include="src\Engine\DXEngine\DXEngine.cpp" />
     <ClCompile Include="src\Engine\Engine.cpp" />
     <ClCompile Include="src\Fbx\Fbx.cpp" />
@@ -202,7 +202,7 @@
     <ClInclude Include="src\Device\Device.h" />
     <ClInclude Include="src\Device\DXDevice\DXDevice.h" />
     <ClInclude Include="src\Device\GLDevice\GLDevice.h" />
-    <ClInclude Include="src\EngineCreator\EngineCreator.h" />
+    <ClInclude Include="src\EngineCreator\DeviceFactory.h" />
     <ClInclude Include="src\Engine\DXEngine\DXEngine.h" />
     <ClInclude Include="src\Engine\Engine.h" />
     <ClInclude Include="src\Fbx\Fbx.h" />
