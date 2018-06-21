@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ComPtr">
+      <UniqueIdentifier>{5ea81a4d-d18b-49f7-b581-45bf0e52f4b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device">
+      <UniqueIdentifier>{fc40b5a0-11f2-4481-ae6f-a8e58f8a6374}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{aeb68481-5a88-464b-9c9e-1e4af44b0c2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VertexBuffer">
+      <UniqueIdentifier>{14ed3dd7-609e-4be7-bfe0-fa0a3f40a711}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FBX">
+      <UniqueIdentifier>{987fbbdd-4766-45ad-a124-c0073fd9f044}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{deb7bc3c-5351-43a2-9134-1892829d35ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{a9dd78b7-f50e-436b-8271-eba5a22d391e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMain">
+      <UniqueIdentifier>{eb6b26d4-761c-4545-8a39-bd1bc08ef9bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{cd423a41-a70a-4dac-9fca-8ce95262233c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{f3af0728-70df-46ba-a3f7-3075f988f32f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{e69941ce-fb89-4ca0-99fa-7ca76fea8123}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\DXEngine">
+      <UniqueIdentifier>{ced1e97e-7d24-43ba-8b34-198deb571a8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device\DXDevice">
+      <UniqueIdentifier>{45dce1b9-2856-4cc4-b525-03ee8df0f865}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngienCreator">
+      <UniqueIdentifier>{48d42cb3-0b35-4a7a-a80a-1c9861f3f6c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Screen">
+      <UniqueIdentifier>{1bf18357-a814-4d65-8e76-5c17343f1db7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{f0e9996d-56f1-4df2-9d3b-7239881959bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{2d973af2-65c6-429d-a217-d68f89d4ad34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RigidBody">
+      <UniqueIdentifier>{73c7f9d0-0146-4d0e-bd09-5d054481397c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{290d3122-a623-42ee-90b7-2a0f7f2192ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\VertexShader">
+      <UniqueIdentifier>{b83f2486-1b31-4407-ad16-ec6a70e2df0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\PixelShader">
+      <UniqueIdentifier>{390b9e7f-090d-478d-8fbe-4500828b89c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\GeometryShader">
+      <UniqueIdentifier>{2bdffd7e-f3d8-4397-a8ef-7de98967033a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh">
+      <UniqueIdentifier>{e6ce5465-bbca-42cf-a17f-5d0493e44c1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{c3d69c9d-dc81-49ad-adcf-86281c4d6262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sprite">
+      <UniqueIdentifier>{629ef05d-7c24-4a56-8021-d96e7206817f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Material">
+      <UniqueIdentifier>{938a8363-a7ce-4f11-a1be-6e44bc61ebce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{43b00ebe-a357-4920-8907-5aca130a8032}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\KeyBoard">
+      <UniqueIdentifier>{735a7793-7ea9-4fbf-98e6-04ce1c3f9786}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FPS">
+      <UniqueIdentifier>{7230894e-c781-4229-a273-87b6933617a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{89272f59-cc64-4b97-a170-2e1e9fe07870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Wave">
+      <UniqueIdentifier>{43c59800-ab75-4ad6-8497-3cf78bb06b00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device\GLDevice">
+      <UniqueIdentifier>{2a90a02d-4057-4135-8dd9-5e8550a07717}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Device\Device.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ComPtr\ComPtr.cpp">
+      <Filter>ComPtr</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window\Window.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WinMain.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VertexBuffer\VertexBuffer.cpp">
+      <Filter>VertexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fbx\Fbx.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture\Texture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\Shader.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameMain\GameMain.cpp">
+      <Filter>GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera\Camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\System.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Engine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\DXEngine\DXEngine.cpp">
+      <Filter>Engine\DXEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Device\DXDevice\DXDevice.cpp">
+      <Filter>Device\DXDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EngineCreator\EngineCreator.cpp">
+      <Filter>EngienCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screen\Screen.cpp">
+      <Filter>Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\Physics.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Collision\Collision.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RigidBody\RigidBody.cpp">
+      <Filter>RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\VertexShader\VertexShader.cpp">
+      <Filter>Shader\VertexShader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\PixelShader\PixelShader.cpp">
+      <Filter>Shader\PixelShader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\GeometryShader\GeometryShader.cpp">
+      <Filter>Shader\GeometryShader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mesh\Mesh.cpp">
+      <Filter>Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Math.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sprite\Sprite.cpp">
+      <Filter>Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Material\Material.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\Input.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\KeyBoard\KeyBoard.cpp">
+      <Filter>Input\KeyBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FPS\FPS.cpp">
+      <Filter>FPS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\Audio.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Wave\Wave.cpp">
+      <Filter>Wave</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Device\GLDevice\GLDevice.cpp">
+      <Filter>Device\GLDevice</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Device\Device.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ComPtr\ComPtr.h">
+      <Filter>ComPtr</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window\Window.h">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\debug.hpp">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VertexBuffer\VertexBuffer.h">
+      <Filter>VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fbx\Fbx.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Texture\Texture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\Shader.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameMain\GameMain.h">
+      <Filter>GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Camera\Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\System\System.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Engine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\DXEngine\DXEngine.h">
+      <Filter>Engine\DXEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Device\DXDevice\DXDevice.h">
+      <Filter>Device\DXDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EngineCreator\EngineCreator.h">
+      <Filter>EngienCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screen\Screen.h">
+      <Filter>Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\Physics.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Collision\Collision.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RigidBody\RigidBody.h">
+      <Filter>RigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utility\Utility.hpp">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\VertexShader\VertexShader.h">
+      <Filter>Shader\VertexShader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\PixelShader\PixelShader.h">
+      <Filter>Shader\PixelShader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\GeometryShader\GeometryShader.h">
+      <Filter>Shader\GeometryShader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mesh\Mesh.h">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Math.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sprite\Sprite.h">
+      <Filter>Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Material\Material.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\Input.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\KeyBoard\KeyBoard.h">
+      <Filter>Input\KeyBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FPS\FPS.h">
+      <Filter>FPS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio\Audio.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Wave\Wave.h">
+      <Filter>Wave</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Device\GLDevice\GLDevice.h">
+      <Filter>Device\GLDevice</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,69 @@
+diff a/directX11/src/GameMain/GameMain.cpp b/directX11/src/GameMain/GameMain.cpp	(rejected hunks)
+@@ -0,0 +1,67 @@
++#include "GameMain.h"
++
++//�R���X�g���N�^
++GameMain::GameMain()
++{
++	vertexBuf = new VertexBuffer(5);
++	texture = new Texture();
++	shader = new Shader();
++
++	shader->ComplieVertexShader();
++	shader->CreateVertexShader();
++
++	shader->CompliePixelShader();
++	shader->CreatePixelShader();
++
++	shader->ComplieGeometryShader();
++	shader->CreateGeometryShader();
++
++	shader->SetShaderConstantBuffer();
++	shader->CreateInputLayout();
++
++	shader->CreateBlendState();
++	shader->CreateRasterizerState();
++	shader->CreateDepthStencilState();
++
++	texture->Load("./data/image/texture.png");
++
++	XMVECTORF32 pos = { 0,0,50 };
++	XMVECTORF32 targetPos = { 0,0,0 };
++	XMVECTORF32 upVec = { 0,1,0 };
++	camera = new Camera(pos, targetPos, upVec);
++	camera->LookAtLH();
++}
++
++//�f�X�g���N�^
++GameMain::~GameMain()
++{
++	delete vertexBuf;
++	delete texture;
++	delete shader;
++	delete camera;
++}
++
++//�X�V����
++void	GameMain::UpDate()
++{
++	camera->PerspectiveFovLH();
++
++	Dev::WriteConstantBuffer();
++}
++
++//�`�揈��
++void	GameMain::Render()
++{
++	Dev::ClearRenderTarget();
++	Dev::ClearDepthStencilView();
++
++
++	Dev::GetDeviceContext()->VSSetShader(shader->GetVertexShader(), nullptr,0);
++	Dev::GetDeviceContext()->PSSetShader(shader->GetPixelShader(), nullptr, 0);
++
++	vertexBuf->Render();
++
++	Dev::WriteConstantBuffer();
++	Dev::GetDXGI()->GetSwapChainPtr()->Present(0, 0);
++}
++
