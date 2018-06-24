@@ -6,6 +6,9 @@
 #include "../../src/Shader/PixelShader/PixelShader.h"
 #include "../../src/Mesh/Mesh.h"
 
+#include "../../src/Sample/Sample.h"
+
+
 //--------------------------------------------------------------------------------------
 //ÉQÅ[ÉÄÉÅÉCÉì
 //--------------------------------------------------------------------------------------
@@ -24,9 +27,8 @@ private:
 	Camera*			camera;
 
 private:
-	VertexBuffer*	vertexBuf;
-
-private:
 	Mesh*		mesh;
 	Texture*	texture;
+
+	Sample*		sample;
 };

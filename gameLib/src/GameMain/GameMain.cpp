@@ -7,37 +7,23 @@
 //コンストラクタ
 GameMain::GameMain()
 {
-	vertexBuf = new VertexBuffer(3);
-	vertexBuf->Create();
 
-	
-
-	Math::Vector3 pos = { 0,12,-20 };
-	Math::Vector3 angle = { 20,0,0 };
+	Math::Vector3 pos = { 0,0,-50 };
+	Math::Vector3 angle = { 0,0,0 };
 	camera = new Camera(pos, angle);
 	camera->PerspectiveFovLH();
 
-	
-	texture = new Texture("./data/image/texture.png");
-	
-	mesh = new Mesh();
-	mesh->CreateCube();
-	mesh->GetMaterial().SetTexture(0, texture);
-	mesh->SetPos(Math::Vector3(0, 1, -10));
-	mesh->SetAngle(Math::Vector3(0, 0, 0));
-	mesh->SetScale(Math::Vector3(10, 1, 1));
 
+	sample = new Sample();
 }
 
 //デストラクタ
 GameMain::~GameMain()
 {
-	Utility::SafeDelete(vertexBuf);
 	Utility::SafeDelete(camera);
+	Utility::SafeDelete(sample);
 
 
-	Utility::SafeDelete(texture);
-	Utility::SafeDelete(mesh);
 }
 
 //更新処理
@@ -52,6 +38,8 @@ void	GameMain::UpDate()
 	{
 		camera->AddVec(Math::Vector3(0.0f, -0.0f, 0.5f));
 	}
+
+	sample->UpDate();
 }
 
 //描画処理
@@ -59,11 +47,12 @@ void	GameMain::Render()
 {
 	FLOAT	color[4] = { 0,0,1,1 };
 
+	Engine<DXDevice>::GetDevice().Run();
 	Engine<DXDevice>::GetDevice().GetDeviceContext3D().ClearRenderTargetView(Engine<DXDevice>::GetDevice().GetRenderTargetView(), color);
-	Engine<DXDevice>::GetDevice().GetDeviceContext3D().ClearDepthStencilView(Engine<DXDevice>::GetDevice().GetDepthStencilView(), 0, 1.0f, 20);
+	Engine<DXDevice>::GetDevice().GetDeviceContext3D().ClearDepthStencilView(Engine<DXDevice>::GetDevice().GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 20);
 
-	mesh->Draw();
-	//vertexBuf->Render();
+	sample->Render();
+
 	Engine<DXDevice>::GetDevice().GetSwapChain().Present(0, 0);
 }
 

@@ -107,11 +107,15 @@ void	Material::Create(const std::string& shaderSource)
 		D3D11_INPUT_PER_VERTEX_DATA,
 		0 });
 
-	if (!vertexShader->Create("vertexShader.vs", inputElementDesc.data(), inputElementDesc.size()))
+	if (!vertexShader->Create("./data/shaderData/testShader", inputElementDesc.data(), inputElementDesc.size()))
 	{
-		MessageBoxA(nullptr, "失敗", "jjijfeijaojef", MB_OK);
+		MessageBoxA(nullptr, "失敗", "頂点シェーダ", MB_OK);
 	}
-	pixelShader->Create("pixelShader.ps");
+	if (!pixelShader->Create("./data/shaderData/testShader"))
+	{
+		MessageBoxA(nullptr, "失敗", "ピクセルシェーダ", MB_OK);
+	}
+
 }
 
 //-----------------------------------------------------------------------------

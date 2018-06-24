@@ -10,7 +10,7 @@ Camera::Camera(const Math::Vector3& position, const Math::Vector3& angle)
 	, angle(angle)
 	, constantBuf(nullptr)
 {
-	this->SetFovAngle(30.0f);
+	this->SetFovAngle(60.0f);
 	this->SetAspect(640.0f / 480.0f);
 	this->SetNearZ(1.0f);
 	this->SetFarZ(20.0f);
@@ -62,7 +62,6 @@ void	Camera::LookAtLH()
 
 	Engine<DXDevice>::GetDevice().GetDeviceContext3D().UpdateSubresource(constantBuf, 0, nullptr, &constant, 0, 0);
 
-	//DXEngine::GetDeviceContext3D().UpdateSubresource(constantBuf, 0, nullptr, &constant, 0, 0);
 	Engine<DXDevice>::GetDevice().GetDeviceContext3D().VSSetConstantBuffers(0, 1, &constantBuf);
 	Engine<DXDevice>::GetDevice().GetDeviceContext3D().HSSetConstantBuffers(0, 1, &constantBuf);
 	Engine<DXDevice>::GetDevice().GetDeviceContext3D().DSSetConstantBuffers(0, 1, &constantBuf);

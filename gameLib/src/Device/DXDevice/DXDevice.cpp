@@ -78,7 +78,7 @@ IWICImagingFactory&		DXDevice::GetTextureFactory() const
 }
 IDWriteFactory&			DXDevice::GetTextFactory() const
 {
-	return *textFactory;
+	return *textFactory.Get();
 }
 
 ID3D11RenderTargetView*	DXDevice::GetRenderTargetView() const
@@ -104,7 +104,7 @@ bool	DXDevice::Create()
 
 void	DXDevice::Run()
 {
-	
+	GetDeviceContext3D().OMSetRenderTargets(1, &renderTargetView, depthStencilView);
 }
 
 bool	DXDevice::CleanUp()
@@ -167,7 +167,10 @@ bool	DXDevice::CreateDirect3D()
 	}
 	
 	//ブレンドステートの作成
-	this->CreateBlendState();
+	if (!this->CreateBlendState())
+	{
+		MessageBoxA(nullptr, "ブレンドステートの作成に失敗", "CreateBlendState()", MB_OK);
+	}
 
 
 	return true;
@@ -177,15 +180,17 @@ bool	DXDevice::CreateDirect3D()
 bool	DXDevice::CreateSwapChain()
 {
 	DXGI_SWAP_CHAIN_DESC	swapDesc;
-
-	HRESULT hr;
 	SecureZeroMemory(&swapDesc, sizeof(swapDesc));
 
+	HRESULT hr;
+	UINT createDeviceFlag = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+
 #if defined(DEBUG) || defined(_DEBUG)
-	UINT createDeviceFlag = D3D11_CREATE_DEVICE_DEBUG;
+	createDeviceFlag |= D3D11_CREATE_DEVICE_DEBUG;
 #else
-	UINT createDeviceFlag = 0;
+	createDeviceFlag = 0;
 #endif
+
 
 	swapDesc.BufferCount = 1;	//シングルバックバッファ(裏画面)
 	swapDesc.BufferDesc.Width = screen->GetWidth();
@@ -221,6 +226,7 @@ bool	DXDevice::CreateSwapChain()
 		D3D_FEATURE_LEVEL_9_1,
 	};
 
+
 	//スワップチェインの作成
 	for (size_t i = 0; i < driverType.size(); i++)
 	{
@@ -243,6 +249,34 @@ bool	DXDevice::CreateSwapChain()
 			break;
 		}
 	}
+
+	IDXGIDevice*	dxgi = nullptr;
+	device3D->QueryInterface(&dxgi);
+
+	IDXGIAdapter*	adapter = nullptr;
+	dxgi->GetAdapter(&adapter);
+
+	IDXGIFactory*	factory = nullptr;
+	adapter->GetParent(__uuidof(IDXGIFactory), reinterpret_cast<void**>(&factory));
+
+
+	factory->CreateSwapChain(device3D, &swapDesc, &swapChain);
+	factory->MakeWindowAssociation(screen->GetHWND(), DXGI_MWA_NO_WINDOW_CHANGES | DXGI_MWA_NO_ALT_ENTER);
+
+	
+	if (dxgi != nullptr)
+	{
+		dxgi->Release();
+	}
+	if (adapter != nullptr)
+	{
+		adapter->Release();
+	}
+	if (factory != nullptr)
+	{
+		factory->Release();
+	}
+
 	if (FAILED(hr))
 	{
 		return false;
@@ -315,6 +349,7 @@ bool	DXDevice::CreateBackBuffer()
 	
 	//深度ステンシルビューの作成
 	D3D11_DEPTH_STENCIL_VIEW_DESC	depStenViewDesc;
+	memset(&depStenViewDesc, 0, sizeof(depStenViewDesc));
 	depStenViewDesc.Format = depthDesc.Format;            // ビューのフォーマット
 	depStenViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	depStenViewDesc.Flags = 0;
@@ -375,6 +410,7 @@ bool	DXDevice::CreateDirect2D()
 #endif
 	SecureZeroMemory(&options, sizeof(D2D1_FACTORY_OPTIONS));
 
+	
 	ID2D1Factory1* factory = nullptr;
 
 	//Direct2Dファクトリの作成
@@ -384,7 +420,6 @@ bool	DXDevice::CreateDirect2D()
 		&factory);											//このメソッドが返されるときに、新しいファクトリへのポインターのアドレスが格納される
 	if (FAILED(hr))
 	{
-		MessageBoxA(nullptr, "ここかな1", "a", MB_OK);
 		return false;
 	}
 
@@ -393,7 +428,6 @@ bool	DXDevice::CreateDirect2D()
 	hr = device3D->QueryInterface(&dxgiDevice);
 	if (FAILED(hr))
 	{
-		MessageBoxA(nullptr, "ここかな2", "b", MB_OK);
 		return false;
 	}
 	
@@ -402,7 +436,6 @@ bool	DXDevice::CreateDirect2D()
 	
 	if (FAILED(hr))
 	{
-		MessageBoxA(nullptr, "ここかな3", "c", MB_OK);
 		return false;
 	}
 	//Direct2DContextの作成
@@ -411,28 +444,33 @@ bool	DXDevice::CreateDirect2D()
 		&deviceContext2D);
 	if (FAILED(hr))
 	{
-		MessageBoxA(nullptr, "ここか4", "d", MB_OK);
 		return false;
 	}
+	
 	//COMオブジェクトの作成
-	/*hr = textureFactory->CoCreateInstance(
+	hr = CoCreateInstance(
 		CLSID_WICImagingFactory,
 		nullptr,
-		CLSCTX_INPROC_SERVER);
-	if (FAILED(hr))
-	{
-		return false;
-	}*/
-	//DirectWriteオブジェクトを作成
-	/*hr = DWriteCreateFactory(
-		DWRITE_FACTORY_TYPE_SHARED,
-		__uuidof(IDWriteFactory),
-		&textureFactory);
+		CLSCTX_INPROC_SERVER,
+		IID_PPV_ARGS(&textureFactory)
+	);
+
 	if (FAILED(hr))
 	{
 		return false;
 	}
-*/
+	
+	//DirectWriteオブジェクトを作成
+	hr = DWriteCreateFactory(
+		DWRITE_FACTORY_TYPE_SHARED,
+		__uuidof(IDWriteFactory),
+		&textFactory);
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	
 	return true;
 }
 

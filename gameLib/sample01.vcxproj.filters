@@ -109,6 +109,9 @@
     <Filter Include="DeviceFactory">
       <UniqueIdentifier>{48d42cb3-0b35-4a7a-a80a-1c9861f3f6c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sample">
+      <UniqueIdentifier>{8b18a7b3-b4d0-4ceb-9126-5bf61f6f1657}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Device\Device.cpp">
@@ -204,8 +207,11 @@
     <ClCompile Include="src\Device\GLDevice\GLDevice.cpp">
       <Filter>Device\GLDevice</Filter>
     </ClCompile>
-    <ClCompile Include="src\EngineCreator\DeviceFactory.cpp">
+    <ClCompile Include="src\DeviceFactory\DeviceFactory.cpp">
       <Filter>DeviceFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sample\Sample.cpp">
+      <Filter>Sample</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -305,8 +311,11 @@
     <ClInclude Include="src\Device\GLDevice\GLDevice.h">
       <Filter>Device\GLDevice</Filter>
     </ClInclude>
-    <ClInclude Include="src\EngineCreator\DeviceFactory.h">
+    <ClInclude Include="src\DeviceFactory\DeviceFactory.h">
       <Filter>DeviceFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sample\Sample.h">
+      <Filter>Sample</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

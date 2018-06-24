@@ -4,7 +4,8 @@
 //!	@note		positionの後ろのPOSITIONはセマンティックと呼ばれるものです。
 struct VS_INPUT
 {
-	float3 position : POSITION;
+	float3	position : POSITION;
+	float4	color : COLOR0;
 };
 
 //!	@struct		出力情報
@@ -12,6 +13,7 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
 	float4 position : SV_POSITION;
+	float4 color : COLOR0;
 };
 
 //! @brief		頂点シェーダーの処理
@@ -21,5 +23,6 @@ VS_OUTPUT main(VS_INPUT IN)
 {
 	VS_OUTPUT OUT;
 	OUT.position = float4(IN.position, 1.0f);
+	OUT.color = IN.color;
 	return OUT;
 }

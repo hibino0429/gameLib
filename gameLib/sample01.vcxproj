@@ -164,10 +164,10 @@
     <ClCompile Include="src\Camera\Camera.cpp" />
     <ClCompile Include="src\Collision\Collision.cpp" />
     <ClCompile Include="src\ComPtr\ComPtr.cpp" />
+    <ClCompile Include="src\DeviceFactory\DeviceFactory.cpp" />
     <ClCompile Include="src\Device\Device.cpp" />
     <ClCompile Include="src\Device\DXDevice\DXDevice.cpp" />
     <ClCompile Include="src\Device\GLDevice\GLDevice.cpp" />
-    <ClCompile Include="src\EngineCreator\DeviceFactory.cpp" />
     <ClCompile Include="src\Engine\DXEngine\DXEngine.cpp" />
     <ClCompile Include="src\Engine\Engine.cpp" />
     <ClCompile Include="src\Fbx\Fbx.cpp" />
@@ -180,6 +180,7 @@
     <ClCompile Include="src\Mesh\Mesh.cpp" />
     <ClCompile Include="src\Physics\Physics.cpp" />
     <ClCompile Include="src\RigidBody\RigidBody.cpp" />
+    <ClCompile Include="src\Sample\Sample.cpp" />
     <ClCompile Include="src\Screen\Screen.cpp" />
     <ClCompile Include="src\Shader\GeometryShader\GeometryShader.cpp" />
     <ClCompile Include="src\Shader\PixelShader\PixelShader.cpp" />
@@ -199,10 +200,10 @@
     <ClInclude Include="src\Collision\Collision.h" />
     <ClInclude Include="src\ComPtr\ComPtr.h" />
     <ClInclude Include="src\debug.hpp" />
+    <ClInclude Include="src\DeviceFactory\DeviceFactory.h" />
     <ClInclude Include="src\Device\Device.h" />
     <ClInclude Include="src\Device\DXDevice\DXDevice.h" />
     <ClInclude Include="src\Device\GLDevice\GLDevice.h" />
-    <ClInclude Include="src\EngineCreator\DeviceFactory.h" />
     <ClInclude Include="src\Engine\DXEngine\DXEngine.h" />
     <ClInclude Include="src\Engine\Engine.h" />
     <ClInclude Include="src\Fbx\Fbx.h" />
@@ -215,6 +216,7 @@
     <ClInclude Include="src\Mesh\Mesh.h" />
     <ClInclude Include="src\Physics\Physics.h" />
     <ClInclude Include="src\RigidBody\RigidBody.h" />
+    <ClInclude Include="src\Sample\Sample.h" />
     <ClInclude Include="src\Screen\Screen.h" />
     <ClInclude Include="src\Shader\GeometryShader\GeometryShader.h" />
     <ClInclude Include="src\Shader\PixelShader\PixelShader.h" />

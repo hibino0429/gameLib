@@ -31,7 +31,7 @@ bool	PixelShader::Create(const std::string& fileName)
 	//シェーダファイルの読み込み
 	auto result = D3DX11CompileFromFileA(
 		(fileName + ".hlsl").c_str(), nullptr, nullptr,
-		"main", "ps_4_0",
+		"main", "ps_5_0",
 		D3D10_SHADER_ENABLE_STRICTNESS | D3D10_SHADER_PACK_MATRIX_COLUMN_MAJOR | D3D10_SHADER_SKIP_VALIDATION,
 		0, nullptr,
 		&pixelBlob, nullptr, nullptr);

@@ -81,7 +81,7 @@ private:
 	ID2D1DeviceContext*		deviceContext2D;
 	IDXGISwapChain*			swapChain;
 	IWICImagingFactory*		textureFactory;
-	IDWriteFactory*			textFactory;
+	Microsoft::WRL::ComPtr<IDWriteFactory>		textFactory;
 	ID3D11RenderTargetView*	renderTargetView;
 	ID3D11Texture2D*		texture2D;
 	ID3D11DepthStencilView*	depthStencilView;
