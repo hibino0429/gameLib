@@ -43,6 +43,7 @@ bool	VertexShader::Create(const std::string& fileName, D3D11_INPUT_ELEMENT_DESC*
 	if (FAILED(result))
 	{
 		Utility::SafeRelease(vertexBlob);
+		MessageBoxA(nullptr, "頂点シェーダでファイルが読み込み不可", "VertexShader::Create()", MB_OK);
 		return false;
 	}
 
@@ -57,6 +58,7 @@ bool	VertexShader::Create(const std::string& fileName, D3D11_INPUT_ELEMENT_DESC*
 	if (FAILED(result))
 	{
 		Utility::SafeRelease(vertexBlob);
+		MessageBoxA(nullptr, "シェーダの作成に失敗しました", "CreateVertexShader()", MB_OK);
 		return false;
 	}
 
@@ -69,7 +71,6 @@ bool	VertexShader::Create(const std::string& fileName, D3D11_INPUT_ELEMENT_DESC*
 	);
 
 	Utility::SafeRelease(vertexBlob);
-
 	if (FAILED(result))
 	{
 		MessageBoxA(nullptr, "InputLayoutの作成に失敗", "CreateInputLayout()", MB_OK);

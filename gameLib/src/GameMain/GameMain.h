@@ -7,7 +7,7 @@
 #include "../../src/Mesh/Mesh.h"
 
 #include "../../src/Sample/Sample.h"
-
+#include "../../src/polygon/polygon.h"
 
 //--------------------------------------------------------------------------------------
 //ƒQ[ƒ€ƒƒCƒ“
@@ -30,5 +30,5 @@ private:
 	Mesh*		mesh;
 	Texture*	texture;
 
-	Sample*		sample;
+	Sample*			sample;
 };

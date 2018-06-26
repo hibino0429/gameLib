@@ -10,17 +10,15 @@
 //!@class		Sample
 //!@brief	サンプルで扱うプログラムを作成するファイル
 //----------------------------------------------------------------------------------------
-class Sample
+class VertexPolygon
 {
 public:
-	Sample();
-	~Sample();
+	VertexPolygon();
+	~VertexPolygon();
 
 	void	UpDate();
 	void	Render();
 
-	void	SetViewMat(const DirectX::XMFLOAT4X4& viewMat);
-	void	SetProjMat(const DirectX::XMFLOAT4X4& projMat);
 
 private:
 	struct Vertex
@@ -28,26 +26,13 @@ private:
 		float pos[3];
 		float color[4];
 	};
-	
-	struct ConstantBuf
-	{
-		DirectX::XMFLOAT4X4	world;
-		DirectX::XMFLOAT4X4	view;
-		DirectX::XMFLOAT4X4	projection;
-	};
 
-	ID3D11Buffer*	constantBuffer;
 	ID3D11Buffer*	vertexBuffer;
 	unsigned int stride;
 	unsigned int offset;
 
-	VertexShader	vertexShader;
-	PixelShader		pixelShader;
+	VertexShader vertexShader;
+	PixelShader pixelShader;
+
 	ID3D11Buffer*	indexBuffer;
-
-	Math::Vector3		pos;
-	Math::Vector3		angle;
-	Math::Vector3		scale;
-
-	D3D11_INPUT_ELEMENT_DESC* inputLayout;
 };

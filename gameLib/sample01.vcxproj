@@ -104,6 +104,12 @@
       <AdditionalLibraryDirectories>E:\Desktop\GameLibrary\gameLib\lib\Fbx\vs2015\x86\debug;E:\Desktop\GameLibrary\gameLib\lib\Collision\Debug;E:\Desktop\GameLibrary\gameLib\lib\Texture\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libfbxsdk-md.lib;oded.lib;drawstuffd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <FxCompile>
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -179,6 +185,7 @@
     <ClCompile Include="src\Math\Math.cpp" />
     <ClCompile Include="src\Mesh\Mesh.cpp" />
     <ClCompile Include="src\Physics\Physics.cpp" />
+    <ClCompile Include="src\polygon\polygon.cpp" />
     <ClCompile Include="src\RigidBody\RigidBody.cpp" />
     <ClCompile Include="src\Sample\Sample.cpp" />
     <ClCompile Include="src\Screen\Screen.cpp" />
@@ -215,6 +222,7 @@
     <ClInclude Include="src\Math\Math.h" />
     <ClInclude Include="src\Mesh\Mesh.h" />
     <ClInclude Include="src\Physics\Physics.h" />
+    <ClInclude Include="src\polygon\polygon.h" />
     <ClInclude Include="src\RigidBody\RigidBody.h" />
     <ClInclude Include="src\Sample\Sample.h" />
     <ClInclude Include="src\Screen\Screen.h" />
@@ -229,6 +237,18 @@
     <ClInclude Include="src\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="src\Wave\Wave.h" />
     <ClInclude Include="src\Window\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="data\shaderData\PixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="data\shaderData\VertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

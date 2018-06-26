@@ -4,7 +4,7 @@
 //!	@note		positionの後ろのPOSITIONはセマンティックと呼ばれるものです。
 struct VS_INPUT
 {
-	float3	position : POSITION;
+	float4	position : POSITION;
 	float4	color : COLOR0;
 };
 
@@ -16,13 +16,22 @@ struct VS_OUTPUT
 	float4 color : COLOR0;
 };
 
+cbuffer ConstantBuf : register(b0)
+{
+	float4x4	world;
+	float4x4	view;
+	float4x4	projection;
+};
+
 //! @brief		頂点シェーダーの処理
 //!	@param[in]	IN			入力情報
 //!	@return		出力情報
 VS_OUTPUT main(VS_INPUT IN)
 {
-	VS_OUTPUT OUT;
-	OUT.position = float4(IN.position, 1.0f);
+	VS_OUTPUT OUT = (VS_OUTPUT)0;
+	OUT.position = mul(IN.position, world);
+	OUT.position = mul(OUT.position, view);
+	OUT.position = mul(OUT.position, projection);
 	OUT.color = IN.color;
 	return OUT;
 }

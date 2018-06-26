@@ -93,7 +93,14 @@ ID3D11DepthStencilView*	DXDevice::GetDepthStencilView() const
 {
 	return depthStencilView;
 }
-
+D3D11_VIEWPORT&			DXDevice::GetViewPort()
+{
+	return viewPort;
+}
+ID3D11RasterizerState&	DXDevice::GetRasterizerState() const
+{
+	return *rasterizerState;
+}
 
 
 bool	DXDevice::Create()
@@ -104,7 +111,9 @@ bool	DXDevice::Create()
 
 void	DXDevice::Run()
 {
-	GetDeviceContext3D().OMSetRenderTargets(1, &renderTargetView, depthStencilView);
+	deviceContext3D->RSSetState(rasterizerState);
+	deviceContext3D->RSSetViewports(1, &viewPort);
+	deviceContext3D->OMSetRenderTargets(1, &renderTargetView, depthStencilView);
 }
 
 bool	DXDevice::CleanUp()
@@ -158,7 +167,6 @@ bool	DXDevice::CreateDirect3D()
 	{
 		
 	}
-
 
 	//device2Dの作成
 	if (!this->CreateDirect2D())
@@ -324,17 +332,18 @@ bool	DXDevice::CreateBackBuffer()
 
 	// 深度/ステンシル・テクスチャの作成
 	D3D11_TEXTURE2D_DESC depthDesc = backBufDesc;
-	depthDesc.Width     = backBufDesc.Width;   // 幅
-	depthDesc.Height    = backBufDesc.Height;  // 高さ
-	depthDesc.MipLevels = 1;					// ミップマップ・レベル数
-	depthDesc.ArraySize = 1;					// 配列サイズ
-	depthDesc.Format = DXGI_FORMAT_D32_FLOAT;	// フォーマット(深度のみ)
-	depthDesc.SampleDesc.Count   = 1;			// マルチサンプリングの設定
-	depthDesc.SampleDesc.Quality = 0;			// マルチサンプリングの品質
-	depthDesc.Usage = D3D11_USAGE_DEFAULT;      // デフォルト使用法
+	SecureZeroMemory(&depthDesc, sizeof(depthDesc));
+	depthDesc.Width     = backBufDesc.Width;		// 幅
+	depthDesc.Height    = backBufDesc.Height;		// 高さ
+	depthDesc.MipLevels = 1;						// ミップマップ・レベル数
+	depthDesc.ArraySize = 1;						// 配列サイズ
+	depthDesc.Format	= DXGI_FORMAT_D32_FLOAT;	// フォーマット(深度のみ)
+	depthDesc.SampleDesc.Count   = 1;				// マルチサンプリングの設定
+	depthDesc.SampleDesc.Quality = 0;				// マルチサンプリングの品質
+	depthDesc.Usage = D3D11_USAGE_DEFAULT;			// デフォルト使用法
 	depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL; // 深度/ステンシルとして使用
-	depthDesc.CPUAccessFlags = 0;				// CPUからはアクセスしない
-	depthDesc.MiscFlags = 0;					// その他の設定なし
+	depthDesc.CPUAccessFlags	= 0;				// CPUからはアクセスしない
+	depthDesc.MiscFlags			= 0;				// その他の設定なし
 
 	hr = GetDevice3D().CreateTexture2D(
 		&depthDesc,					// 作成する2Dテクスチャの設定
@@ -350,9 +359,9 @@ bool	DXDevice::CreateBackBuffer()
 	//深度ステンシルビューの作成
 	D3D11_DEPTH_STENCIL_VIEW_DESC	depStenViewDesc;
 	memset(&depStenViewDesc, 0, sizeof(depStenViewDesc));
-	depStenViewDesc.Format = depthDesc.Format;            // ビューのフォーマット
+	depStenViewDesc.Format	= depthDesc.Format;            // ビューのフォーマット
 	depStenViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-	depStenViewDesc.Flags = 0;
+	depStenViewDesc.Flags	= 0;
 	depStenViewDesc.Texture2D.MipSlice = 0;
 
 	hr = GetDevice3D().CreateDepthStencilView(
@@ -366,8 +375,11 @@ bool	DXDevice::CreateBackBuffer()
 		return false;
 	}
 
+	//ラスタライザの作成
+	CreateRasterizerState();
+
 	//ビューポートの設定
-	SetViewPort((float)backBufDesc.Width, (float)backBufDesc.Height);
+	SetViewPort(static_cast<float>(backBufDesc.Width), static_cast<float>(backBufDesc.Height));
 	return true;
 }
 
@@ -476,8 +488,9 @@ bool	DXDevice::CreateDirect2D()
 
 void	DXDevice::SetViewPort(float width,float height)
 {
-	D3D11_VIEWPORT	viewPort;
 	SecureZeroMemory(&viewPort, sizeof(viewPort));
+	viewPort.TopLeftX	= 0;
+	viewPort.TopLeftY	= 0;
 	viewPort.Width		= width;
 	viewPort.Height		= height;
 	viewPort.MinDepth	= 0.0f;
@@ -581,6 +594,7 @@ bool	DXDevice::AcquireBackBuffer()
 	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	descDSV.Flags = 0;
 	descDSV.Texture2D.MipSlice = 0;
+	//深度ステンシルの作成
 	hr = device3D->CreateDepthStencilView(
 		texture2D,				//深度ステンシルビューを作成するテクスチャ
 		&descDSV,				//深度ステンシルビューの設定
@@ -595,3 +609,13 @@ bool	DXDevice::AcquireBackBuffer()
 }
 
 
+//!@brief	ラスタライザの作成
+bool	DXDevice::CreateRasterizerState()
+{
+	D3D11_RASTERIZER_DESC rdc = {};
+	rdc.FillMode = D3D11_FILL_SOLID;	//3つの頂点を結んでできた三角形を塗りつぶす
+	rdc.CullMode = D3D11_CULL_NONE;		//両方描画
+	rdc.FrontCounterClockwise = true;	//反時計回り
+	device3D->CreateRasterizerState(&rdc, &rasterizerState);
+	return true;
+}

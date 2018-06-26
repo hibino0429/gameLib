@@ -39,6 +39,7 @@ bool	PixelShader::Create(const std::string& fileName)
 	if (FAILED(result))
 	{
 		Utility::SafeRelease(pixelBlob);
+		MessageBoxA(nullptr, "シェーダファイルの読み込みに失敗", "Pixel::Create()", MB_OK);
 		return false;
 	}
 

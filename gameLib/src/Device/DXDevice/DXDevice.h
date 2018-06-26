@@ -52,7 +52,9 @@ public:
 	ID3D11RenderTargetView*	GetRenderTargetView() const;
 	ID3D11Texture2D*		GetTexture2D() const;
 	ID3D11DepthStencilView*	GetDepthStencilView() const;
-	
+	D3D11_VIEWPORT&			GetViewPort();
+	ID3D11RasterizerState&	GetRasterizerState() const;
+
 	//!@brief ê∂ê¨
 	bool	Create();
 	//!@brief çXêV
@@ -73,6 +75,7 @@ private:
 	void	SetViewPort(float width,float height);
 	bool	ChangeScreenSize();
 	bool	AcquireBackBuffer();
+	bool	CreateRasterizerState();
 
 private:
 	ID3D11Device*			device3D;
@@ -86,5 +89,7 @@ private:
 	ID3D11Texture2D*		texture2D;
 	ID3D11DepthStencilView*	depthStencilView;
 	Screen*					screen;
+	D3D11_VIEWPORT			viewPort;
+	ID3D11RasterizerState*	rasterizerState;
 };
 

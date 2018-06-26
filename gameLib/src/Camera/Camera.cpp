@@ -5,17 +5,21 @@
 //!@brief	eyePos		視点
 //!@brief	targetPos	注視点
 //!@brief	upVec		上ベクトル
-Camera::Camera(const Math::Vector3& position, const Math::Vector3& angle)
-	: position(position)
-	, angle(angle)
+Camera::Camera(const Math::Vector3& eyePos, const Math::Vector3& targetPos, const Math::Vector3& upVec)
+	: position(eyePos)
+	, angle(targetPos)
+	, eyePos(eyePos)
+	, targetPos(targetPos)
+	, upVec(upVec)
 	, constantBuf(nullptr)
 {
-	this->SetFovAngle(60.0f);
-	this->SetAspect(640.0f / 480.0f);
-	this->SetNearZ(1.0f);
-	this->SetFarZ(20.0f);
+	float asp = Engine<DXDevice>::GetDevice().GetViewPort().Width / Engine<DXDevice>::GetDevice().GetViewPort().Height;
 
-	Create();
+	this->SetFovAngle(45.0f);
+	this->SetAspect(asp);
+	this->SetNearZ(0.1f);
+	this->SetFarZ(100.0f);	
+	//Create();
 }
 
 //!@brief	デストラクタ
@@ -30,15 +34,19 @@ bool	Camera::Create()
 {
 	D3D11_BUFFER_DESC	constantBufDesc;
 	SecureZeroMemory(&constantBufDesc,sizeof(constantBufDesc));
-	constantBufDesc.ByteWidth = static_cast<UINT>(sizeof(constant));
-	constantBufDesc.Usage = D3D11_USAGE_DEFAULT;
-	constantBufDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	constantBufDesc.CPUAccessFlags = 0;
+	constantBufDesc.ByteWidth	= sizeof(ConstantBuffer);
+	constantBufDesc.Usage		= D3D11_USAGE_DEFAULT;
+	constantBufDesc.BindFlags	= D3D11_BIND_CONSTANT_BUFFER;
+	constantBufDesc.CPUAccessFlags		= 0;
+	constantBufDesc.MiscFlags			= 0;
+	constantBufDesc.StructureByteStride = 0;
+
 	auto result = Engine<DXDevice>::GetDevice().GetDevice3D().CreateBuffer(
 		&constantBufDesc,
 		nullptr,
 		&constantBuf
 	);
+
 	if (FAILED(result))
 	{
 		MessageBoxA(nullptr, "バッファの作成に失敗", "Camera.Create()", MB_OK);
@@ -50,52 +58,51 @@ bool	Camera::Create()
 //!@brief	View変換を行う
 void	Camera::LookAtLH()
 {
-	constant.view = DirectX::XMMatrixTranspose(
-		DirectX::XMMatrixInverse(
-			nullptr,
-			DirectX::XMMatrixRotationX(DirectX::XMConvertToRadians(angle.x)) *
-			DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(angle.y)) *
-			DirectX::XMMatrixRotationZ(DirectX::XMConvertToRadians(angle.z)) *
-			DirectX::XMMatrixTranslation(position.x, position.y, position.z)
-		)
+	//view変換する
+	DirectX::XMMATRIX viewMat = DirectX::XMMatrixTranspose(
+		DirectX::XMMatrixLookAtLH(eyePos, targetPos, upVec)
 	);
-
-	Engine<DXDevice>::GetDevice().GetDeviceContext3D().UpdateSubresource(constantBuf, 0, nullptr, &constant, 0, 0);
-
-	Engine<DXDevice>::GetDevice().GetDeviceContext3D().VSSetConstantBuffers(0, 1, &constantBuf);
-	Engine<DXDevice>::GetDevice().GetDeviceContext3D().HSSetConstantBuffers(0, 1, &constantBuf);
-	Engine<DXDevice>::GetDevice().GetDeviceContext3D().DSSetConstantBuffers(0, 1, &constantBuf);
-	Engine<DXDevice>::GetDevice().GetDeviceContext3D().GSSetConstantBuffers(0, 1, &constantBuf);
-	Engine<DXDevice>::GetDevice().GetDeviceContext3D().PSSetConstantBuffers(0, 1, &constantBuf);
+	
+	DirectX::XMStoreFloat4x4(&constant.view, viewMat);
 }
 
 //!@brief	Ortho変換を行う
 void	Camera::OrthoFovLH()
 {
-	float width = 0, height = 0;
-	//Orthoビュー変換を行う
-	constant.projection = DirectX::XMMatrixTranspose(
+	DirectX::XMMATRIX orthoViewMat = DirectX::XMMatrixTranspose(
 		DirectX::XMMatrixOrthographicLH(
-			static_cast<float>(width),
-			static_cast<float>(height),
+			Engine<DXDevice>::GetDevice().GetViewPort().Width,
+			Engine<DXDevice>::GetDevice().GetViewPort().Height,
 			nearZ,
 			farZ)
 	);
 
-	Engine<DXDevice>::GetDevice().GetDeviceContext3D().UpdateSubresource(constantBuf, 0, nullptr, &constant.projection, 0, 0);
+	//Orthoビュー変換を行う
+	DirectX::XMStoreFloat4x4(&constant.view,orthoViewMat);	
 }
 
-//概要: Perspective変換を行う
+//!@brief	Perspective変換を行う
 void	Camera::PerspectiveFovLH()
 {
-	constant.projection = DirectX::XMMatrixPerspectiveFovLH(
-		DirectX::XMConvertToRadians(fovAngle),
-		aspect,
-		nearZ,
-		farZ
+	//perspectiveの変換を行う
+	DirectX::XMMATRIX perspectiveMat = DirectX::XMMatrixTranspose(
+		DirectX::XMMatrixPerspectiveFovLH(
+			DirectX::XMConvertToRadians(fovAngle),
+			aspect,
+			nearZ,
+			farZ
+		)
 	);
 
+	DirectX::XMMATRIX worldMat = DirectX::XMMatrixTranspose(
+		DirectX::XMMatrixTranslation(eyePos.x, eyePos.y, eyePos.z)
+	);
+
+	DirectX::XMStoreFloat4x4(&constant.projection, perspectiveMat);
+	DirectX::XMStoreFloat4x4(&constant.world, worldMat);
+	//Engine<DXDevice>::GetDevice().GetDeviceContext3D().UpdateSubresource(constantBuf, 0, nullptr, &constant, 0, 0);
 }
+
 
 
 
@@ -103,19 +110,19 @@ void	Camera::PerspectiveFovLH()
 //引数: eyePos_ 視点
 void	Camera::SetEyePos(const Math::Vector3& eyePos_)
 {
-	//eyePos = eyePos_;
+	eyePos = eyePos_;
 }
 //概要: 注視点の設定
 //引数: targetPos_ 注視点
 void	Camera::SetTargetPos(const Math::Vector3& targetPos_)
 {
-	//targetPos = targetPos_;
+	targetPos = targetPos_;
 }
 //概要: 上方向ベクトルの設定
 //引数: upVec_ 上方向ベクトル
 void	Camera::SetUpVec(const Math::Vector3& upVec_)
 {
-	//upVec = upVec_;
+	upVec = upVec_;
 }
 
 //概要: 視野角(度数)の設定
@@ -143,19 +150,20 @@ void	Camera::SetFarZ(const float& farZ_)
 	farZ = farZ_;
 }
 
-
-
-//!@brief 定数バッファの取得
-ID3D11Buffer**	Camera::GetConstantBuf()
-{
-	return &constantBuf;
-}
-
-
-
 //!@brief	カメラの位置を動かす
 //!@param[in]	moveVec	移動量
 void	Camera::AddVec(const Math::Vector3& moveVec)
 {
 	position += moveVec;
+}
+
+//!@brief	ビュー行列の取得
+DirectX::XMFLOAT4X4&	Camera::GetViewMatrix()
+{
+	return this->constant.view;
+}
+//!@brief	プロジェクション行列の取得
+DirectX::XMFLOAT4X4&	Camera::GetProjectionMatrix()
+{
+	return this->constant.projection;
 }

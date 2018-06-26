@@ -106,7 +106,7 @@ bool	Shader::ComplieGeometryShader()
 	hr = D3DX11CompileFromFile(
 		L"./data/shaderData/GeometryShader.hlsl",
 		nullptr, nullptr,
-		"GS",
+		"main",
 		"gs_4_0",
 		compileOption,
 		0, nullptr,

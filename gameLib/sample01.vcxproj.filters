@@ -112,6 +112,12 @@
     <Filter Include="Sample">
       <UniqueIdentifier>{8b18a7b3-b4d0-4ceb-9126-5bf61f6f1657}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\shaderData">
+      <UniqueIdentifier>{5132eeeb-5577-4f36-8cb3-6e4ef50ebaf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="polygon">
+      <UniqueIdentifier>{735b52ad-d7fb-4a69-a327-0e5c7d8af4aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Device\Device.cpp">
@@ -212,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="src\Sample\Sample.cpp">
       <Filter>Sample</Filter>
+    </ClCompile>
+    <ClCompile Include="src\polygon\polygon.cpp">
+      <Filter>polygon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -317,5 +326,16 @@
     <ClInclude Include="src\Sample\Sample.h">
       <Filter>Sample</Filter>
     </ClInclude>
+    <ClInclude Include="src\polygon\polygon.h">
+      <Filter>polygon</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="data\shaderData\PixelShader.hlsl">
+      <Filter>リソース ファイル\shaderData</Filter>
+    </FxCompile>
+    <FxCompile Include="data\shaderData\VertexShader.hlsl">
+      <Filter>リソース ファイル\shaderData</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
