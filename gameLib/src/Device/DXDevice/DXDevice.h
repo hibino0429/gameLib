@@ -88,8 +88,8 @@ private:
 	ID3D11RenderTargetView*	renderTargetView;
 	ID3D11Texture2D*		texture2D;
 	ID3D11DepthStencilView*	depthStencilView;
-	Screen*					screen;
 	D3D11_VIEWPORT			viewPort;
 	ID3D11RasterizerState*	rasterizerState;
+	Screen*					screen;
 };
 

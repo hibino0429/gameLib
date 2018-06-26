@@ -14,6 +14,8 @@ GameMain::GameMain()
 	//camera = new Camera(eyePos, targetPos, upVec);
 
 	sample = new Sample();
+
+	texture = new Texture("./data/image/texture.png");
 }
 
 //デストラクタ

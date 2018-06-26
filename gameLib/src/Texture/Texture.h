@@ -58,6 +58,19 @@ public:
 	//!@return		ID3D11Texture2D&	テクスチャのインターフェイス
 	ID3D11Texture2D&	GetInterface();
 
+	
+public:
+	//!@brief	読み込み
+	bool	LoadTex(const std::string& filePath);
+	//!@brief	設定
+	void	SetParam();
+	//!@brief	テクスチャを送る
+	void	Send();
+	//!@brief	シェーダリソースビュー(texture用)の設定
+	void	SetShaderResourceView();
+	//!@brief	描画
+	void	Render();
+
 private:
 	//!@brief	画像ファイルからシェーダ・リソース・ビューを作成
 	bool	CreateShaderResourceView();
@@ -69,4 +82,11 @@ private:
 	ID3D11SamplerState*			textureSampler;		//テクスチャサンプラー
 	ID3D11Texture2D*			texture2D;
 	Math::Vector2				size;
+
+	IWICImagingFactory*			imageFactory = nullptr;
+	IWICBitmapDecoder*			bitmapDecoder = nullptr;
+	IWICBitmapFrameDecode*		bitmapFrameDecoder = nullptr;
+	IWICFormatConverter*		formatConverter = nullptr;
+	UINT						imageWidth;
+	UINT						imageHeight;
 };

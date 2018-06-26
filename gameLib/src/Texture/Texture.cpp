@@ -9,7 +9,8 @@ Texture::Texture()
 	, texResourceView(nullptr)
 	, textureSampler(nullptr)
 {
-	size = Math::Vector2(1, 1);
+	//CoInitialize(nullptr);
+	//size = Math::Vector2(1, 1);
 }
 
 //!@brief	コンストラクタ
@@ -19,9 +20,15 @@ Texture::Texture(const std::string& filePath)
 	, texResourceView(nullptr)
 	, textureSampler(nullptr)
 {
-	Load(filePath);
-	size = Math::Vector2(1, 1);
+	//CoInitialize(nullptr);
+	//Load(filePath);
+	//size = Math::Vector2(1, 1);
+	this->LoadTex(filePath);
+	this->SetParam();
+	this->Send();
+	this->SetShaderResourceView();
 }
+
 //!@brief	コンストラクタ
 //!@param[in]	buffer	バッファ
 //!@param[in]	width	テクスチャの幅
@@ -107,7 +114,8 @@ bool	Texture::Load(const std::string& filePath)
 	IWICBitmapDecoder*	decoder = nullptr;
 	Engine<DXDevice>::GetDevice().GetTextureFactory().CreateDecoderFromFilename(
 		path,
-		0, GENERIC_READ,
+		nullptr, 
+		GENERIC_READ,
 		WICDecodeMetadataCacheOnDemand,
 		&decoder
 	);
@@ -195,20 +203,16 @@ void	Texture::Create(const BYTE* const buffer, int width, int height)
 	textureSubresourceData.SysMemSlicePitch = width * height * 4;
 	Engine<DXDevice>::GetDevice().GetDevice3D().CreateTexture2D(&textureDesc, &textureSubresourceData, &texture2D);
 	
-	if (texResourceView != nullptr)
-	{
-		texResourceView->Release();
-	}
+	Utility::SafeRelease(texResourceView);
+	
 	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc = {};
 	shaderResourceViewDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
 	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	shaderResourceViewDesc.Texture2D.MipLevels = 1;
 	Engine<DXDevice>::GetDevice().GetDevice3D().CreateShaderResourceView(texture2D, &shaderResourceViewDesc, &texResourceView);
 	
-	if (textureSampler != nullptr)
-	{
-		textureSampler->Release();
-	}
+	Utility::SafeRelease(textureSampler);
+	
 	D3D11_SAMPLER_DESC samplerDesc = {};
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -312,4 +316,64 @@ bool	Texture::CreateSampler()
 		return false;
 	}
 	return true;
+}
+
+
+
+//!@brief	読み込み
+bool	Texture::LoadTex(const std::string& filePath)
+{
+	CoInitialize(nullptr);
+	imageFactory = nullptr;
+	bitmapDecoder = nullptr;
+	bitmapFrameDecoder = nullptr;
+	formatConverter = nullptr;
+
+	CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_IWICImagingFactory,(LPVOID*)(imageFactory));
+	Engine<DXDevice>::GetDevice().GetTextureFactory().CreateDecoderFromFilename(L"./data/image/texture.png", nullptr, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &bitmapDecoder);
+	bitmapDecoder->GetFrame(0, &bitmapFrameDecoder);
+	Engine<DXDevice>::GetDevice().GetTextureFactory().CreateFormatConverter(&formatConverter);
+	formatConverter->Initialize(bitmapFrameDecoder, GUID_WICPixelFormat32bppRGBA, WICBitmapDitherTypeNone, nullptr, 1.0f, WICBitmapPaletteTypeMedianCut);
+	formatConverter->GetSize(&imageWidth, &imageHeight);
+
+	return true;
+}
+//!@brief	設定
+void	Texture::SetParam()
+{
+	D3D11_TEXTURE2D_DESC	textureDesc;
+	textureDesc.Width				= imageWidth;
+	textureDesc.Height				= imageHeight;
+	textureDesc.MipLevels			= 1;
+	textureDesc.ArraySize			= 1;
+	textureDesc.Format				= DXGI_FORMAT_R8G8B8A8_UNORM;
+	textureDesc.SampleDesc.Count	= 1;
+	textureDesc.SampleDesc.Quality	= 0;
+	textureDesc.Usage				= D3D11_USAGE_DEFAULT;
+	textureDesc.BindFlags			= D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+	textureDesc.CPUAccessFlags		= 0;
+	Engine<DXDevice>::GetDevice().GetDevice3D().CreateTexture2D(&textureDesc, nullptr, &texture2D);
+}
+//!@brief	テクスチャを送る(シェーダ側へ)
+void	Texture::Send()
+{
+	D3D11_MAPPED_SUBRESOURCE 	mappedSubResource;
+	//SecureZeroMemory(&mappedSubResource, sizeof(mappedSubResource));
+	Engine<DXDevice>::GetDevice().GetDeviceContext3D().Map(texture2D, 0,D3D11_MAP_WRITE_DISCARD,0, &mappedSubResource);
+	formatConverter->CopyPixels(NULL, imageWidth * 4, imageWidth * imageHeight * 4, (BYTE*)mappedSubResource.pData);
+	Engine<DXDevice>::GetDevice().GetDeviceContext3D().Unmap(texture2D, 0);
+}
+//!@brief	シェーダリソースビュー(texture用)の設定
+void	Texture::SetShaderResourceView()
+{
+	D3D11_SHADER_RESOURCE_VIEW_DESC	shaderResViewDesc;
+	shaderResViewDesc.Format				= DXGI_FORMAT_R8G8B8A8_UNORM;
+	shaderResViewDesc.ViewDimension			= D3D11_SRV_DIMENSION_TEXTURE2D;
+	shaderResViewDesc.Texture2D.MipLevels	= 1;
+	Engine<DXDevice>::GetDevice().GetDevice3D().CreateShaderResourceView(texture2D, &shaderResViewDesc, &texResourceView);
+}
+//!@brief	描画
+void	Texture::Render()
+{
+	Engine<DXDevice>::GetDevice().GetDeviceContext3D().PSSetShaderResources(0, 1, &texResourceView);
 }
