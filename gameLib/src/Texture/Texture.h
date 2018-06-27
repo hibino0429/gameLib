@@ -83,10 +83,9 @@ private:
 	ID3D11Texture2D*			texture2D;
 	Math::Vector2				size;
 
-	IWICImagingFactory*			imageFactory = nullptr;
-	IWICBitmapDecoder*			bitmapDecoder = nullptr;
-	IWICBitmapFrameDecode*		bitmapFrameDecoder = nullptr;
-	IWICFormatConverter*		formatConverter = nullptr;
+	IWICBitmapDecoder*			bitmapDecoder;
+	IWICBitmapFrameDecode*		bitmapFrameDecoder;
+	IWICFormatConverter*		formatConverter;
 	UINT						imageWidth;
 	UINT						imageHeight;
 };

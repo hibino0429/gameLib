@@ -34,7 +34,7 @@ bool	VertexShader::Create(const std::string& fileName, D3D11_INPUT_ELEMENT_DESC*
 	//シェーダファイルの読み込み
 	auto result = D3DX11CompileFromFileA(
 		(fileName + ".hlsl").c_str(), nullptr, nullptr,
-		"main", "vs_5_0",
+		"VS_main", "vs_5_0",
 		D3D10_SHADER_ENABLE_STRICTNESS | D3D10_SHADER_PACK_MATRIX_COLUMN_MAJOR | D3D10_SHADER_SKIP_VALIDATION,
 		0, nullptr,
 		&vertexBlob,

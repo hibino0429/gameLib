@@ -244,7 +244,7 @@ bool	DXDevice::CreateSwapChain()
 			nullptr,
 			createDeviceFlag,
 			feature,
-			6,
+			ARRAYSIZE(feature),
 			D3D11_SDK_VERSION,
 			&swapDesc,
 			&swapChain,
@@ -416,13 +416,13 @@ bool	DXDevice::CreateDirect2D()
 {
 	HRESULT hr;
 	D2D1_FACTORY_OPTIONS options;
-	
+	SecureZeroMemory(&options, sizeof(D2D1_FACTORY_OPTIONS));
+
 #if defined(_DEBUG)
 	options.debugLevel = D2D1_DEBUG_LEVEL_INFORMATION;
 #endif
-	SecureZeroMemory(&options, sizeof(D2D1_FACTORY_OPTIONS));
 
-	
+	CoInitialize(nullptr);
 	ID2D1Factory1* factory = nullptr;
 
 	//Direct2Dファクトリの作成
@@ -445,7 +445,6 @@ bool	DXDevice::CreateDirect2D()
 	
 	//Direct2DとDirectX11で連携できるかどうか
 	hr = factory->CreateDevice(dxgiDevice, &device2D);
-	
 	if (FAILED(hr))
 	{
 		return false;
@@ -464,11 +463,12 @@ bool	DXDevice::CreateDirect2D()
 		CLSID_WICImagingFactory,
 		nullptr,
 		CLSCTX_INPROC_SERVER,
-		IID_PPV_ARGS(&textureFactory)
-	);
+		IID_IWICImagingFactory,
+		(LPVOID*)(&textureFactory));
 
 	if (FAILED(hr))
 	{
+		MessageBoxA(nullptr, "COMオブジェクトの作成に失敗", "CoCreateInstance()", MB_OK);
 		return false;
 	}
 	
@@ -479,6 +479,7 @@ bool	DXDevice::CreateDirect2D()
 		&textFactory);
 	if (FAILED(hr))
 	{
+		MessageBoxA(nullptr, "textureFactoryの生成に失敗", "DWriteCreateFactory()", MB_OK);
 		return false;
 	}
 
