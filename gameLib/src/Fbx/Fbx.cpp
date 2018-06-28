@@ -1,29 +1,36 @@
 #include "Fbx.h"
 
-void	FbxModel::LoadFile()
+void	FbxModel::LoadFile(const std::string& filePath)
 {
 	fbxManager = FbxManager::Create();
 	scene = FbxScene::Create(fbxManager, "fbxScene");
-	FbxString fileName("humanoid.fbx");
+	FbxString fileName(filePath.c_str());
 	fbxImporter = FbxImporter::Create(fbxManager, "imp");
 	fbxImporter->Initialize(fileName.Buffer(), -1, fbxManager->GetIOSettings());
+	fbxImporter->Import(scene);
 	fbxImporter->Destroy();
 }
 
 void	FbxModel::LoadVertexData()
 {
+	//先頭のノードから順番に検索していく
 	for (int i = 0; i < scene->GetRootNode()->GetChildCount(); ++i)
 	{
+		//頂点データが入っているノードを発見したら
 		if (scene->GetRootNode()->GetChild(i)->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh)
 		{
+			//meshに取り入れる
 			mesh = scene->GetRootNode()->GetChild(i)->GetMesh();
 			break;
 		}
 	}
+
 	//頂点データが保持されているノードを読み込み取得する
+	//メッシュの数だけ、頂点データを作成する
 	Vec3*	vec3 = new Vec3[mesh->GetControlPointsCount()];
 	for (int i = 0; i < mesh->GetControlPointsCount(); ++i)
 	{
+		//頂点データにFBXのデータを代入
 		vec3[i].x = (float)mesh->GetControlPointAt(i)[0];
 		vec3[i].y = (float)mesh->GetControlPointAt(i)[1];
 		vec3[i].z = (float)mesh->GetControlPointAt(i)[2];
@@ -32,19 +39,58 @@ void	FbxModel::LoadVertexData()
 
 void	FbxModel::LoadIndexData()
 {
+	//インデックスバッファの作成
 	D3D11_BUFFER_DESC	indexDesc;
-	indexDesc.ByteWidth = sizeof(int) * mesh->GetPolygonVertexCount();
-	indexDesc.Usage = D3D11_USAGE_DEFAULT;
-	indexDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexDesc.CPUAccessFlags = 0;
-	indexDesc.MiscFlags = 0;
+	indexDesc.ByteWidth			= sizeof(int) * mesh->GetPolygonVertexCount();
+	indexDesc.Usage				= D3D11_USAGE_DEFAULT;
+	indexDesc.BindFlags			= D3D11_BIND_INDEX_BUFFER;
+	indexDesc.CPUAccessFlags	= 0;
+	indexDesc.MiscFlags			= 0;
 	indexDesc.StructureByteStride = 0;
 
-	ID3D11Buffer*	indexBuffer;
+	//インデックスのシェーダに送るデータの作成
 	D3D11_SUBRESOURCE_DATA	indexData;
 	indexData.pSysMem = mesh->GetPolygonVertices();
+
+	//バッファの作成
+	ID3D11Buffer*	indexBuffer;
 	DXEngine::GetDevice3D().CreateBuffer(&indexDesc, &indexData, &indexBuffer);
 }
+
+
+//!@brief	ノードの探索
+void	FbxModel::ProbeNode(FbxNode* fbxNode)
+{
+	if (fbxNode)
+	{
+		printf(fbxNode->GetName());
+		for (int i = 0; fbxNode->GetChildCount() > i; ++i)
+		{
+			ProbeNode(fbxNode->GetChild(i));
+		}
+	}
+}
+//!@brief	指定したノードタイプかのチェック
+bool	FbxModel::CheckNodeType(const FbxNodeAttribute::EType& nodeType)
+{
+	if (modelNode)
+	{
+		int attributeCount = modelNode->GetNodeAttributeCount();
+		for (int i = 0; i < attributeCount; ++i)
+		{
+			FbxNodeAttribute::EType	attributeType = modelNode->GetNodeAttributeByIndex(i)->GetAttributeType();
+			//ノードが指定したノードタイプにつながっているかチェック
+			if (attributeType == nodeType)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+
+
 //概要: SDK全体の管理(マネジャー)クラスを生成
 void	FbxModel::CreateManager()
 {

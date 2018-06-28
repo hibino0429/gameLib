@@ -33,9 +33,14 @@ public:
 		float z;
 	};
 public:
-	void	LoadFile();
+	void	LoadFile(const std::string& filePath);
 	void	LoadVertexData();
 	void	LoadIndexData();
+
+	//!@brief	ノードの探索
+	void	ProbeNode(FbxNode* fbxNode);
+	//!@brief	指定したノードタイプかのチェック
+	bool	CheckNodeType(const FbxNodeAttribute::EType& nodeType);
 
 private:
 	//概要: SDK全体の管理(マネジャー)クラスを生成
@@ -90,15 +95,15 @@ private:
 	void	GetModelPos();
 
 private:
-	FbxManager*		fbxManager;		//SDKコアクラス
-	FbxImporter*	fbxImporter;	//インポータ
+	FbxManager*				fbxManager;		//SDKコアクラス
+	FbxImporter*			fbxImporter;	//インポータ
 	FbxIOPluginRegistry*	plugin;	//プラグイン
-	FbxScene*			scene;		//シーン
+	FbxScene*				scene;		//シーン
 
-	FbxNode*			rootNode;	//ルートノード
-	FbxNode*			childNode;	//子ノード
+	FbxNode*				rootNode;	//ルートノード
+	FbxNode*				childNode;	//子ノード
 
-	FbxNodeAttribute*	nodeAttribute;	//ノードタイプ
+	FbxNodeAttribute*		nodeAttribute;	//ノードタイプ
 	FbxNodeAttribute::EType type;		//ノードの種類
 
 	FbxMesh*			 mesh;		//メッシュ
@@ -137,8 +142,33 @@ private:
 };
 
 
-//FBXのモデル単体のクラス
+//モデルクラス
 class Model
 {
+public:
+	Model();
+	~Model();
+
+public:
+	void	CreateVertex();
+	void	CreateIndex();
+
+private:
 
 };
+
+
+
+//解説
+
+//FBXManagerは、FBXを取り扱うための管理を行う
+
+//FBXSceneは、FBXファイルに格納されているシーンの情報を保持する
+
+//FBXSceneには、ノードがあり、階層構造で、頂点データ・ライト・アニメーション等の描画に必要な情報がある
+
+//FBXファイルから頂点データを取得
+
+//GetPolygonVertexCount() はインデックスデータの数を取得
+
+//GetPolygonVertices()でインデックスデータそのものを取得
