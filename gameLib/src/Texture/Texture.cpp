@@ -9,7 +9,7 @@ Texture::Texture()
 	, texResourceView(nullptr)
 	, textureSampler(nullptr)
 {
-	//CoInitialize(nullptr);
+	CoInitialize(nullptr);
 	//size = Math::Vector2(1, 1);
 }
 
@@ -20,11 +20,11 @@ Texture::Texture(const std::string& filePath)
 	, texResourceView(nullptr)
 	, textureSampler(nullptr)
 {
-	//CoInitialize(nullptr);
+	CoInitialize(nullptr);
 	//Load(filePath);
 	//size = Math::Vector2(1, 1);
 	this->LoadTex(filePath);
-	this->SetParam();
+	//this->SetParam();
 	this->Send();
 	this->SetShaderResourceView();
 }
@@ -44,7 +44,7 @@ Texture::Texture(const BYTE* const buffer, int width, int height)
 	textureDesc.Height = height;
 	textureDesc.MipLevels = 1;
 	textureDesc.ArraySize = 1;
-	textureDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+	textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	textureDesc.SampleDesc.Count = 1;
 	textureDesc.SampleDesc.Quality = 0;
 	textureDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -60,7 +60,7 @@ Texture::Texture(const BYTE* const buffer, int width, int height)
 
 	texResourceView->Release();
 	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc = {};
-	shaderResourceViewDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+	shaderResourceViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	shaderResourceViewDesc.Texture2D.MipLevels = 1;
 	Engine<DXDevice>::GetDevice().GetDevice3D().CreateShaderResourceView(texture2D, &shaderResourceViewDesc, &texResourceView);
@@ -189,7 +189,7 @@ void	Texture::Create(const BYTE* const buffer, int width, int height)
 	textureDesc.Height = height;
 	textureDesc.MipLevels = 1;
 	textureDesc.ArraySize = 1;
-	textureDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+	textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	textureDesc.SampleDesc.Count = 1;
 	textureDesc.SampleDesc.Quality = 0;
 	textureDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -206,7 +206,7 @@ void	Texture::Create(const BYTE* const buffer, int width, int height)
 	Utility::SafeRelease(texResourceView);
 	
 	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc = {};
-	shaderResourceViewDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+	shaderResourceViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	shaderResourceViewDesc.Texture2D.MipLevels = 1;
 	Engine<DXDevice>::GetDevice().GetDevice3D().CreateShaderResourceView(texture2D, &shaderResourceViewDesc, &texResourceView);
@@ -323,28 +323,88 @@ bool	Texture::CreateSampler()
 //!@brief	読み込み
 bool	Texture::LoadTex(const std::string& filePath)
 {
-	bitmapDecoder = nullptr;
-	bitmapFrameDecoder = nullptr;
-	formatConverter = nullptr;
+	IWICBitmapDecoder*	decoder = nullptr;
+	auto hr = Engine<DXDevice>::GetDevice().GetTextureFactory().CreateDecoderFromFilename(
+		L"./data/image/star.png",
+		0,
+		GENERIC_READ,
+		WICDecodeMetadataCacheOnDemand,
+		&decoder
+	);
+	if (FAILED(hr))
+	{
+		MessageBoxA(nullptr, "デコーダの生成に失敗", "CreateDecoderFromFile()", MB_OK);
+	}
 
-	Engine<DXDevice>::GetDevice().GetTextureFactory().CreateDecoderFromFilename(L"./data/image/texture.png", nullptr, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &bitmapDecoder);
-	bitmapDecoder->GetFrame(0, &bitmapFrameDecoder);
-	Engine<DXDevice>::GetDevice().GetTextureFactory().CreateFormatConverter(&formatConverter);
-	formatConverter->Initialize(bitmapFrameDecoder, GUID_WICPixelFormat32bppRGBA, WICBitmapDitherTypeNone, nullptr, 1.0f, WICBitmapPaletteTypeMedianCut);
-	formatConverter->GetSize(&imageWidth, &imageHeight);
-	
+	IWICBitmapFrameDecode*	frame = nullptr;
+	decoder->GetFrame(0, &frame);
+	UINT width, height;
+	frame->GetSize(&width, &height);
+
+	WICPixelFormatGUID	pixelFormat;
+	hr = frame->GetPixelFormat(&pixelFormat);
+	if (FAILED(hr))
+	{
+		MessageBoxA(nullptr, "テクスチャの形式取得に失敗", "PixelFormat()", MB_OK);
+	}
+
+	std::unique_ptr<BYTE[]>	buffer(new BYTE[width * height * 4]);
+
+	if (pixelFormat != GUID_WICPixelFormat32bppRGBA)
+	{
+		//Direct2Dはビットマップしか描画できないため変換を行う
+		IWICFormatConverter*	formatConverter = nullptr;
+		hr = Engine<DXDevice>::GetDevice().GetTextureFactory().CreateFormatConverter(&formatConverter);
+		if (FAILED(hr))
+		{
+			MessageBoxA(nullptr, "コンバーターの作成に失敗", "CreateConverter()", MB_OK);
+		}
+		hr = formatConverter->Initialize(
+			frame,
+			GUID_WICPixelFormat32bppRGBA,
+			WICBitmapDitherTypeErrorDiffusion,
+			0,
+			0,
+			WICBitmapPaletteTypeCustom
+		);
+		if (FAILED(hr))
+		{
+			MessageBoxA(nullptr, "テクスチャのコンバートに失敗", "Initialize()", MB_OK);
+		}
+
+		hr = formatConverter->CopyPixels(0, width * 4, width * height * 4, buffer.get());
+		if (FAILED(hr))
+		{
+			MessageBoxA(nullptr, "テクスチャの情報の取得に失敗", "CopyPixels()", MB_OK);
+		}
+		Utility::SafeRelease(formatConverter);
+	}
+	else
+	{
+		hr = frame->CopyPixels(0, width * 4, width * height * 4, buffer.get());
+		if (FAILED(hr))
+		{
+			MessageBoxA(nullptr, "テクスチャの情報の取得に失敗", "CopyPixels()", MB_OK);
+		}
+	}
+
+	SetParam(buffer.get(), width, height);
+
+	Utility::SafeRelease(decoder);
+	Utility::SafeRelease(frame);
+
 	return true;
 }
 //!@brief	設定
-void	Texture::SetParam()
+void	Texture::SetParam(const BYTE* const buffer,int width,int height)
 {
 	D3D11_TEXTURE2D_DESC	textureDesc;
 	SecureZeroMemory(&textureDesc, sizeof(textureDesc));
-	textureDesc.Width				= imageWidth;
-	textureDesc.Height				= imageHeight;
+	textureDesc.Width				= width;
+	textureDesc.Height				= height;
 	textureDesc.MipLevels			= 1;
 	textureDesc.ArraySize			= 1;
-	textureDesc.Format				= DXGI_FORMAT_R8G8B8A8_UNORM;
+	textureDesc.Format				= DXGI_FORMAT_R8G8B8A8_UNORM;	//フォーマットがBlue,Green,Redの順でないと色が逆さになり、いろがおかしくなる
 	textureDesc.SampleDesc.Count	= 1;
 	textureDesc.SampleDesc.Quality	= 0;
 	textureDesc.Usage				= D3D11_USAGE_DEFAULT;
@@ -352,32 +412,34 @@ void	Texture::SetParam()
 	textureDesc.CPUAccessFlags		= 0;
 	textureDesc.MiscFlags			= 0;
 
+	D3D11_SUBRESOURCE_DATA	subResourceData;
+	SecureZeroMemory(&subResourceData, sizeof(subResourceData));
+	subResourceData.pSysMem				= buffer;
+	subResourceData.SysMemPitch			= width * 4;
+	subResourceData.SysMemSlicePitch	= width * height * 4;
+	Engine<DXDevice>::GetDevice().GetDevice3D().CreateTexture2D(&textureDesc, &subResourceData, &texture2D);
+
 	D3D11_SAMPLER_DESC	samplerDesc;
 	SecureZeroMemory(&samplerDesc, sizeof(samplerDesc));
 	samplerDesc.Filter			= D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 	samplerDesc.AddressU		= samplerDesc.AddressV = samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.BorderColor[0]	= 0.0f;
+	samplerDesc.BorderColor[1]	= 0.0f;
+	samplerDesc.BorderColor[2]	= 0.0f;
+	samplerDesc.BorderColor[3]	= 0.0f;
 	samplerDesc.MaxAnisotropy	= 1;
 	samplerDesc.ComparisonFunc	= D3D11_COMPARISON_ALWAYS;
+	samplerDesc.MinLOD			= 0.0f;
 	samplerDesc.MaxLOD			= D3D11_FLOAT32_MAX;
 
 	Engine<DXDevice>::GetDevice().GetDevice3D().CreateSamplerState(&samplerDesc, &textureSampler);
-
-	Engine<DXDevice>::GetDevice().GetDevice3D().CreateTexture2D(&textureDesc, nullptr, &texture2D);
 }
 //!@brief	テクスチャを送る(シェーダ側へ)
 void	Texture::Send()
 {
-	D3D11_MAPPED_SUBRESOURCE 	mappedSubResource;
-	SecureZeroMemory(&mappedSubResource, sizeof(mappedSubResource));
-	auto hr = Engine<DXDevice>::GetDevice().GetDeviceContext3D().Map(texture2D, 0,D3D11_MAP_WRITE_DISCARD,0, &mappedSubResource);
-	formatConverter->CopyPixels(nullptr, imageWidth * 4, imageWidth * imageHeight * 4, (BYTE*)mappedSubResource.pData);
-	Engine<DXDevice>::GetDevice().GetDeviceContext3D().Unmap(texture2D, 0);
-
-	if (FAILED(hr))
-	{
-		MessageBoxA(nullptr, "Mapped_SubResourceの作成に失敗", "Texture::Send()", MB_OK);
-	}
+	
 }
+
 //!@brief	シェーダリソースビュー(texture用)の設定
 void	Texture::SetShaderResourceView()
 {

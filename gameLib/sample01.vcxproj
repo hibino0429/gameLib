@@ -96,12 +96,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\Desktop\GameLibrary\gameLib\include\Texture;E:\Desktop\GameLibrary\gameLib\include\Collision;E:\Desktop\GameLibrary\gameLib\include\Fbx;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\game\Desktop\gameLib\include\Texture;C:\Users\game\Desktop\gameLib\include\Collision;C:\Users\game\Desktop\gameLib\include\Fbx;E:\Desktop\GameLibrary\gameLib\include\Texture;E:\Desktop\GameLibrary\gameLib\include\Collision;E:\Desktop\GameLibrary\gameLib\include\Fbx;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>E:\Desktop\GameLibrary\gameLib\lib\Fbx\vs2015\x86\debug;E:\Desktop\GameLibrary\gameLib\lib\Collision\Debug;E:\Desktop\GameLibrary\gameLib\lib\Texture\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\game\Desktop\gameLib\lib\Texture\Debug;C:\Users\game\Desktop\gameLib\lib\Collision\Debug;C:\Users\game\Desktop\gameLib\lib\Fbx\vs2015\x86\debug;E:\Desktop\GameLibrary\gameLib\lib\Fbx\vs2015\x86\debug;E:\Desktop\GameLibrary\gameLib\lib\Collision\Debug;E:\Desktop\GameLibrary\gameLib\lib\Texture\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libfbxsdk-md.lib;oded.lib;drawstuffd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>

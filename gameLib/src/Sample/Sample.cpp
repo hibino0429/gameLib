@@ -1,5 +1,6 @@
 #include "Sample.h"
 #include "../../src/Camera/Camera.h"
+#include "../../src/Utility/Utility.hpp"
 
 Sample::Sample()
 	: pos(Math::Vector3(0,0,0))
@@ -11,8 +12,8 @@ Sample::Sample()
 
 	Vertex vertexData[] {
 		{ { -0.5f,  0.5f, -0.5f },{ 1.0f, 0.0f, 0.0f, 1.0f } },
-		{ { 0.5f,  0.5f, -0.5f },{ 1.0f, 0.0f, 0.0f, 1.0f } },
-		{ { -0.5f, -0.5f, -0.5f },{ 1.0f, 0.0f, 0.0f, 1.0f } },
+		{ { 0.5f,  0.5f, -0.5f },{ 1.0f, 0.0f, 0.0f, 1.0f }},
+		{ { -0.5f, -0.5f, -0.5f },{ 1.0f, 0.0f, 0.0f, 1.0f }},
 		{ { 0.5f, -0.5f, -0.5f },{ 1.0f, 0.0f, 0.0f, 1.0f } },
 
 		{ { -0.5f,  0.5f,  0.5f },{ 0.0f, 1.0f, 1.0f, 1.0f } },
@@ -41,6 +42,7 @@ Sample::Sample()
 		{ { 0.5f, -0.5f, -0.5f },{ 0.0f, 1.0f, 0.0f, 1.0f } },
 	};
 
+
 	WORD	indexList[] = {
 		0,  1,  2,     3,  2,  1,
 		4,  5,  6,     7,  6,  5,
@@ -50,9 +52,22 @@ Sample::Sample()
 		20, 21, 22,    23, 22, 21,
 	};
 
+	Vex	vexDatas[] =
+	{
+		{ { -0.5f,  0.5f, 0.5f },{ 0.0f, 0.0f } },
+	{ { 0.5f, -0.5f, 0.5f },{ 1.0f, 0.0f } },
+	{ { -0.5f, -0.5f, 0.5f },{ 1.0f, 1.0f } },
+	{ { 0.5f,  0.5f, 0.5f },{ 0.0f, 1.0f } }
+	};
+
+	WORD	inList[] = {
+		0,1,2,
+		0,3,1
+	};
+
 	//indexバッファの作成
 	D3D11_BUFFER_DESC	indexBufferDesc;
-	indexBufferDesc.ByteWidth			= sizeof(WORD) * 6 * 6;
+	indexBufferDesc.ByteWidth			= sizeof(WORD) * 6;
 	indexBufferDesc.Usage				= D3D11_USAGE_DEFAULT;
 	indexBufferDesc.BindFlags			= D3D11_BIND_INDEX_BUFFER;
 	indexBufferDesc.CPUAccessFlags		= 0;
@@ -60,7 +75,7 @@ Sample::Sample()
 	indexBufferDesc.StructureByteStride = 0;
 
 	D3D11_SUBRESOURCE_DATA	indexSubData;
-	indexSubData.pSysMem			= indexList;
+	indexSubData.pSysMem			= inList;
 	indexSubData.SysMemPitch		= 0;
 	indexSubData.SysMemSlicePitch	= 0;
 
@@ -70,7 +85,7 @@ Sample::Sample()
 	D3D11_BUFFER_DESC bufferDesc;
 	memset(&bufferDesc, 0, sizeof(bufferDesc));
 	bufferDesc.Usage				= D3D11_USAGE_DEFAULT;
-	bufferDesc.ByteWidth			= sizeof(Vertex) * 24;
+	bufferDesc.ByteWidth			= sizeof(Vertex) * 4;
 	bufferDesc.BindFlags			= D3D11_BIND_VERTEX_BUFFER;
 	bufferDesc.CPUAccessFlags		= 0;
 	bufferDesc.MiscFlags			= 0;
@@ -78,7 +93,7 @@ Sample::Sample()
 
 	D3D11_SUBRESOURCE_DATA	subResourceData;
 	memset(&subResourceData, 0, sizeof(subResourceData));
-	subResourceData.pSysMem				= vertexData;
+	subResourceData.pSysMem				= vexDatas;
 	subResourceData.SysMemPitch			= 0;
 	subResourceData.SysMemSlicePitch	= 0;
 
@@ -110,7 +125,10 @@ Sample::Sample()
 
 Sample::~Sample()
 {
-
+	Utility::SafeRelease(vertexBuffer);
+	Utility::SafeRelease(indexBuffer);
+	Utility::SafeRelease(constantBuffer);
+	
 }
 
 
@@ -160,7 +178,7 @@ void	Sample::Render()
 	Engine<DXDevice>::GetDevice().GetDeviceContext3D().GSSetConstantBuffers(0, 1, &constantBuffer);
 	Engine<DXDevice>::GetDevice().GetDeviceContext3D().PSSetConstantBuffers(0, 1, &constantBuffer);
 
-	Engine<DXDevice>::GetDevice().GetDeviceContext3D().DrawIndexed(36, 0, 0);
+	Engine<DXDevice>::GetDevice().GetDeviceContext3D().DrawIndexed(4, 0, 0);
 }
 
 

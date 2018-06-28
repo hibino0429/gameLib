@@ -17,6 +17,7 @@ VertexPolygon::VertexPolygon()
 		0,1,2,
 		0,3,1
 	};
+
 	D3D11_BUFFER_DESC	indexBufferDesc;
 	indexBufferDesc.ByteWidth = sizeof(WORD) * 6;
 	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;

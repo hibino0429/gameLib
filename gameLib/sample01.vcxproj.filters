@@ -337,8 +337,10 @@
     <FxCompile Include="data\shaderData\VertexShader.hlsl">
       <Filter>リソース ファイル\shaderData</Filter>
     </FxCompile>
-    <FxCompile Include="data\shaderData\textureShader.hlsl">
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\shaderData\textureShader.hlsl">
       <Filter>リソース ファイル\shaderData</Filter>
-    </FxCompile>
+    </None>
   </ItemGroup>
 </Project>

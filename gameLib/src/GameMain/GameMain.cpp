@@ -23,6 +23,7 @@ GameMain::~GameMain()
 {
 	//Utility::SafeDelete(camera);
 	Utility::SafeDelete(sample);
+	Utility::SafeDelete(texture);
 }
 
 //XVˆ—
@@ -40,7 +41,6 @@ void	GameMain::UpDate()
 		//camera->AddVec(Math::Vector3(0.0f, -0.0f, 0.5f));
 	}
 
-	texture->Render();
 	sample->UpDate();
 }
 
@@ -52,13 +52,11 @@ void	GameMain::Render()
 	Engine<DXDevice>::GetDevice().Run();
 	Engine<DXDevice>::GetDevice().GetDeviceContext3D().ClearRenderTargetView(Engine<DXDevice>::GetDevice().GetRenderTargetView(), color);
 	Engine<DXDevice>::GetDevice().GetDeviceContext3D().ClearDepthStencilView(Engine<DXDevice>::GetDevice().GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-
-
+	
+	texture->Render();
 	sample->Render();
 
-
 	Engine<DXDevice>::GetDevice().GetSwapChain().Present(0, 0);
-
 }
 
 

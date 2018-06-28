@@ -27,8 +27,14 @@ private:
 	{
 		float pos[3];
 		float color[4];
+		float uv[2];
 	};
 	
+	struct Vex
+	{
+		float pos[3];
+		float uv[2];
+	};
 	struct ConstantBuf
 	{
 		DirectX::XMFLOAT4X4	world;
@@ -38,12 +44,12 @@ private:
 
 	ID3D11Buffer*	constantBuffer;
 	ID3D11Buffer*	vertexBuffer;
+	ID3D11Buffer*	indexBuffer;
 	unsigned int stride;
 	unsigned int offset;
 
 	VertexShader	vertexShader;
 	PixelShader		pixelShader;
-	ID3D11Buffer*	indexBuffer;
 
 	Math::Vector3		pos;
 	Math::Vector3		angle;

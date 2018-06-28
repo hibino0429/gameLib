@@ -46,6 +46,16 @@ DXDevice::~DXDevice()
 		device3D->Release();
 		device3D = nullptr;
 	}
+	if (device2D != nullptr)
+	{
+		device2D->Release();
+		device2D = nullptr;
+	}
+	if (deviceContext2D != nullptr)
+	{
+		deviceContext2D->Release();
+		deviceContext2D = nullptr;
+	}
 }
 
 
@@ -409,6 +419,11 @@ bool	DXDevice::CreateBlendState()
 	}
 	deviceContext3D->OMSetBlendState(blendState, blendFactor, 0xffffffff);
 	
+	if (blendState != nullptr)
+	{
+		blendState->Release();
+		blendState = nullptr;
+	}
 	return true;
 }
 
@@ -483,7 +498,16 @@ bool	DXDevice::CreateDirect2D()
 		return false;
 	}
 
-	
+	if (factory != nullptr)
+	{
+		factory->Release();
+		factory = nullptr;
+	}
+	if (dxgiDevice != nullptr)
+	{
+		dxgiDevice->Release();
+		dxgiDevice = nullptr;
+	}
 	return true;
 }
 
@@ -511,7 +535,7 @@ bool	DXDevice::ChangeScreenSize()
 
 	int width = 640, height = 480;
 	//バックバッファのサイズ変更
-	swapChain->ResizeBuffers(1, width, height, DXGI_FORMAT_B8G8R8A8_UNORM, 0);
+	swapChain->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
 
 	//描画ターゲットの再設定
 	DXGI_MODE_DESC	descMode;

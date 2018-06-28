@@ -63,7 +63,7 @@ public:
 	//!@brief	読み込み
 	bool	LoadTex(const std::string& filePath);
 	//!@brief	設定
-	void	SetParam();
+	void	SetParam(const BYTE* const buffer,int width,int height);
 	//!@brief	テクスチャを送る
 	void	Send();
 	//!@brief	シェーダリソースビュー(texture用)の設定
@@ -83,9 +83,10 @@ private:
 	ID3D11Texture2D*			texture2D;
 	Math::Vector2				size;
 
-	IWICBitmapDecoder*			bitmapDecoder;
-	IWICBitmapFrameDecode*		bitmapFrameDecoder;
-	IWICFormatConverter*		formatConverter;
 	UINT						imageWidth;
 	UINT						imageHeight;
 };
+
+
+
+//テクスチャなどの色の指定をRGBAの順番などに注意する
