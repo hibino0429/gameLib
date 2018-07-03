@@ -9,9 +9,8 @@
 #endif
 
 #include <string>
-#include "../../src/Engine/DXEngine/DXEngine.h"
-#include "../../src/Math/Math.h"
-
+#include <vector>
+#include "../../src/Vertex/Vertex.h"
 
 //-----------------------------------------------------------------------------
 //!@brief FBXクラス
@@ -19,28 +18,39 @@
 class FbxModel
 {
 public:
-	class Vec3
-	{
-	public:
-		Vec3() {}
-		Vec3(float x, float y, float z)
-			: x(x), y(y), z(z)
-		{}
-
-	public:
-		float x;
-		float y;
-		float z;
-	};
-public:
 	void	LoadFile(const std::string& filePath);
-	void	LoadVertexData();
-	void	LoadIndexData();
 
+private:
 	//!@brief	ノードの探索
-	void	ProbeNode(FbxNode* fbxNode);
-	//!@brief	指定したノードタイプかのチェック
-	bool	CheckNodeType(const FbxNodeAttribute::EType& nodeType);
+	void		ProbeNode(FbxNode* fbxNode);
+public:
+	//!@brief	頂点データのコントロールポイント数の取得
+	int			GetVertexDatas();
+	//!@brief	頂点データのポリゴン数の取得
+	int			GetVertexCount();
+	//!@brief	頂点データの取得
+	int*		GetVertexPolygonVertices();
+	
+	//!@brief	頂点データを渡す
+	Vertex*		GetVertexData();
+
+private:
+	//!@brief	指定したノードを探す
+	//!@param[in]	nodeType	探すノード
+	//!@return	見つかったら true 見つからなかったら　false
+	bool		SearchDesignationNode(const FbxNodeAttribute::EType& nodeType);
+	//!@brief	メッシュの数だけノードの読み込みを行う
+	void		LoadNodeForMeshNum();
+	//!@brief	メッシュのデータを受け取る
+	void		SetMeshData();
+
+private:
+	//!@brief	アニメーションの生成
+	void	CreateAnimation();
+	//!@brief	アニメーションの時間の生成と設定
+	void	CreateAnimationTime();
+	//!@brief	アニメーションの行列計算
+	void	AnimationMatrix();
 
 private:
 	//概要: SDK全体の管理(マネジャー)クラスを生成
@@ -73,8 +83,6 @@ private:
 	//概要: ポリゴンの基本情報の取得
 	void	GetPolygonInfo();
 
-	//概要: 頂点の情報を取得
-	void	GetVertexInfo();
 	//概要: メッシュの法線の取得
 	void	GetMeshNormal();
 
@@ -112,50 +120,39 @@ private:
 private:
 	int				controlNum;				//頂点数
 	FbxVector4*		src;					//頂点座標配列 (fbx用)
-	Math::Vector4*	vertexPosArray;			//頂点座標 (DirectX用)
-
 private:
 	FbxLayer*				normalLayer;		//レイヤー
 	FbxLayerElementNormal*	normalElem;			//法線
 
-private:
-	FbxLayer*				uvLayer;			//レイヤー
-	FbxLayerElementUV*		uvElem;				//UV情報
 
-private:
-	FbxNode*				materialNode;	//マテリアルオブジェクト
-	FbxSurfaceMaterial*		material;		//マテリアル
-
-private:
-	FbxProperty				texProperty;	//ディフューズプロパティ
-	FbxTexture*				fbxTexture;		//テクスチャ
-	
-private:
-	FbxNode*				modelNode;		//モデルのノード
-	FbxMatrix				modelPos;		//モデルの位置
 private:
 	int			childNodeNum;	//子ノードの数
 
 	int			polygonNum;			//ポリゴン数
 	int			polygonVertexNum;	//ポリゴン頂点インデックス数
 	int*		polygonIndexArray;	//ポリゴン頂点インデックス配列
+
+	int			findNodeTypeNum;	//ノードタイプが見つかった時の番号
+
+	FbxNode*	meshNode;
+	FbxArray<FbxString*>	animStackNameArray;
+	int			animStackNumber;
+	FbxTime		frameTime;
+	FbxTime		timeCount;
+	FbxTime		start;
+	FbxTime		stop;
+
+	//-------------------------------------------------------
+	//FBXデータを外部に送る用の変数
+	//-------------------------------------------------------
+	Vertex*		vertexData;		//頂点データ
+
+	int			vertexDataNum;	//頂点データの数
+	int			indexDataNum;	//インデックスデータの数
+	int*		indexDatas;		//インデックスデータ
 };
 
 
-//モデルクラス
-class Model
-{
-public:
-	Model();
-	~Model();
-
-public:
-	void	CreateVertex();
-	void	CreateIndex();
-
-private:
-
-};
 
 
 

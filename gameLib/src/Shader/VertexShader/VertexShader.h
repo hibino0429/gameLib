@@ -26,4 +26,6 @@ public:
 private:
 	ID3D11VertexShader*		vertexShader;	//頂点シェーダ
 	ID3D11InputLayout*		inputLayout;	//インプットレイアウト
+	std::string				entryPointName;	//エントリーポイント名
+	std::string				versionName;	//バージョン名
 };

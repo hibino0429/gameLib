@@ -96,12 +96,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\game\Desktop\gameLib\include\Texture;C:\Users\game\Desktop\gameLib\include\Collision;C:\Users\game\Desktop\gameLib\include\Fbx;E:\Desktop\GameLibrary\gameLib\include\Texture;E:\Desktop\GameLibrary\gameLib\include\Collision;E:\Desktop\GameLibrary\gameLib\include\Fbx;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Desktop\GameLibrary\gameLib\include\Effekseer\include;C:\Users\game\Desktop\gameLib\include\Texture;C:\Users\game\Desktop\gameLib\include\Collision;C:\Users\game\Desktop\gameLib\include\Fbx;E:\Desktop\GameLibrary\gameLib\include\Texture;E:\Desktop\GameLibrary\gameLib\include\Collision;E:\Desktop\GameLibrary\gameLib\include\Fbx;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>C:\Users\game\Desktop\gameLib\lib\Texture\Debug;C:\Users\game\Desktop\gameLib\lib\Collision\Debug;C:\Users\game\Desktop\gameLib\lib\Fbx\vs2015\x86\debug;E:\Desktop\GameLibrary\gameLib\lib\Fbx\vs2015\x86\debug;E:\Desktop\GameLibrary\gameLib\lib\Collision\Debug;E:\Desktop\GameLibrary\gameLib\lib\Texture\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\Desktop\GameLibrary\gameLib\lib\Effekseer\lib;C:\Users\game\Desktop\gameLib\lib\Texture\Debug;C:\Users\game\Desktop\gameLib\lib\Collision\Debug;C:\Users\game\Desktop\gameLib\lib\Fbx\vs2015\x86\debug;E:\Desktop\GameLibrary\gameLib\lib\Fbx\vs2015\x86\debug;E:\Desktop\GameLibrary\gameLib\lib\Collision\Debug;E:\Desktop\GameLibrary\gameLib\lib\Texture\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libfbxsdk-md.lib;oded.lib;drawstuffd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
@@ -184,8 +184,10 @@
     <ClCompile Include="src\Material\Material.cpp" />
     <ClCompile Include="src\Math\Math.cpp" />
     <ClCompile Include="src\Mesh\Mesh.cpp" />
+    <ClCompile Include="src\Particle\Particle.cpp" />
     <ClCompile Include="src\Physics\Physics.cpp" />
     <ClCompile Include="src\polygon\polygon.cpp" />
+    <ClCompile Include="src\PrimitiveData\PrimitiveData.cpp" />
     <ClCompile Include="src\RigidBody\RigidBody.cpp" />
     <ClCompile Include="src\Sample\Sample.cpp" />
     <ClCompile Include="src\Screen\Screen.cpp" />
@@ -197,6 +199,7 @@
     <ClCompile Include="src\System\System.cpp" />
     <ClCompile Include="src\Texture\Texture.cpp" />
     <ClCompile Include="src\VertexBuffer\VertexBuffer.cpp" />
+    <ClCompile Include="src\Vertex\Vertex.cpp" />
     <ClCompile Include="src\Wave\Wave.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
     <ClCompile Include="src\WinMain.cpp" />
@@ -206,6 +209,7 @@
     <ClInclude Include="src\Camera\Camera.h" />
     <ClInclude Include="src\Collision\Collision.h" />
     <ClInclude Include="src\ComPtr\ComPtr.h" />
+    <ClInclude Include="src\Console\Console.hpp" />
     <ClInclude Include="src\debug.hpp" />
     <ClInclude Include="src\DeviceFactory\DeviceFactory.h" />
     <ClInclude Include="src\Device\Device.h" />
@@ -221,8 +225,10 @@
     <ClInclude Include="src\Material\Material.h" />
     <ClInclude Include="src\Math\Math.h" />
     <ClInclude Include="src\Mesh\Mesh.h" />
+    <ClInclude Include="src\Particle\Particle.h" />
     <ClInclude Include="src\Physics\Physics.h" />
     <ClInclude Include="src\polygon\polygon.h" />
+    <ClInclude Include="src\PrimitiveData\PrimitiveData.h" />
     <ClInclude Include="src\RigidBody\RigidBody.h" />
     <ClInclude Include="src\Sample\Sample.h" />
     <ClInclude Include="src\Screen\Screen.h" />
@@ -235,6 +241,7 @@
     <ClInclude Include="src\Texture\Texture.h" />
     <ClInclude Include="src\Utility\Utility.hpp" />
     <ClInclude Include="src\VertexBuffer\VertexBuffer.h" />
+    <ClInclude Include="src\Vertex\Vertex.h" />
     <ClInclude Include="src\Wave\Wave.h" />
     <ClInclude Include="src\Window\Window.h" />
   </ItemGroup>

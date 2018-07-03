@@ -118,6 +118,18 @@
     <Filter Include="polygon">
       <UniqueIdentifier>{735b52ad-d7fb-4a69-a327-0e5c7d8af4aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PrimitiveData">
+      <UniqueIdentifier>{1dd3c966-e2eb-463b-8ab4-88bf98c2e2f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle">
+      <UniqueIdentifier>{2d68ce7a-f365-442a-8b29-7824e330fac5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Console">
+      <UniqueIdentifier>{b1fc246a-ae5e-4b2d-b188-7ce00680c205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vertex">
+      <UniqueIdentifier>{55b46b7a-3710-4261-92c4-62e16253a52e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Device\Device.cpp">
@@ -221,6 +233,15 @@
     </ClCompile>
     <ClCompile Include="src\polygon\polygon.cpp">
       <Filter>polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PrimitiveData\PrimitiveData.cpp">
+      <Filter>PrimitiveData</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vertex\Vertex.cpp">
+      <Filter>Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Particle\Particle.cpp">
+      <Filter>Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +349,18 @@
     </ClInclude>
     <ClInclude Include="src\polygon\polygon.h">
       <Filter>polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PrimitiveData\PrimitiveData.h">
+      <Filter>PrimitiveData</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Console\Console.hpp">
+      <Filter>Console</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vertex\Vertex.h">
+      <Filter>Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Particle\Particle.h">
+      <Filter>Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

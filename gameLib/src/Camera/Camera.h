@@ -65,6 +65,12 @@ public:
 	//!@brief	プロジェクション行列の取得
 	DirectX::XMFLOAT4X4&	GetProjectionMatrix();
 
+	const DirectX::XMMATRIX&		GetView() const;
+	const DirectX::XMMATRIX&		GetProj() const;
+	ID3D11Buffer*			GetConstantBuf();
+
+	DirectX::XMMATRIX	viewMatrix;
+	DirectX::XMMATRIX	projMatrix;
 
 private:
 	ID3D11Buffer*	constantBuf;//定数バッファ

@@ -1,4 +1,6 @@
 #include "Fbx.h"
+#include "../../src/Utility/Utility.hpp"
+#include "../../src/Engine/Engine.h"
 
 void	FbxModel::LoadFile(const std::string& filePath)
 {
@@ -6,56 +8,24 @@ void	FbxModel::LoadFile(const std::string& filePath)
 	scene = FbxScene::Create(fbxManager, "fbxScene");
 	FbxString fileName(filePath.c_str());
 	fbxImporter = FbxImporter::Create(fbxManager, "imp");
-	fbxImporter->Initialize(fileName.Buffer(), -1, fbxManager->GetIOSettings());
+	if (!fbxImporter->Initialize(fileName.Buffer(), -1, fbxManager->GetIOSettings()))
+	{
+		MessageBoxA(nullptr, "FBXファイルの読み込みに失敗しました", "LoadFile()", MB_OK);
+	}
 	fbxImporter->Import(scene);
 	fbxImporter->Destroy();
-}
 
-void	FbxModel::LoadVertexData()
-{
-	//先頭のノードから順番に検索していく
-	for (int i = 0; i < scene->GetRootNode()->GetChildCount(); ++i)
+	//ノードタイプがメッシュなら
+	if (SearchDesignationNode(FbxNodeAttribute::EType::eMesh))
 	{
-		//頂点データが入っているノードを発見したら
-		if (scene->GetRootNode()->GetChild(i)->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh)
-		{
-			//meshに取り入れる
-			mesh = scene->GetRootNode()->GetChild(i)->GetMesh();
-			break;
-		}
-	}
-
-	//頂点データが保持されているノードを読み込み取得する
-	//メッシュの数だけ、頂点データを作成する
-	Vec3*	vec3 = new Vec3[mesh->GetControlPointsCount()];
-	for (int i = 0; i < mesh->GetControlPointsCount(); ++i)
-	{
-		//頂点データにFBXのデータを代入
-		vec3[i].x = (float)mesh->GetControlPointAt(i)[0];
-		vec3[i].y = (float)mesh->GetControlPointAt(i)[1];
-		vec3[i].z = (float)mesh->GetControlPointAt(i)[2];
+		//メッシュノードとメッシュを取り入れる
+		meshNode = scene->GetRootNode()->GetChild(findNodeTypeNum);
+		mesh = scene->GetRootNode()->GetChild(findNodeTypeNum)->GetMesh();
+		LoadNodeForMeshNum();
+		SetMeshData();
 	}
 }
 
-void	FbxModel::LoadIndexData()
-{
-	//インデックスバッファの作成
-	D3D11_BUFFER_DESC	indexDesc;
-	indexDesc.ByteWidth			= sizeof(int) * mesh->GetPolygonVertexCount();
-	indexDesc.Usage				= D3D11_USAGE_DEFAULT;
-	indexDesc.BindFlags			= D3D11_BIND_INDEX_BUFFER;
-	indexDesc.CPUAccessFlags	= 0;
-	indexDesc.MiscFlags			= 0;
-	indexDesc.StructureByteStride = 0;
-
-	//インデックスのシェーダに送るデータの作成
-	D3D11_SUBRESOURCE_DATA	indexData;
-	indexData.pSysMem = mesh->GetPolygonVertices();
-
-	//バッファの作成
-	ID3D11Buffer*	indexBuffer;
-	DXEngine::GetDevice3D().CreateBuffer(&indexDesc, &indexData, &indexBuffer);
-}
 
 
 //!@brief	ノードの探索
@@ -70,24 +40,201 @@ void	FbxModel::ProbeNode(FbxNode* fbxNode)
 		}
 	}
 }
-//!@brief	指定したノードタイプかのチェック
-bool	FbxModel::CheckNodeType(const FbxNodeAttribute::EType& nodeType)
+
+
+
+//!@brief	頂点データのコントロールポイント数の取得
+int			FbxModel::GetVertexDatas()
 {
-	if (modelNode)
+	return this->vertexDataNum;
+}
+//!@brief	頂点データのポリゴン数の取得
+int				FbxModel::GetVertexCount()
+{
+	return this->indexDataNum;
+}
+//!@brief	頂点データの取得
+int*			FbxModel::GetVertexPolygonVertices()
+{
+	return this->indexDatas;
+}
+
+
+
+//!@brief	頂点データを渡す
+Vertex*		FbxModel::GetVertexData()
+{
+	return vertexData;
+}
+
+//!@brief	指定したノードを探す
+//!@param[in]	nodeType	探すノード
+bool		FbxModel::SearchDesignationNode(const FbxNodeAttribute::EType& nodeType)
+{
+	//先頭のノードから順番に検索していく
+	for (int i = 0; i < scene->GetRootNode()->GetChildCount(); ++i)
 	{
-		int attributeCount = modelNode->GetNodeAttributeCount();
-		for (int i = 0; i < attributeCount; ++i)
+		//頂点データが入っているノードを発見したら
+		if (scene->GetRootNode()->GetChild(i)->GetNodeAttribute()->GetAttributeType() == nodeType)
 		{
-			FbxNodeAttribute::EType	attributeType = modelNode->GetNodeAttributeByIndex(i)->GetAttributeType();
-			//ノードが指定したノードタイプにつながっているかチェック
-			if (attributeType == nodeType)
-			{
-				return true;
-			}
+			findNodeTypeNum = i;
+			return true;
 		}
 	}
 	return false;
 }
+
+//!@brief	メッシュの数だけノードの読み込みを行う
+void		FbxModel::LoadNodeForMeshNum()
+{
+	//メッシュの数だけ頂点データを作成する
+	Vertex* vertexData = new Vertex[mesh->GetControlPointsCount()];
+
+	//頂点データにメッシュデータを渡す
+	for (int meshCnt = 0; meshCnt < mesh->GetControlPointsCount(); ++meshCnt)
+	{
+		vertexData[meshCnt].x = static_cast<float>(mesh->GetControlPointAt(meshCnt)[0]);
+		vertexData[meshCnt].y = static_cast<float>(mesh->GetControlPointAt(meshCnt)[1]);
+		vertexData[meshCnt].z = static_cast<float>(mesh->GetControlPointAt(meshCnt)[2]);
+	}
+}
+
+
+//!@brief	メッシュのデータを受け取る
+void		FbxModel::SetMeshData()
+{
+	vertexDataNum = mesh->GetControlPointsCount();	//頂点数
+	indexDataNum = mesh->GetPolygonVertexCount();	//インデックス数
+	indexDatas = mesh->GetPolygonVertices();		//インデックスデータ
+}
+
+
+
+
+
+
+
+
+//!@brief	アニメーションの生成
+void	FbxModel::CreateAnimation()
+{
+	////////////////////////////////////////////////////////
+	//利用するアニメーションの選択
+	////////////////////////////////////////////////////////
+	//FBXファイル内のアニメーション名一覧の取得
+	scene->FillAnimStackNameArray(animStackNameArray);
+	//選んだアニメーション名を使用して、そのアニメーション情報を探す
+	FbxAnimStack*	animationStack = scene->FindMember<FbxAnimStack>(animStackNameArray[animStackNumber]->Buffer());
+	//選んだアニメーションを設定する
+	scene->SetCurrentAnimationStack(animationStack);
+}
+
+
+//!@brief	アニメーションの時間の生成と設定
+void	FbxModel::CreateAnimationTime()
+{
+	///////////////////////////////////////////////////////
+	//アニメーションの実行に必要な時間を扱う設定
+	///////////////////////////////////////////////////////
+	//FBXから時間情報の取得
+	FbxTakeInfo*	takeInfo = scene->GetTakeInfo(*(animStackNameArray[animStackNumber]));
+	//開始時間の取得
+	start = takeInfo->mLocalTimeSpan.GetStart();
+	//終了時間の取得
+	stop = takeInfo->mLocalTimeSpan.GetStop();
+	//アニメーション(1コマ)が実行される時間情報
+	frameTime.SetTime(0, 0, 0, 1, 0, scene->GetGlobalSettings().GetTimeMode());
+	//開始からの経過時間
+	timeCount = start;
+}
+
+
+//!@brief	アニメーションの行列計算
+void	FbxModel::AnimationMatrix()
+{
+	//アニメーションの時間の更新
+	timeCount += frameTime;
+	if (timeCount > stop)
+	{
+		timeCount = start;
+	}
+
+	////////////////////////////////////////////////////////////////
+	//各フレーム毎の計算に必要なパラメータの取得を行う
+	FbxMatrix globalPosition = meshNode->EvaluateGlobalTransform(timeCount);
+	
+	//行列の作成(移動・回転・拡大)
+	FbxVector4	translation = meshNode->GetGeometricTranslation(FbxNode::eSourcePivot);
+	FbxVector4	rotation = meshNode->GetGeometricRotation(FbxNode::eSourcePivot);
+	FbxVector4	scale = meshNode->GetGeometricScaling(FbxNode::eSourcePivot);
+	//行列のオフセットを求める
+	FbxAMatrix	geometryOffset = FbxAMatrix(translation, rotation, scale);
+
+
+	//////////////////////////////////////////////////////////////
+	//全ての頂点にかけ合わせるための計算
+	FbxMatrix*	clusterDeformation = new FbxMatrix[mesh->GetControlPointsCount()];
+	//0クリア
+	std::memset(clusterDeformation, 0, sizeof(FbxMatrix) * mesh->GetControlPointsCount());
+	
+	//全てのクラスタ情報の取得
+	FbxSkin*	skinDeformer = (FbxSkin*)mesh->GetDeformer(0, FbxDeformer::eSkin);
+	int clusterCount = skinDeformer->GetClusterCount();
+
+	//クラスタ情報を1つずつ取り出して、クラスタ独自に持つ行列の計算を行う
+	for (int clusterIndex = 0; clusterIndex < clusterCount; ++clusterCount)
+	{
+		//１つのクラスタ情報の取得
+		FbxCluster*	cluster = skinDeformer->GetCluster(clusterIndex);
+		FbxMatrix	vertexTransformMatrix;
+		
+		//--------------------------------計算-------------------------------//
+		FbxAMatrix	referenceGlobalInitPostion;				//グローバル空間の初期位置参照
+		FbxAMatrix	clusterGlobalInitPostion;				//グローバル空間での初期位置
+		FbxMatrix	clusterGlobalCurrentPosition;			//グローバル空間でのクラスタの現在の位置
+		FbxMatrix	clusterRelativeInitPosition;			//Childのクラスタの初期位置
+		FbxMatrix	clusterRelativeCurrentPositionInverse;	//Childの現在の位置の逆行列
+
+		cluster->GetTransformMatrix(referenceGlobalInitPostion);
+		referenceGlobalInitPostion *= geometryOffset;
+
+		cluster->GetTransformLinkMatrix(clusterGlobalInitPostion);
+		clusterGlobalCurrentPosition = cluster->GetLink()->EvaluateGlobalTransform(timeCount);
+		clusterRelativeInitPosition = clusterGlobalInitPostion.Inverse() * referenceGlobalInitPostion;
+		clusterRelativeCurrentPositionInverse = globalPosition.Inverse() * clusterGlobalCurrentPosition;
+		vertexTransformMatrix = clusterRelativeCurrentPositionInverse * clusterRelativeInitPosition;
+
+		//上記で作成した行列に各頂点ごとの影響度(重み)をかけてそれぞれに加算する
+		for(int i = 0; i < cluster->GetControlPointIndicesCount(); ++i)
+		{
+			//影響を与える頂点番号(インデックス)の取得
+			int index = cluster->GetControlPointIndices()[i];
+			//頂点(index変数)に与える影響度の数値の取得
+			double weight = cluster->GetControlPointWeights()[i];
+			//頂点(index変数)に影響を与えるための行列の計算 (クラスタが頂点Ani影響を与える行列 = クラスタが持つ独自行列 * 頂点Aの影響度)
+			FbxMatrix influence = vertexTransformMatrix * weight;
+			//頂点(index変数)に影響を与えるための行列へ加算 (頂点Aに影響を与える行列 = クラスタ1が頂点Aに影響を与える行列 + クラスタ2が頂点Aに影響を当てる行列 + ...n個)
+			clusterDeformation[index] += influence;
+		}
+	}
+
+	//全ての頂点と、その各頂点に影響を与える行列を掛け合わせ、最終的な座標値を求める
+	for (int i = 0; i < mesh->GetControlPointsCount(); ++i)
+	{
+		FbxVector4	outVertex = clusterDeformation[i].MultNormalize(mesh->GetControlPointAt(i));
+		vertexData[i].x = static_cast<float>(outVertex[0]);
+		vertexData[i].y = static_cast<float>(outVertex[1]);
+		vertexData[i].z = static_cast<float>(outVertex[2]);
+	}
+
+	//クラスタの削除
+	Utility::SafeDeleteArray(clusterDeformation);
+
+	//画面更新を1秒に30回に設定するには Present(2,0)とする
+}
+
+
+
 
 
 
@@ -211,24 +358,6 @@ void	FbxModel::GetPolygonInfo()
 }
 
 
-//概要: 頂点の情報を取得
-void	FbxModel::GetVertexInfo()
-{
-	controlNum = mesh->GetControlPointsCount();	//頂点数取得
-	src = mesh->GetControlPoints();				//頂点座標配列
-	
-	//コピー
-	Math::Vector4*	controlArray = new Math::Vector4[controlNum];
-	for (int i = 0; i < controlNum; ++i)
-	{
-		controlArray[i].x = src[i][0];
-		controlArray[i].y = src[i][1];
-		controlArray[i].z = src[i][2];
-		controlArray[i].w = src[i][3];
-
-	}
-	
-}
 
 
 //概要: メッシュの法線の取得
@@ -258,8 +387,7 @@ void	FbxModel::GetNormalMethod()
 
 	int	normalNum = normalElem->GetDirectArray().GetCount();
 	int	indexNum = normalElem->GetIndexArray().GetCount();
-	Math::Vector4*	normalBuf = new Math::Vector4[normalNum];
-
+	
 	if (mappingMode == FbxLayerElement::eByPolygonVertex)
 	{
 		if (refMode == FbxLayerElement::eDirect)
@@ -267,9 +395,7 @@ void	FbxModel::GetNormalMethod()
 			//直接取得
 			for(int i = 0; i < normalNum; ++i)
 			{
-				normalBuf[i].x = (float)normalElem->GetDirectArray().GetAt(i)[0];
-				normalBuf[i].y = (float)normalElem->GetDirectArray().GetAt(i)[1];
-				normalBuf[i].z = (float)normalElem->GetDirectArray().GetAt(i)[2];
+
 			}
 		}
 	}
@@ -280,9 +406,7 @@ void	FbxModel::GetNormalMethod()
 			//直接取得
 			for (int i = 0; i < normalNum; ++i)
 			{
-				normalBuf[i].x = (float)normalElem->GetDirectArray().GetAt(i)[0];
-				normalBuf[i].y = (float)normalElem->GetDirectArray().GetAt(i)[1];
-				normalBuf[i].z = (float)normalElem->GetDirectArray().GetAt(i)[2];
+
 			}
 		}
 	}
@@ -292,50 +416,13 @@ void	FbxModel::GetNormalMethod()
 //概要: UV情報を取得する
 void	FbxModel::GetUVInfo()
 {
-	int layerCount = mesh->GetLayerCount();	//meshから取得
-	for (int i = 0; i < layerCount; ++i)
-	{
-		uvLayer = mesh->GetLayer(i);
-		uvElem = uvLayer->GetUVs();
-		if (uvElem == 0)
-		{
-			continue;
-		}
-		//UV情報を取得する
-	}
+	
 }
 
 //概要: UV座標を取得する
 void	FbxModel::GetUVPos()
 {
-	int uvNum = uvElem->GetDirectArray().GetCount();
-	int indexNum = uvElem->GetIndexArray().GetCount();
-	int size = uvNum > indexNum ? uvNum : indexNum;
-	Math::Vector4*	buffer = new Math::Vector4[size];
-
-	//マッピングモード・リファレンスモード別に取得
-	FbxLayerElement::EMappingMode	mappingMode = uvElem->GetMappingMode();
-	FbxLayerElement::EReferenceMode	refMode = uvElem->GetReferenceMode();
-
-
-	if (mappingMode == FbxLayerElement::eByPolygonVertex) {
-		if (refMode == FbxLayerElement::eDirect) {
-			// 直接取得
-			for (int i = 0; i < size; ++i) {
-				buffer[i].x = (float)uvElem->GetDirectArray().GetAt(i)[0];
-				buffer[i].y = (float)uvElem->GetDirectArray().GetAt(i)[1];
-			}
-		}
-		else
-			if (refMode == FbxLayerElement::eIndexToDirect) {
-				// インデックスから取得
-				for (int i = 0; i < size; ++i) {
-					int index = uvElem->GetIndexArray().GetAt(i);
-					buffer[i].x = (float)uvElem->GetDirectArray().GetAt(index)[0];
-					buffer[i].y = (float)uvElem->GetDirectArray().GetAt(index)[1];
-				}
-			}
-	}
+	
 }
 
 
@@ -343,123 +430,18 @@ void	FbxModel::GetUVPos()
 //概要: マテリアルオブジェクトを取得
 void	FbxModel::GetMaterialObject()
 {
-	materialNode = mesh->GetNode();
-	if (materialNode == 0) { return; }
-
-	//マテリアル数
-	int materialNum = materialNode->GetMaterialCount();
-	if (materialNum == 0) { return; }
-
-	//マテリアル情報を取得
-	for (int i = 0; i < materialNum; ++i)
-	{
-		material = materialNode->GetMaterial(i);
-		if (material != 0)
-		{
-			//マテリアル解析
-
-			//LambertかPhongか
-			if (material->GetClassId().Is(FbxSurfaceLambert::ClassId))
-			{
-				//lambertにダウンキャスト
-				FbxSurfaceLambert*	lambert = (FbxSurfaceLambert*)material;
-				DirectX::XMVECTOR	ambient_;
-				DirectX::XMVECTOR	diffuse_;
-				DirectX::XMVECTOR	emissive_;
-				DirectX::XMFLOAT3	bump_;
-				DirectX::XMVECTOR	transparency_;
-				
-				//// アンビエント
-				//ambient_.r = (float)lambert->Ambient.Get()[0];
-				//ambient_.r = (float)lambert->Ambient.Get()[1];
-				//ambient_.g = (float)lambert->Ambient.Get()[2];
-
-				//// ディフューズ
-				//diffuse_.r = (float)lambert->Diffuse.Get()[0];
-				//diffuse_.g = (float)lambert->Diffuse.Get()[1];
-				//diffuse_.b = (float)lambert->Diffuse.Get()[2];
-
-				//// エミッシブ
-				//emissive_.r = (float)lambert->Emissive.Get()[0];
-				//emissive_.g = (float)lambert->Emissive.Get()[1];
-				//emissive_.b = (float)lambert->Emissive.Get()[2];
-
-				//// バンプ
-				//bump_.x = (float)lambert->Bump.Get()[0];
-				//bump_.y = (float)lambert->Bump.Get()[1];
-				//bump_.z = (float)lambert->Bump.Get()[2];
-
-				//// 透過度
-				//transparency_ = (float)lambert->TransparencyFactor.Get();
-
-
-			}
-			else if (material->GetClassId().Is(FbxSurfacePhong::ClassId))
-			{
-				FbxSurfacePhong*	phong = (FbxSurfacePhong*)material;
-
-				//ランパード情報を取得
-				
-				//情報
-				DirectX::XMVECTOR	specular;
-				float	shininess;
-				float	reflectivity;
-				//スペキュラ
-				/*specular.r = (float)phong->Specular.Get()[0];
-				specular.g = (float)phong->Specular.Get()[1];
-				specular.b = (float)phong->Specular.Get()[2];*/
-
-				//光沢
-				shininess = (float)phong->Shininess.Get();
-
-				//反射
-				reflectivity = (float)phong->ReflectionFactor.Get();
-			}
-		}
-	}
+	
 }
 
 
 //概要: テクスチャ情報の取得
 void	FbxModel::GetTexture()
 {
-	//ディフューズプロパティの検索
-	texProperty = material->FindProperty(FbxSurfaceMaterial::sDiffuse);
-	//プロパティが持っているレイヤードテクスチャの枚数をチェック
-	int layerNum = texProperty.GetSrcObjectCount();
 	
-	//レイヤードテクスチャがなければ通常のテクスチャ
-	if (layerNum == 0)
-	{
-		//通常のテクスチャの枚数をチェック
-		int numNormalTexture = texProperty.GetSrcObjectCount();
-		//書くテクスチャについてテクスチャ情報をゲット
-		for (int i = 0; i < numNormalTexture; ++i)
-		{
-			fbxTexture = FbxCast<FbxTexture>(texProperty.GetSrcObject());
-
-			//テクスチャファイルパスの取得
-			const char* fileName = fbxTexture->GetName();
-			char outTexName[100] = "";
-			size_t size = strlen(fileName);
-			memcpy(outTexName, fileName, size);
-			outTexName[size] = '\0';
-
-			break;
-		}
-	}
 }
 
 //概要: モデルの位置を取得
 void	FbxModel::GetModelPos()
 {
-	int time = 0;
-	modelNode = mesh->GetNode();
-
-	//タイムモードの取得
-	//1フレーム単位で位置を取得できる
-	FbxGlobalSettings&	gloabalTime = scene->GetGlobalSettings();
-	time = gloabalTime.GetTimeMode();
-
-
+	
 }

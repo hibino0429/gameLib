@@ -19,7 +19,7 @@ Camera::Camera(const Math::Vector3& eyePos, const Math::Vector3& targetPos, cons
 	this->SetAspect(asp);
 	this->SetNearZ(0.1f);
 	this->SetFarZ(100.0f);	
-	//Create();
+	Create();
 }
 
 //!@brief	デストラクタ
@@ -59,17 +59,27 @@ bool	Camera::Create()
 void	Camera::LookAtLH()
 {
 	//view変換する
-	DirectX::XMMATRIX viewMat = DirectX::XMMatrixTranspose(
+	viewMatrix = DirectX::XMMatrixTranspose(
 		DirectX::XMMatrixLookAtLH(eyePos, targetPos, upVec)
 	);
 	
-	DirectX::XMStoreFloat4x4(&constant.view, viewMat);
+	/*DirectX::XMMATRIX viewMat =  DirectX::XMMatrixTranspose(
+		DirectX::XMMatrixInverse(
+			nullptr,
+			DirectX::XMMatrixRotationX(DirectX::XMConvertToRadians(angle.x)) *
+			DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(angle.y)) *
+			DirectX::XMMatrixRotationZ(DirectX::XMConvertToRadians(angle.z)) *
+			DirectX::XMMatrixTranslation(position.x, position.y, position.z)
+		)
+	);*/
+	
+	DirectX::XMStoreFloat4x4(&constant.view, viewMatrix);
 }
 
 //!@brief	Ortho変換を行う
 void	Camera::OrthoFovLH()
 {
-	DirectX::XMMATRIX orthoViewMat = DirectX::XMMatrixTranspose(
+	viewMatrix = DirectX::XMMatrixTranspose(
 		DirectX::XMMatrixOrthographicLH(
 			Engine<DXDevice>::GetDevice().GetViewPort().Width,
 			Engine<DXDevice>::GetDevice().GetViewPort().Height,
@@ -78,14 +88,14 @@ void	Camera::OrthoFovLH()
 	);
 
 	//Orthoビュー変換を行う
-	DirectX::XMStoreFloat4x4(&constant.view,orthoViewMat);	
+	DirectX::XMStoreFloat4x4(&constant.view,viewMatrix);	
 }
 
 //!@brief	Perspective変換を行う
 void	Camera::PerspectiveFovLH()
 {
 	//perspectiveの変換を行う
-	DirectX::XMMATRIX perspectiveMat = DirectX::XMMatrixTranspose(
+	projMatrix = DirectX::XMMatrixTranspose(
 		DirectX::XMMatrixPerspectiveFovLH(
 			DirectX::XMConvertToRadians(fovAngle),
 			aspect,
@@ -94,13 +104,10 @@ void	Camera::PerspectiveFovLH()
 		)
 	);
 
-	DirectX::XMMATRIX worldMat = DirectX::XMMatrixTranspose(
-		DirectX::XMMatrixTranslation(eyePos.x, eyePos.y, eyePos.z)
-	);
-
-	DirectX::XMStoreFloat4x4(&constant.projection, perspectiveMat);
+	DirectX::XMMATRIX worldMat = DirectX::XMMatrixTranslation(eyePos.x, eyePos.y, eyePos.z);
 	DirectX::XMStoreFloat4x4(&constant.world, worldMat);
-	//Engine<DXDevice>::GetDevice().GetDeviceContext3D().UpdateSubresource(constantBuf, 0, nullptr, &constant, 0, 0);
+	DirectX::XMStoreFloat4x4(&constant.projection, projMatrix);
+	Engine<DXDevice>::GetDevice().GetDeviceContext3D().UpdateSubresource(constantBuf, 0, nullptr, &constant, 0, 0);
 }
 
 
@@ -154,7 +161,7 @@ void	Camera::SetFarZ(const float& farZ_)
 //!@param[in]	moveVec	移動量
 void	Camera::AddVec(const Math::Vector3& moveVec)
 {
-	position += moveVec;
+	eyePos += moveVec;
 }
 
 //!@brief	ビュー行列の取得
@@ -166,4 +173,18 @@ DirectX::XMFLOAT4X4&	Camera::GetViewMatrix()
 DirectX::XMFLOAT4X4&	Camera::GetProjectionMatrix()
 {
 	return this->constant.projection;
+}
+
+
+const DirectX::XMMATRIX&		Camera::GetView() const 
+{
+	return viewMatrix;
+}
+const DirectX::XMMATRIX&		Camera::GetProj() const 
+{
+	return projMatrix;
+}
+ID3D11Buffer*			Camera::GetConstantBuf()
+{
+	return constantBuf;
 }

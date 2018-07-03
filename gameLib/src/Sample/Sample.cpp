@@ -102,14 +102,14 @@ Sample::Sample()
 	//入力項目
 	D3D11_INPUT_ELEMENT_DESC inLayout[] = {
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0,                            0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD",    0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR",    0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
 	this->inputLayout = inLayout;
 
 	//シェーダの作成
-	vertexShader.Create("./data/shaderData/textureShader", this->inputLayout, 2);
-	pixelShader.Create("./data/shaderData/textureShader");
-
+	vertexShader.Create("./data/shaderData/VertexShader", this->inputLayout, 2);
+	pixelShader.Create("./data/shaderData/PixelShader");
+	
 	//定数バッファの作成
 	D3D11_BUFFER_DESC	cbDesc;
 	std::memset(&cbDesc, 0, sizeof(cbDesc));
@@ -148,7 +148,7 @@ void	Sample::UpDate()
 	float	height = Engine<DXDevice>::GetDevice().GetViewPort().Height;
 	float    aspect = width / height;
 	float    nearZ = 0.1f;
-	float    farZ = 100.0f;
+	float    farZ = 1000.0f;
 	DirectX::XMMATRIX projMatrix = DirectX::XMMatrixPerspectiveFovLH(fov, aspect, nearZ, farZ);
 	
 	//マトリックスの設定
@@ -156,7 +156,6 @@ void	Sample::UpDate()
 	DirectX::XMStoreFloat4x4(&cb.world, DirectX::XMMatrixTranspose(worldMatrix));
 	DirectX::XMStoreFloat4x4(&cb.view, DirectX::XMMatrixTranspose(viewMatrix));
 	DirectX::XMStoreFloat4x4(&cb.projection, DirectX::XMMatrixTranspose(projMatrix));
-	
 	
 	Engine<DXDevice>::GetDevice().GetDeviceContext3D().UpdateSubresource(constantBuffer, 0, nullptr, &cb, 0, 0);
 }

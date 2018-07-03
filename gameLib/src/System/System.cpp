@@ -20,9 +20,6 @@ System::System(HINSTANCE hInstance, LPWSTR cmdLine, int cmdShow)
 
 	//ウィンドウの表示
 	window->Show(cmdShow);
-	//コンソール
-	//AllocConsole();
-
 
 	//デバイスの生成と初期化
 	device = new DXDevice(screen);
@@ -30,6 +27,7 @@ System::System(HINSTANCE hInstance, LPWSTR cmdLine, int cmdShow)
 	
 	//デバイスをエンジンに登録
 	Engine<DXDevice>::RegistDevice(device);
+
 
 	//ゲームメインの生成
 	gameMain = new GameMain();

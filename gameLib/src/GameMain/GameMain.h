@@ -8,6 +8,7 @@
 
 #include "../../src/Sample/Sample.h"
 #include "../../src/polygon/polygon.h"
+#include "../../src/Particle/Particle.h"
 
 //--------------------------------------------------------------------------------------
 //ÉQÅ[ÉÄÉÅÉCÉì
@@ -27,8 +28,11 @@ private:
 	Camera*			camera;
 
 private:
-	Mesh*		mesh;
-	Texture*	texture;
-
+	Mesh*			mesh;
+	Texture*		texture;
+	
 	Sample*			sample;
+	Model*			model;
+	Particle*		particle;
+	int				timeCnt;
 };

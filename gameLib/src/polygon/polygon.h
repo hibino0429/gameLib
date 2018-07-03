@@ -1,38 +1,46 @@
 #pragma once
 
 #include <string>
-#include "../../src/Engine/DXEngine/DXEngine.h"
-#include "../../src/Shader/VertexShader/VertexShader.h"
-#include "../../src/Shader/PixelShader/PixelShader.h"
-#include "../../src/Math/Math.h"
+#include "../../src/Fbx/Fbx.h"
+#include "../../src/PrimitiveData/PrimitiveData.h"
+#include "../../src/Camera/Camera.h"
 
 //----------------------------------------------------------------------------------------
-//!@class		Sample
+//!@class		Mo
 //!@brief	サンプルで扱うプログラムを作成するファイル
 //----------------------------------------------------------------------------------------
-class VertexPolygon
+class Model
 {
 public:
-	VertexPolygon();
-	~VertexPolygon();
+	Model();
+	~Model();
 
 	void	UpDate();
 	void	Render();
-
+private:
+	//!@brief	インプットレイアウトの作成
+	void	CreateInputLayout();
+	//!@brief	定数バッファの作成
+	void	CreateConstantBuffer();
+public:
+	//!@brief	マトリックスの設定
+	void	SetMatrix(Camera* camera);
 
 private:
-	struct Vertex
+	//定数バッファ
+	struct ConstantBuffer
 	{
-		float pos[3];
-		float color[4];
+		DirectX::XMFLOAT4X4	world;
+		DirectX::XMFLOAT4X4	view;
+		DirectX::XMFLOAT4X4	projection;
 	};
-
-	ID3D11Buffer*	vertexBuffer;
-	unsigned int stride;
-	unsigned int offset;
-
-	VertexShader vertexShader;
-	PixelShader pixelShader;
-
-	ID3D11Buffer*	indexBuffer;
+private:
+	VertexShader*	vertexShader;
+	PixelShader*	pixelShader;
+	ID3D11Buffer*	constantBuf;
+	Primitive*		primitive;
+	FbxModel*		fbxModel;
+	Math::Vector3	pos;
+	Math::Vector3	angle;
+	Math::Vector3	scale;
 };
