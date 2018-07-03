@@ -9,7 +9,7 @@
 GameMain::GameMain()
 {
 	timeCnt = 0;
-	Math::Vector3 eyePos = { 2.0f,2.0f,-2.0f };
+	Math::Vector3 eyePos = { 2.0f,2.0f,-120.0f };
 	Math::Vector3 targetPos = { 0,0,0 };
 	Math::Vector3 upVec = { 0, 1 ,0 };
 	camera = new Camera(eyePos, targetPos, upVec);

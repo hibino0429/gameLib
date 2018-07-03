@@ -13,6 +13,9 @@ class Model
 {
 public:
 	Model();
+	//!@brief	コンストラクタ
+	//!@param[in]	filePath	ファイルパス
+	Model(const std::string& filePath);
 	~Model();
 
 	void	UpDate();

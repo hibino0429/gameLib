@@ -38,7 +38,7 @@ void	Primitive::AddVertexDatas(const std::vector<Vertex>&	vertexData)
 	}
 }
 //!@brief	インデックスデータを追加
-void	Primitive::AddIndexDatas(const std::vector<WORD>& indexData)
+void	Primitive::AddIndexDatas(const std::vector<int>& indexData)
 {
 	for (auto& index : indexData)
 	{

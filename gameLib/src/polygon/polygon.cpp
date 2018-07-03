@@ -10,41 +10,38 @@ Model::Model()
 	, scale(Math::Vector3(1,1,1))
 	, constantBuf(nullptr)
 {
-	//this->fbxModel = new FbxModel();
-	//this->fbxModel->LoadFile("./data/image/ball.fbx");
-
-	//図形のデータの作成
-	//this->primitiveData = new PrimitiveData(fbxModel->GetVertexDatas());
-	
-	//頂点データをもらってくる
-	//FBXから頂点データの座標をもらう
-	//primitiveData->SetVertexDatas(fbxModel->GetVertexData());
-
-	//primitiveData->SetVertexBuffer(fbxModel->GetVertexDatas());
-	//primitiveData->SetIndexBuffer(fbxModel->GetVertexPolygonVertices(), fbxModel->GetVertexCount());
-
-
-	std::vector<Vertex>	vertices;
-	vertices.push_back(Vertex(-0.5f, 0.5f, 0.5f, 0.0f, 0.0f));
-	vertices.push_back(Vertex(0.5f, -0.5f, 0.5f, 1.0f, 0.0f));
-	vertices.push_back(Vertex(-0.5f, -0.5f, 0.5f, 1.0f, 1.0f));
-	vertices.push_back(Vertex(0.5f, 0.5f, 0.5f, 0.0f, 1.0f));
+	this->fbxModel = new FbxModel("./data/image/RollerBall.fbx");
 
 	vertexShader = new VertexShader();
 	pixelShader = new PixelShader();
 	primitive = new Primitive();
 
-	std::vector<WORD>	indices;
-	indices.push_back(0);
-	indices.push_back(1);
-	indices.push_back(2);
-	indices.push_back(0);
-	indices.push_back(3);
-	indices.push_back(1);
+	primitive->AddVertexDatas(fbxModel->GetVertexData());
+	primitive->AddIndexDatas(fbxModel->GetVertexPolygonVertices());
 
-	primitive->AddVertexDatas(vertices);
-	primitive->AddIndexDatas(indices);
+	primitive->CreateVertexBuffer();
+	primitive->CreateIndexBuffer();
 
+	CreateInputLayout();
+	CreateConstantBuffer();
+}
+
+//!@brief	コンストラクタ
+//!@param[in]	filePath	ファイルパス
+Model::Model(const std::string& filePath)
+	: pos(Math::Vector3(0,0,0))
+	, angle(Math::Vector3(0,0,0))
+	, scale(Math::Vector3(1,1,1))
+	, constantBuf(nullptr)
+{
+	fbxModel = new FbxModel("./data/image/RollerBall.fbx");
+
+	vertexShader = new VertexShader();
+	pixelShader = new PixelShader();
+	primitive = new Primitive();
+
+	primitive->AddVertexDatas(fbxModel->GetVertexData());
+	primitive->AddIndexDatas(fbxModel->GetVertexPolygonVertices());
 	primitive->CreateVertexBuffer();
 	primitive->CreateIndexBuffer();
 
@@ -59,6 +56,7 @@ Model::~Model()
 	Utility::SafeDelete(vertexShader);
 	Utility::SafeDelete(pixelShader);
 	Utility::SafeDelete(primitive);
+	Utility::SafeDelete(fbxModel);
 	//Release
 	Utility::SafeRelease(constantBuf);
 }

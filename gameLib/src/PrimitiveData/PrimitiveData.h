@@ -29,7 +29,7 @@ public:
 	//!@brief	頂点データを追加する
 	void	AddVertexDatas(const std::vector<Vertex>&	vertexData);
 	//!@brief	インデックスデータを追加
-	void	AddIndexDatas(const std::vector<WORD>& indexData);
+	void	AddIndexDatas(const std::vector<int>& indexData);
 	//!@brief	頂点バッファの作成
 	void	CreateVertexBuffer();
 	//!@brief	インデックスバッファの作成
@@ -39,5 +39,5 @@ private:
 	ID3D11Buffer*	indexBuffer;
 
 	std::vector<Vertex>	vertices;	//頂点データ
-	std::vector<WORD>	indices;	//インデックスデータ
+	std::vector<int>	indices;	//インデックスデータ
 };

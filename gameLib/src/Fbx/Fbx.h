@@ -18,6 +18,8 @@
 class FbxModel
 {
 public:
+	FbxModel(const std::string& filePath);
+	~FbxModel();
 	void	LoadFile(const std::string& filePath);
 
 private:
@@ -29,10 +31,10 @@ public:
 	//!@brief	頂点データのポリゴン数の取得
 	int			GetVertexCount();
 	//!@brief	頂点データの取得
-	int*		GetVertexPolygonVertices();
+	std::vector<int>&		GetVertexPolygonVertices();
 	
 	//!@brief	頂点データを渡す
-	Vertex*		GetVertexData();
+	std::vector<Vertex>&		GetVertexData();
 
 private:
 	//!@brief	指定したノードを探す
@@ -145,11 +147,10 @@ private:
 	//-------------------------------------------------------
 	//FBXデータを外部に送る用の変数
 	//-------------------------------------------------------
-	Vertex*		vertexData;		//頂点データ
-
+	std::vector<Vertex>	vertexDatas;	//頂点データ
+	std::vector<int>	indices;		//インデックスデータ
 	int			vertexDataNum;	//頂点データの数
 	int			indexDataNum;	//インデックスデータの数
-	int*		indexDatas;		//インデックスデータ
 };
 
 

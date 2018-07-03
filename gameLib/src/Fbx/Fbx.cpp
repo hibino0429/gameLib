@@ -1,6 +1,38 @@
 #include "Fbx.h"
 #include "../../src/Utility/Utility.hpp"
-#include "../../src/Engine/Engine.h"
+
+
+FbxModel::FbxModel(const std::string& filePath)
+	: fbxManager(nullptr)
+	, scene(nullptr)
+	, fbxImporter(nullptr)
+{
+	fbxManager = FbxManager::Create();
+	scene = FbxScene::Create(fbxManager, "fbxScene");
+	FbxString fileName(filePath.c_str());
+	fbxImporter = FbxImporter::Create(fbxManager, "imp");
+	fbxImporter->Initialize(fileName.Buffer(), -1, fbxManager->GetIOSettings());
+	fbxImporter->Import(scene);
+	fbxImporter->Destroy();
+
+	//ノードタイプがメッシュなら
+	if (SearchDesignationNode(FbxNodeAttribute::EType::eMesh))
+	{
+		//メッシュノードとメッシュを取り入れる
+		meshNode = scene->GetRootNode()->GetChild(findNodeTypeNum);
+		mesh = scene->GetRootNode()->GetChild(findNodeTypeNum)->GetMesh();
+		LoadNodeForMeshNum();
+		SetMeshData();
+	}
+}
+
+FbxModel::~FbxModel()
+{
+	mesh->Destroy();
+	meshNode->Destroy();
+	scene->Destroy();
+	fbxManager->Destroy();
+}
 
 void	FbxModel::LoadFile(const std::string& filePath)
 {
@@ -8,10 +40,7 @@ void	FbxModel::LoadFile(const std::string& filePath)
 	scene = FbxScene::Create(fbxManager, "fbxScene");
 	FbxString fileName(filePath.c_str());
 	fbxImporter = FbxImporter::Create(fbxManager, "imp");
-	if (!fbxImporter->Initialize(fileName.Buffer(), -1, fbxManager->GetIOSettings()))
-	{
-		MessageBoxA(nullptr, "FBXファイルの読み込みに失敗しました", "LoadFile()", MB_OK);
-	}
+	fbxImporter->Initialize(fileName.Buffer(), -1, fbxManager->GetIOSettings());
 	fbxImporter->Import(scene);
 	fbxImporter->Destroy();
 
@@ -54,17 +83,17 @@ int				FbxModel::GetVertexCount()
 	return this->indexDataNum;
 }
 //!@brief	頂点データの取得
-int*			FbxModel::GetVertexPolygonVertices()
+std::vector<int>&		FbxModel::GetVertexPolygonVertices()
 {
-	return this->indexDatas;
+	return this->indices;
 }
 
 
 
 //!@brief	頂点データを渡す
-Vertex*		FbxModel::GetVertexData()
+std::vector<Vertex>&		FbxModel::GetVertexData()
 {
-	return vertexData;
+	return vertexDatas;
 }
 
 //!@brief	指定したノードを探す
@@ -88,14 +117,16 @@ bool		FbxModel::SearchDesignationNode(const FbxNodeAttribute::EType& nodeType)
 void		FbxModel::LoadNodeForMeshNum()
 {
 	//メッシュの数だけ頂点データを作成する
-	Vertex* vertexData = new Vertex[mesh->GetControlPointsCount()];
-
 	//頂点データにメッシュデータを渡す
 	for (int meshCnt = 0; meshCnt < mesh->GetControlPointsCount(); ++meshCnt)
 	{
-		vertexData[meshCnt].x = static_cast<float>(mesh->GetControlPointAt(meshCnt)[0]);
-		vertexData[meshCnt].y = static_cast<float>(mesh->GetControlPointAt(meshCnt)[1]);
-		vertexData[meshCnt].z = static_cast<float>(mesh->GetControlPointAt(meshCnt)[2]);
+		//メッシュの頂点を渡す
+		vertexDatas.push_back(
+			Vertex(static_cast<float>(mesh->GetControlPointAt(meshCnt)[0]),
+				static_cast<float>(mesh->GetControlPointAt(meshCnt)[1]),
+				static_cast<float>(mesh->GetControlPointAt(meshCnt)[2])
+			)
+		);
 	}
 }
 
@@ -105,7 +136,11 @@ void		FbxModel::SetMeshData()
 {
 	vertexDataNum = mesh->GetControlPointsCount();	//頂点数
 	indexDataNum = mesh->GetPolygonVertexCount();	//インデックス数
-	indexDatas = mesh->GetPolygonVertices();		//インデックスデータ
+	//インデックスデータ
+	for (int cnt = 0; cnt < indexDataNum; ++cnt)
+	{
+		indices.push_back(mesh->GetPolygonVertices()[cnt]);
+	}
 }
 
 
@@ -222,9 +257,13 @@ void	FbxModel::AnimationMatrix()
 	for (int i = 0; i < mesh->GetControlPointsCount(); ++i)
 	{
 		FbxVector4	outVertex = clusterDeformation[i].MultNormalize(mesh->GetControlPointAt(i));
-		vertexData[i].x = static_cast<float>(outVertex[0]);
-		vertexData[i].y = static_cast<float>(outVertex[1]);
-		vertexData[i].z = static_cast<float>(outVertex[2]);
+		vertexDatas.push_back(
+			Vertex(
+				static_cast<float>(outVertex[0]),
+				static_cast<float>(outVertex[1]),
+				static_cast<float>(outVertex[2])
+			)
+		);
 	}
 
 	//クラスタの削除
