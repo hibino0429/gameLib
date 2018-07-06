@@ -26,10 +26,12 @@ private:
 	//!@brief	ノードの探索
 	void		ProbeNode(FbxNode* fbxNode);
 public:
-	//!@brief	頂点データのコントロールポイント数の取得
+	//!@brief	頂点の数の取得
 	int			GetVertexDatas();
 	//!@brief	頂点データのポリゴン数の取得
 	int			GetVertexCount();
+	//!@brief	ポリゴン数の取得
+	int			GetPolygonCount();
 	//!@brief	頂点データの取得
 	std::vector<int>&		GetVertexPolygonVertices();
 	

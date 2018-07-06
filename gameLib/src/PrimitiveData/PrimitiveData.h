@@ -24,7 +24,7 @@ public:
 	//!@brief	頂点データを追加する
 	void	AddVertexData(const Vertex& vertexData);
 	//!@brief	インデックスデータを追加する
-	void	AddIndexData(const WORD& indexData);
+	void	AddIndexData(const int& indexData);
 
 	//!@brief	頂点データを追加する
 	void	AddVertexDatas(const std::vector<Vertex>&	vertexData);

@@ -72,12 +72,12 @@ void	FbxModel::ProbeNode(FbxNode* fbxNode)
 
 
 
-//!@brief	頂点データのコントロールポイント数の取得
+//!@brief	頂点数の取得
 int			FbxModel::GetVertexDatas()
 {
 	return this->vertexDataNum;
 }
-//!@brief	頂点データのポリゴン数の取得
+//!@brief	頂点のポリゴン数の取得
 int				FbxModel::GetVertexCount()
 {
 	return this->indexDataNum;

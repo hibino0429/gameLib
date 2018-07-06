@@ -7,10 +7,10 @@
 Model::Model()
 	: pos(Math::Vector3(0,0,0))
 	, angle(Math::Vector3(0,0,0))
-	, scale(Math::Vector3(1,1,1))
+	, scale(Math::Vector3(10,10,10))
 	, constantBuf(nullptr)
 {
-	this->fbxModel = new FbxModel("./data/image/RollerBall.fbx");
+	this->fbxModel = new FbxModel("./data/image/ball.fbx");
 
 	vertexShader = new VertexShader();
 	pixelShader = new PixelShader();
@@ -94,9 +94,9 @@ void	Model::CreateConstantBuffer()
 {
 	D3D11_BUFFER_DESC	constantBufDesc;
 	memset(&constantBufDesc, 0, sizeof(constantBufDesc));
-	constantBufDesc.ByteWidth = sizeof(ConstantBuffer);
-	constantBufDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	constantBufDesc.Usage = D3D11_USAGE_DEFAULT;
+	constantBufDesc.ByteWidth	= sizeof(ConstantBuffer);
+	constantBufDesc.BindFlags	= D3D11_BIND_CONSTANT_BUFFER;
+	constantBufDesc.Usage		= D3D11_USAGE_DEFAULT;
 
 	Engine<DXDevice>::GetDevice().GetDevice3D().CreateBuffer(&constantBufDesc, nullptr, &constantBuf);
 }
