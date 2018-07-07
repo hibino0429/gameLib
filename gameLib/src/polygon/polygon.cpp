@@ -7,10 +7,10 @@
 Model::Model()
 	: pos(Math::Vector3(0,0,0))
 	, angle(Math::Vector3(0,0,0))
-	, scale(Math::Vector3(10,10,10))
+	, scale(Math::Vector3(1,1,1))
 	, constantBuf(nullptr)
 {
-	this->fbxModel = new FbxModel("./data/image/ball.fbx");
+	this->fbxModel = new FbxModel("./data/image/unitychan.fbx");
 
 	vertexShader = new VertexShader();
 	pixelShader = new PixelShader();
@@ -34,7 +34,7 @@ Model::Model(const std::string& filePath)
 	, scale(Math::Vector3(1,1,1))
 	, constantBuf(nullptr)
 {
-	fbxModel = new FbxModel("./data/image/RollerBall.fbx");
+	fbxModel = new FbxModel(filePath);
 
 	vertexShader = new VertexShader();
 	pixelShader = new PixelShader();
@@ -47,6 +47,7 @@ Model::Model(const std::string& filePath)
 
 	CreateInputLayout();
 	CreateConstantBuffer();
+	
 }
 
 //!@brief	デストラクタ
@@ -65,6 +66,9 @@ void	Model::UpDate()
 {
 	vertexShader->Set();
 	pixelShader->Set();
+
+	fbxModel->AnimationMatrix();
+	primitive->UpDateVertexDatas(fbxModel->GetVertexData());
 }
 
 void	Model::Render()

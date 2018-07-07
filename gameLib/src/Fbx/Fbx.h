@@ -48,7 +48,7 @@ private:
 	//!@brief	メッシュのデータを受け取る
 	void		SetMeshData();
 
-private:
+public:
 	//!@brief	アニメーションの生成
 	void	CreateAnimation();
 	//!@brief	アニメーションの時間の生成と設定
@@ -87,12 +87,6 @@ private:
 	//概要: ポリゴンの基本情報の取得
 	void	GetPolygonInfo();
 
-	//概要: メッシュの法線の取得
-	void	GetMeshNormal();
-
-	//概要: 法線ベクトルの方式を取得
-	void	GetNormalMethod();
-
 	//概要: UV情報を取得する
 	void	GetUVInfo();
 	//概要: UV座標を取得する
@@ -121,16 +115,9 @@ private:
 	FbxMesh*			 mesh;		//メッシュ
 
 
-private:
-	int				controlNum;				//頂点数
-	FbxVector4*		src;					//頂点座標配列 (fbx用)
-private:
-	FbxLayer*				normalLayer;		//レイヤー
-	FbxLayerElementNormal*	normalElem;			//法線
-
 
 private:
-	int			childNodeNum;	//子ノードの数
+	int			childNodeNum;		//子ノードの数
 
 	int			polygonNum;			//ポリゴン数
 	int			polygonVertexNum;	//ポリゴン頂点インデックス数

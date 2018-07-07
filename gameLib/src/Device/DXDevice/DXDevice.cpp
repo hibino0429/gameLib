@@ -639,7 +639,7 @@ bool	DXDevice::CreateRasterizerState()
 {
 	D3D11_RASTERIZER_DESC rdc = {};
 	rdc.FillMode = D3D11_FILL_SOLID;	//3‚Â‚Ì’¸“_‚ğŒ‹‚ñ‚Å‚Å‚«‚½OŠpŒ`‚ğ“h‚è‚Â‚Ô‚·
-	rdc.CullMode = D3D11_CULL_NONE;		//—¼•û•`‰æ
+	rdc.CullMode = D3D11_CULL_BACK;		//—¼•û•`‰æ
 	rdc.FrontCounterClockwise = true;	//”½Œv‰ñ‚è
 	device3D->CreateRasterizerState(&rdc, &rasterizerState);
 	return true;

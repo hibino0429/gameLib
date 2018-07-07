@@ -91,3 +91,10 @@ void	Primitive::CreateIndexBuffer()
 
 	Engine<DXDevice>::GetDevice().GetDevice3D().CreateBuffer(&indexBufDesc, &indexSubData, &indexBuffer);
 }
+
+//!@brief	頂点データを更新する
+//!@param[in]	頂点データ	vertexData
+void	Primitive::UpDateVertexDatas(const std::vector<Vertex>& vertexData)
+{
+	vertices = vertexData;
+}

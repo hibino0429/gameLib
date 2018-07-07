@@ -9,7 +9,7 @@
 GameMain::GameMain()
 {
 	timeCnt = 0;
-	Math::Vector3 eyePos = { 2.0f,2.0f,-40.0f };
+	Math::Vector3 eyePos = { 2.0f,2.0f,-570.0f };
 	Math::Vector3 targetPos = { 0,0,0 };
 	Math::Vector3 upVec = { 0, 1 ,0 };
 	camera = new Camera(eyePos, targetPos, upVec);
@@ -17,7 +17,7 @@ GameMain::GameMain()
 	//sample = new Sample();
 	//texture = new Texture("./data/image/texture.png");
 
-	model = new Model();
+	model = new Model("./data/image/humanoid.fbx");
 
 	//particle = new Particle();
 	//particle->Load("./data/particle/TestParticle.efk");
@@ -76,7 +76,7 @@ void	GameMain::Render()
 	model->Render();
 	//particle->Draw(*camera);
 
-	Engine<DXDevice>::GetDevice().GetSwapChain().Present(0, 0);
+	Engine<DXDevice>::GetDevice().GetSwapChain().Present(2, 0);
 }
 
 

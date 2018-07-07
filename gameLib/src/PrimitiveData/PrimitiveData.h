@@ -34,6 +34,9 @@ public:
 	void	CreateVertexBuffer();
 	//!@brief	インデックスバッファの作成
 	void	CreateIndexBuffer();
+	//!@brief	頂点データを更新する
+	//!@param[in]	頂点データ	vertexData
+	void	UpDateVertexDatas(const std::vector<Vertex>& vertexData);
 private:
 	ID3D11Buffer*	vertexBuffer;
 	ID3D11Buffer*	indexBuffer;

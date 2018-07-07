@@ -18,7 +18,7 @@ Camera::Camera(const Math::Vector3& eyePos, const Math::Vector3& targetPos, cons
 	this->SetFovAngle(45.0f);
 	this->SetAspect(asp);
 	this->SetNearZ(0.1f);
-	this->SetFarZ(100.0f);	
+	this->SetFarZ(1000.0f);	
 	Create();
 }
 

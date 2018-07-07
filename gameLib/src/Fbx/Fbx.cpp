@@ -1,11 +1,12 @@
 #include "Fbx.h"
 #include "../../src/Utility/Utility.hpp"
-
+#include <iostream>
 
 FbxModel::FbxModel(const std::string& filePath)
 	: fbxManager(nullptr)
 	, scene(nullptr)
 	, fbxImporter(nullptr)
+	, animStackNumber(0)
 {
 	fbxManager = FbxManager::Create();
 	scene = FbxScene::Create(fbxManager, "fbxScene");
@@ -24,6 +25,9 @@ FbxModel::FbxModel(const std::string& filePath)
 		LoadNodeForMeshNum();
 		SetMeshData();
 	}
+
+	CreateAnimation();
+	CreateAnimationTime();
 }
 
 FbxModel::~FbxModel()
@@ -217,7 +221,7 @@ void	FbxModel::AnimationMatrix()
 	int clusterCount = skinDeformer->GetClusterCount();
 
 	//クラスタ情報を1つずつ取り出して、クラスタ独自に持つ行列の計算を行う
-	for (int clusterIndex = 0; clusterIndex < clusterCount; ++clusterCount)
+	for (int clusterIndex = 0; clusterIndex < clusterCount; ++clusterIndex)
 	{
 		//１つのクラスタ情報の取得
 		FbxCluster*	cluster = skinDeformer->GetCluster(clusterIndex);
@@ -257,19 +261,16 @@ void	FbxModel::AnimationMatrix()
 	for (int i = 0; i < mesh->GetControlPointsCount(); ++i)
 	{
 		FbxVector4	outVertex = clusterDeformation[i].MultNormalize(mesh->GetControlPointAt(i));
-		vertexDatas.push_back(
-			Vertex(
-				static_cast<float>(outVertex[0]),
-				static_cast<float>(outVertex[1]),
-				static_cast<float>(outVertex[2])
-			)
-		);
+		for (auto it = vertexDatas.begin(); it != vertexDatas.end(); ++it)
+		{
+			(*it).x = static_cast<float>(outVertex[0]);
+			(*it).y = static_cast<float>(outVertex[1]);
+			(*it).z = static_cast<float>(outVertex[2]);
+		}
 	}
 
 	//クラスタの削除
 	Utility::SafeDeleteArray(clusterDeformation);
-
-	//画面更新を1秒に30回に設定するには Present(2,0)とする
 }
 
 
@@ -398,58 +399,6 @@ void	FbxModel::GetPolygonInfo()
 
 
 
-
-//概要: メッシュの法線の取得
-void	FbxModel::GetMeshNormal()
-{
-	//レイヤーオブジェクトを取得
-	int layerNum = mesh->GetLayerCount();
-	for (int i = 0; i < layerNum; ++i)
-	{
-		normalLayer = mesh->GetLayer(i);
-		//法線をチェック
-		normalElem = normalLayer->GetNormals();
-		if (normalElem == 0)
-		{
-			continue;
-		}
-		//法線あった
-	}
-}
-
-//概要: 法線ベクトルの方式を取得
-void	FbxModel::GetNormalMethod()
-{
-	//マッピングモード・リファレンスモードの取得
-	FbxLayerElement::EMappingMode	mappingMode = normalElem->GetMappingMode();
-	FbxLayerElement::EReferenceMode	refMode = normalElem->GetReferenceMode();
-
-	int	normalNum = normalElem->GetDirectArray().GetCount();
-	int	indexNum = normalElem->GetIndexArray().GetCount();
-	
-	if (mappingMode == FbxLayerElement::eByPolygonVertex)
-	{
-		if (refMode == FbxLayerElement::eDirect)
-		{
-			//直接取得
-			for(int i = 0; i < normalNum; ++i)
-			{
-
-			}
-		}
-	}
-	else if (mappingMode == FbxLayerElement::eByControlPoint)
-	{
-		if (refMode == FbxLayerElement::eDirect)
-		{
-			//直接取得
-			for (int i = 0; i < normalNum; ++i)
-			{
-
-			}
-		}
-	}
-}
 
 
 //概要: UV情報を取得する
