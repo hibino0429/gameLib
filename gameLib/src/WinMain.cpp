@@ -1,11 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "Window/Window.h"
-#include "debug.hpp"
-#include "System/System.h"
-
-#include "../src/Device/DXDevice/DXDevice.h"
-#include "../../src/Console/Console.hpp"
+#include "../src/GameSystem/Window/Window.h"
+#include "../src/Utility/debug.hpp"
+#include "../src/GameSystem/System/System.h"
+#include "../src/DXEngine/DXDevice/DXDevice.h"
+#include "../src/GameSystem/Console/Console.hpp"
 
 //------------------------------------------------------------------------
 //アプリケーションのメイン
