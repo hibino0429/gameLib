@@ -195,6 +195,12 @@
     <ClCompile Include="src\GameSystem\FPS\FPS.cpp" />
     <ClCompile Include="src\GameSystem\GameMain\GameMain.cpp" />
     <ClCompile Include="src\GameSystem\ODE\Collision\Collision.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicBox\DynamicBox.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicCapsule\DynamicCapsule.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicCylinder\DynamicCylinder.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicShape.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicSphere\DynamicSphere.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\PhysicsData\PhysicsData.cpp" />
     <ClCompile Include="src\GameSystem\ODE\Physics\Physics.cpp" />
     <ClCompile Include="src\GameSystem\ODE\RigidBody\RigidBody.cpp" />
     <ClCompile Include="src\GameSystem\Particle\Particle.cpp" />
@@ -236,6 +242,12 @@
     <ClInclude Include="src\GameSystem\FPS\FPS.h" />
     <ClInclude Include="src\GameSystem\GameMain\GameMain.h" />
     <ClInclude Include="src\GameSystem\ODE\Collision\Collision.h" />
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicBox\DynamicBox.h" />
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicCapsule\DynamicCapsule.h" />
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicCylinder\DynamicCylinder.h" />
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicShape.h" />
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicSphere\DynamicSphere.h" />
+    <ClInclude Include="src\GameSystem\ODE\PhysicsData\PhysicsData.h" />
     <ClInclude Include="src\GameSystem\ODE\Physics\Physics.h" />
     <ClInclude Include="src\GameSystem\ODE\RigidBody\RigidBody.h" />
     <ClInclude Include="src\GameSystem\Particle\Particle.h" />

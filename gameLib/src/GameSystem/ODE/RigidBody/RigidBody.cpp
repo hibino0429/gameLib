@@ -1,47 +1,21 @@
 #include "RigidBody.h"
+#include "../../src/Utility/Utility.hpp"
 
 //コンストラクタ
-RigidBody::RigidBody()
+RigidBody::RigidBody(DynamicShape* dynamicShape)
 {
-	rigidBody = dBodyCreate(0);		//引数にworldIDを入れる
-	dMassSetZero(&mass);
-	
-	Create();
+	this->dynamicShape = dynamicShape;
 }
 
 //デストラクタ
 RigidBody::~RigidBody()
 {
-	if (geometory != nullptr)
-	{
-		dGeomDestroy(geometory);
-		geometory = nullptr;
-	}
-	if (rigidBody != nullptr)
-	{
-		dBodyDestroy(rigidBody);
-		rigidBody = nullptr;
-	}
+	Utility::SafeDelete(dynamicShape);
 }
 
-
-//生成
-void	RigidBody::Create()
+//!@brief	剛体の取得
+//!@return	保持している剛体の形状を返す
+DynamicShape&	RigidBody::GetShape() const
 {
-	Vec3 pos = Vec3(0, 0, 0);
-	Vec3 scale = Vec3(1, 1, 1);
-	dReal	totalMass = 0;
-
-	rigidBody = dBodyCreate(0);		//引数にworldIDを入れる
-	dMassSetZero(&mass);
-	dMassSetBoxTotal(&mass, totalMass, scale.x, scale.y, scale.z);
-	dBodySetMass(rigidBody, &mass);
-
-	//ジオメトリの作成、ボディにコリジョンを反映
-	geometory = dCreateBox(0, scale.x, scale.y, scale.z);
-	dGeomSetBody(geometory, rigidBody);
-
-	//ボディの位置設定
-	dBodySetPosition(rigidBody, pos.x, pos.y, pos.z);
-
+	return *dynamicShape;
 }

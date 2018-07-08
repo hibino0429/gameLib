@@ -1,5 +1,12 @@
 #include "Physics.h"
 
+
+dWorldID		Physics::world = nullptr;
+dSpaceID		Physics::collisionSpace = nullptr;
+dJointGroupID	Physics::jointGroup = nullptr;
+float			Physics::stepTime = 0;
+
+
 //!@brief コンストラクタ
 Physics::Physics()
 {
@@ -46,19 +53,19 @@ Physics::~Physics()
 
 //!@brief 物理世界の取得
 //!@return 物理世界
-dWorldID		Physics::GetWorld() const
+dWorldID		Physics::GetWorld()
 {
 	return world;
 }
 //!@brief ODE空間の取得
 //!@return ODEの空間
-dSpaceID		Physics::GetCollisionSpace() const
+dSpaceID		Physics::GetCollisionSpace()
 {
 	return collisionSpace;
 }
 //!@brief ジョイントグループの取得
 //!@return ジョイントグループ
-dJointGroupID	Physics::GetJointGroupID() const
+dJointGroupID	Physics::GetJointGroupID()
 {
 	return jointGroup;
 }

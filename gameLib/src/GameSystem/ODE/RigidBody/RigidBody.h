@@ -1,42 +1,40 @@
 #pragma once
-#define _CRT_SECURE_NO_WARNINGS
-#define warning (disable : 4819)	
-
-#include<ode/ode.h>
+#include "../../src/GameSystem/ODE/DynamicShape/DynamicShape.h"
 
 
-#if defined(_DEBUG)
-#pragma comment(lib,"oded.lib")
-#else
-#pragma comment(lib,"ode.lib")
-#endif
+//修正箇所
+//依存性のない数学ライブラリを作成し、適用させる必要がある
 
 //----------------------------------------------------------------------------------------
-//概要: RigidBody(剛体)クラス
+//!@class		RigidBody
+//!@brief	剛体を扱うクラス
+//!@brief	適用させることで物理挙動をさせることができる
+//!@brief	剛体の形状(dynamicShape)の解放を行う
 //----------------------------------------------------------------------------------------
 class RigidBody
 {
 public:
-	RigidBody();
-	~RigidBody();
-	//概要: 剛体の生成
-	void		Create();
+	//!@brief	コンストラクタ
+	//!@param[in]	dynamicShape	形状
+	RigidBody(DynamicShape* dynamicShape);
+	//!@brief	デストラクタ
+	//!@brief	形状の解放責任を持つ
+	virtual ~RigidBody();
+public:
+	//!@brief	剛体の取得
+	//!@return	保持している剛体の形状を返す
+	DynamicShape&	GetShape() const;
 
-	class Vec3
+	//アライメント対策
+	void*	operator new(size_t size)
 	{
-	public:
-		Vec3() {}
-		Vec3(float x, float y, float z)
-			: x(x),y(y),z(z)
-		{}
-
-	public:
-		float x;
-		float y;
-		float z;
-	};
+		return _mm_malloc(size, 16);
+	}
+	void	operator delete(void* p)
+	{
+		_mm_free(p);
+	}
 private:
-	dBodyID		rigidBody;	//剛体
-	dGeomID		geometory;	//衝突検知
-	dMass		mass;		//質量
+	DynamicShape*	dynamicShape;	//剛体の形状
 };
+

@@ -20,32 +20,32 @@
 class Physics
 {
 public:
-	//概要: コンストラクタ
+	//!@brief	コンストラクタ
 	Physics();
-	//概要: デストラクタ
+	//!@brief	デストラクタ
 	~Physics();
+public:
+	//!@brief	物理世界の取得
+	//!@return	物理世界
+	static dWorldID		GetWorld();
+	//!@brief	ODE空間の取得
+	//!@return	ODEの空間
+	static dSpaceID		GetCollisionSpace();
+	//!@brief	ジョイントグループの取得
+	//!@return	ジョイントグループの取得
+	static dJointGroupID	GetJointGroupID();
 
-	//概要: 物理世界の取得
-	//戻り値: 物理世界
-	dWorldID		GetWorld() const;
-	//概要: ODE空間の取得
-	//戻り値: ODEの空間
-	dSpaceID		GetCollisionSpace() const;
-	//概要: ジョイントグループの取得
-	//戻り値: ジョイントグループの取得
-	dJointGroupID	GetJointGroupID() const;
-
-	//概要: 動力学計算の実施
-	void	WorldStep();
-
+	//!@brief	動力学計算の実施
+	static void	WorldStep();
 public:
 	//!@brief	垂直重力の設定
 private:
-	dWorldID			world;			//ODE世界
-	dSpaceID		collisionSpace;		//ODE空間
-	dJointGroupID	jointGroup;			//ジョイントグループ
+	static dWorldID			world;				//ODE世界
+	static dSpaceID			collisionSpace;		//ODE空間
+	static dJointGroupID	jointGroup;			//ジョイントグループ
+	
 	float			horizonGravity;		//水平重力(x)
 	float			verticalGravity;	//垂直重力(y)
 	float			deepGravity;		//奥行重力(z)
-	float			stepTime;			//ステップ時間
+	static float	stepTime;			//ステップ時間
 };

@@ -160,6 +160,24 @@
     <Filter Include="Component\AnimationData">
       <UniqueIdentifier>{bb4feabd-d3e7-4028-8724-b09e0148eceb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSystem\ODE\PhysicsData">
+      <UniqueIdentifier>{c6d3ddf8-c588-41b2-9474-bd416eef3217}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\ODE\DynamicShape">
+      <UniqueIdentifier>{36c38ae0-108c-41b1-9cb9-719e18091ceb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\ODE\DynamicShape\DynamicBox">
+      <UniqueIdentifier>{967f0874-1d69-4d3b-9db0-2212e00d0c29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\ODE\DynamicShape\DynamicSphere">
+      <UniqueIdentifier>{c0776a43-a9fd-4810-92e9-6651268b4c4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\ODE\DynamicShape\DynamicCylinder">
+      <UniqueIdentifier>{484bca81-5559-4862-8d39-6c36e76cdcef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\ODE\DynamicShape\DynamicCapsule">
+      <UniqueIdentifier>{e5f6a6e8-4b2a-47f1-8a85-279e5af7aaeb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\WinMain.cpp">
@@ -275,6 +293,24 @@
     </ClCompile>
     <ClCompile Include="src\Component\AnimationData\AnimationData.cpp">
       <Filter>Component\AnimationData</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameSystem\ODE\PhysicsData\PhysicsData.cpp">
+      <Filter>GameSystem\ODE\PhysicsData</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicShape.cpp">
+      <Filter>GameSystem\ODE\DynamicShape</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicBox\DynamicBox.cpp">
+      <Filter>GameSystem\ODE\DynamicShape\DynamicBox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicSphere\DynamicSphere.cpp">
+      <Filter>GameSystem\ODE\DynamicShape\DynamicSphere</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicCylinder\DynamicCylinder.cpp">
+      <Filter>GameSystem\ODE\DynamicShape\DynamicCylinder</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicCapsule\DynamicCapsule.cpp">
+      <Filter>GameSystem\ODE\DynamicShape\DynamicCapsule</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +433,24 @@
     </ClInclude>
     <ClInclude Include="src\Component\AnimationData\AnimationData.h">
       <Filter>Component\AnimationData</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameSystem\ODE\PhysicsData\PhysicsData.h">
+      <Filter>GameSystem\ODE\PhysicsData</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicShape.h">
+      <Filter>GameSystem\ODE\DynamicShape</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicBox\DynamicBox.h">
+      <Filter>GameSystem\ODE\DynamicShape\DynamicBox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicSphere\DynamicSphere.h">
+      <Filter>GameSystem\ODE\DynamicShape\DynamicSphere</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicCylinder\DynamicCylinder.h">
+      <Filter>GameSystem\ODE\DynamicShape\DynamicCylinder</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicCapsule\DynamicCapsule.h">
+      <Filter>GameSystem\ODE\DynamicShape\DynamicCapsule</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
