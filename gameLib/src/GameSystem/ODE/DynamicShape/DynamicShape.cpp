@@ -1,5 +1,5 @@
 #include "DynamicShape.h"
-
+#include "../../src/GameSystem/ODE/Physics/Physics.h"
 
 
 //コンストラクタ

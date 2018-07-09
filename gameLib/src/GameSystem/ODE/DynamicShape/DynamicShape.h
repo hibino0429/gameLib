@@ -2,9 +2,15 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define warning (disable : 4819)	
 
+#if defined(_DEBUG)
+#pragma comment(lib,"oded.lib")
+#else
+#pragma comment(lib,"ode.lib")
+#endif
+
 #include <ode/ode.h>
 #include "../../src/DXEngine/Math/Math.h"
-#include "../../src/GameSystem/ODE/Physics/Physics.h"
+
 
 //------------------------------------------------------------------------------
 //!@class		DynamicShape

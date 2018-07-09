@@ -1,4 +1,6 @@
 #include "DynamicBox.h"
+#include "../../src/GameSystem/ODE/Physics/Physics.h"
+
 
 //!@brief	コンストラクタ
 //!@param[in]	centerPos	中心座標

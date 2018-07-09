@@ -3,7 +3,8 @@
 #include <ode/ode.h>
 #include <memory>
 #include <vector>
-
+#include "../../src/GameSystem/ODE/Collision/Collision.h"
+#include "../../src/GameSystem/ODE/RigidBody/RigidBody.h"
 
 #if defined(_DEBUG)
 #pragma comment(lib,"oded.lib")
@@ -38,12 +39,24 @@ public:
 	//!@brief	動力学計算の実施
 	static void	WorldStep();
 public:
-	//!@brief	垂直重力の設定
+	//!@brief	更新
+	static void	UpDate();
+
+	//!@brief	衝突検知
+	//!@param[in]	data	衝突データ
+	//!@param[in]	col		自身の物体
+	//!@param[in]	col2	相手の物体
+	static void	NearCallBack(void* data, const Collision& col, const Collision& col2);
+
+
 private:
 	static dWorldID			world;				//ODE世界
 	static dSpaceID			collisionSpace;		//ODE空間
-	static dJointGroupID	jointGroup;			//ジョイントグループ
-	
+	static dJointGroupID	contactGroup;		//ジョイントグループ
+
+	std::vector<RigidBody*>	rigidBodys;
+	std::vector<Collision*>	collsions;
+
 	float			horizonGravity;		//水平重力(x)
 	float			verticalGravity;	//垂直重力(y)
 	float			deepGravity;		//奥行重力(z)
