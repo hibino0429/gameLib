@@ -23,7 +23,7 @@
     <ProjectGuid>{04F799F1-672A-49C6-9DEC-B425D9B63DD2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>sample01</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -96,12 +96,13 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\Desktop\GameLibrary\gameLib\include\Effekseer\include;C:\Users\game\Desktop\gameLib\include\Texture;C:\Users\game\Desktop\gameLib\include\Collision;C:\Users\game\Desktop\gameLib\include\Fbx;E:\Desktop\GameLibrary\gameLib\include\Texture;E:\Desktop\GameLibrary\gameLib\include\Collision;E:\Desktop\GameLibrary\gameLib\include\Fbx;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/GL;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.17134.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.17134.0\shared;./include/Effekseer/include;./include/Collision/;./include/Fbx;./include/Texture;./include/Bullet;./include/Ogg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>E:\Desktop\GameLibrary\gameLib\lib\Effekseer\lib;C:\Users\game\Desktop\gameLib\lib\Texture\Debug;C:\Users\game\Desktop\gameLib\lib\Collision\Debug;C:\Users\game\Desktop\gameLib\lib\Fbx\vs2015\x86\debug;E:\Desktop\GameLibrary\gameLib\lib\Fbx\vs2015\x86\debug;E:\Desktop\GameLibrary\gameLib\lib\Collision\Debug;E:\Desktop\GameLibrary\gameLib\lib\Texture\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>./lib/DirectXTK/x86/Debug;./lib/freeglut/x86/Debug;./lib/Effekseer/lib;./lib/Fbx/vs2015/x86/debug;./lib/Bullet/x86/Debug;./lib/ODE/x86/Debug;./lib/Ogg/libOgg/Debug;./lib/Ogg/libVorbis/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libfbxsdk-md.lib;oded.lib;drawstuffd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
@@ -117,12 +118,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\mhbys\Desktop\DirectX11\directX11\include\Texture;C:\Users\mhbys\Desktop\DirectX11\directX11\include\Collision;C:\Users\mhbys\Desktop\DirectX11\directX11\include\Fbx;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\mhbys\Desktop\DirectX11\directX11\includeCol;C:\Users\mhbys\Desktop\DirectX11\directX11\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/Collision;./include/Bullet;./include/Texture;./include/Fbx;./include/Effekseer;./include/Ogg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>C:\Users\mhbys\Desktop\DirectX11\directX11\libCol\Debug;C:\Program Files %28x86%29\Windows Kits\8.1\Lib;C:\Users\mhbys\Desktop\DirectX11\directX11\lib\Texture\Debug;C:\Users\mhbys\Desktop\DirectX11\directX11\lib\Collision\Debug;C:\Users\mhbys\Desktop\DirectX11\directX11\lib\Fbx\vs2015\x64\debug;C:\Program Files %28x86%29\Windows Kits\10\Lib\10.0.10240.0\ucrt\x64;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;C:\Users\mhbys\Desktop\DirectX11\directX11\lib\vs2015\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>./lib/DirectXTK/x64/Debug;C:\Program Files %28x86%29\Windows Kits\10\Lib\10.0.10240.0\ucrt\x64;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;./lib/Effekseer/Debug;./lib/Bullet/x64/Debug;./lib/freeglut/x64/Debug;./lib/Fbx/vs2015/x64/debug;./lib/ODE/x64/Debug;./lib/Ogg/libOgg/Debug;./lib/Ogg/libVorbis/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libfbxsdk-md.lib;d2d1.lib;oded.lib;D2D1.lib;oded.lib;drawstuffd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>d2d1.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -135,14 +136,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\game\Desktop\directX11\include\Texture;C:\Users\game\Desktop\directX11\include\Fbx;C:\Users\game\Desktop\directX11\include\Collision;C:\Users\mhbys\Desktop\DirectX11\directX11\include\Texture;C:\Users\mhbys\Desktop\DirectX11\directX11\include\Collision;C:\Users\mhbys\Desktop\DirectX11\directX11\include\Fbx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include;./include/Collision;./include/Effekseer/include;./include/Fbx;./include/Texture;./include/Bullet;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>C:\Users\game\Desktop\directX11\lib\Fbx\vs2015\x86\debug;C:\Users\game\Desktop\directX11\lib\Texture\Debug;C:\Users\game\Desktop\directX11\lib\Collision\Debug;C:\Users\mhbys\Desktop\DirectX11\directX11\lib\Texture\Release;C:\Users\mhbys\Desktop\DirectX11\directX11\lib\Collision\Release;C:\Users\mhbys\Desktop\DirectX11\directX11\lib\Fbx\vs2015\x86\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>./lib/ODE/x86/Release;./lib/DirectXTK/x86/Release;./lib/Effekseer/Release;./lib/Fbx/vs2015/x86/release;./lib/Bullet/x86/Release;./lib/Ogg/libVorbis/Release;./lib/Ogg/libOgg/Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libfbxsdk-mt.lib;ode.lib;drawstuff.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -154,7 +155,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\mhbys\Desktop\DirectX11\directX11\includeCol;C:\Users\mhbys\Desktop\DirectX11\directX11\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\8.1\Include;./include/Effekseer;./include/Collision;./include/Bullet;./include/Fbx;./include/GL;./include/Texture;C:\Program Files %28x86%29\Windows Kits\10\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -162,106 +164,320 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>libfbxsdk-md.lib;d2d1.lib;oded.lib;ode.lib;drawstuff.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\mhbys\Desktop\DirectX11\directX11\libCol\Release;C:\Users\mhbys\Desktop\DirectX11\directX11\libCol\Debug;C:\Users\mhbys\Desktop\DirectX11\directX11\libCol;C:\Program Files %28x86%29\Windows Kits\8.1\Lib;C:\Users\mhbys\Desktop\DirectX11\directX11\lib\vs2015\x64\release;%(AdditionalLibraryDirectories);C:\Users\mhbys\Desktop\DirectX11\directX11\libCol\Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\Windows Kits\8.1\Lib\winv6.3\um\x64;./lib/ODE/x64/Release;./lib/DirectXTK/x64/Release;C:\Program Files %28x86%29\Windows Kits\10\Lib\10.0.17134.0\um\arm64;./lib/Bullet/x64/Release;./lib/Effekseer/Release;./lib/vs2015/x64/release;./lib/freeglut/x64/Release;./lib/Ogg/libVorbis/Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Audio\Audio.cpp" />
-    <ClCompile Include="src\Camera\Camera.cpp" />
-    <ClCompile Include="src\Collision\Collision.cpp" />
-    <ClCompile Include="src\ComPtr\ComPtr.cpp" />
-    <ClCompile Include="src\DeviceFactory\DeviceFactory.cpp" />
-    <ClCompile Include="src\Device\Device.cpp" />
-    <ClCompile Include="src\Device\DXDevice\DXDevice.cpp" />
-    <ClCompile Include="src\Device\GLDevice\GLDevice.cpp" />
-    <ClCompile Include="src\Engine\DXEngine\DXEngine.cpp" />
+    <ClCompile Include="src\Bullet\BulletDebugDraw.cpp" />
+    <ClCompile Include="src\Bullet\BulletWorld.cpp" />
+    <ClCompile Include="src\Bullet\CollisionObject.cpp" />
+    <ClCompile Include="src\Component\AnimationData\AnimationData.cpp" />
+    <ClCompile Include="src\Component\Assset\AssetList\AssetList.cpp" />
+    <ClCompile Include="src\Component\Assset\AssetManager\AssetManager.cpp" />
+    <ClCompile Include="src\Component\Assset\LoadAsset\LoadAsset.cpp" />
+    <ClCompile Include="src\Component\Camera\Camera.cpp" />
+    <ClCompile Include="src\Component\Collision\AABB\AABB.cpp" />
+    <ClCompile Include="src\Component\Collision\BoxCollider\BoxCollider.cpp" />
+    <ClCompile Include="src\Component\Collision\Capsule2D\Capsule2D.cpp" />
+    <ClCompile Include="src\Component\Collision\Capsule3D\Capsule3D.cpp" />
+    <ClCompile Include="src\Component\Collision\CapsuleCollider\CapsuleCollider.cpp" />
+    <ClCompile Include="src\Component\Collision\Circle2D\Circle2D.cpp" />
+    <ClCompile Include="src\Component\Collision\Line2D\Line2D.cpp" />
+    <ClCompile Include="src\Component\Collision\Line3D\Line3D.cpp" />
+    <ClCompile Include="src\Component\Collision\Plane\Plane.cpp" />
+    <ClCompile Include="src\Component\Collision\Point2D\Point2D.cpp" />
+    <ClCompile Include="src\Component\Collision\Point3D\Point3D.cpp" />
+    <ClCompile Include="src\Component\Collision\Ray\Ray.cpp" />
+    <ClCompile Include="src\Component\Collision\Segment2D\Segment2D.cpp" />
+    <ClCompile Include="src\Component\Collision\Segment3D\Segment3D.cpp" />
+    <ClCompile Include="src\Component\Collision\SphereCollider\SphereCollider.cpp" />
+    <ClCompile Include="src\Component\Collision\Sphere\Sphere.cpp" />
+    <ClCompile Include="src\Component\Collision\Triangle2D\Triangle2D.cpp" />
+    <ClCompile Include="src\Component\ConstantBuffer\ConstantBuffer.cpp" />
+    <ClCompile Include="src\Component\Light\Light.cpp" />
+    <ClCompile Include="src\Component\Material\Material.cpp" />
+    <ClCompile Include="src\Component\Material\Shader.cpp" />
+    <ClCompile Include="src\Component\ModelRender\ModelRender.cpp" />
+    <ClCompile Include="src\Component\Move\MoveCamera.cpp" />
+    <ClCompile Include="src\Component\ParticleSystem\ParticleSystem.cpp" />
+    <ClCompile Include="src\Component\SpriteAnimation\SpriteAnimation.cpp" />
+    <ClCompile Include="src\Component\SpriteRender\SpriteRender.cpp" />
+    <ClCompile Include="src\Component\Transform\Transform.cpp" />
+    <ClCompile Include="src\DXEngine\DXDevice\DXDevice.cpp" />
+    <ClCompile Include="src\DXEngine\DXEngine\DXEngine.cpp" />
+    <ClCompile Include="src\DXEngine\Font\Font.cpp" />
+    <ClCompile Include="src\DXEngine\Input\Input.cpp" />
+    <ClCompile Include="src\DXEngine\Input\KeyBoard\KeyBoard.cpp" />
+    <ClCompile Include="src\DXEngine\Material\Materials.cpp" />
+    <ClCompile Include="src\DXEngine\Math\Math.cpp" />
+    <ClCompile Include="src\DXEngine\Mesh\Mesh.cpp" />
+    <ClCompile Include="src\DXEngine\Model\Model.cpp" />
+    <ClCompile Include="src\DXEngine\PointLight\PointLight.cpp" />
+    <ClCompile Include="src\DXEngine\PrimitiveData\PrimitiveData.cpp" />
+    <ClCompile Include="src\DXEngine\Shader\GeometryShader\GeometryShader.cpp" />
+    <ClCompile Include="src\DXEngine\Shader\PixelShader\PixelShader.cpp" />
+    <ClCompile Include="src\DXEngine\Shader\VertexShader\VertexShader.cpp" />
+    <ClCompile Include="src\DXEngine\Sound\Audio.cpp" />
+    <ClCompile Include="src\DXEngine\Sound\AudioSource.cpp" />
+    <ClCompile Include="src\DXEngine\Sound\OggDecoder.cpp" />
+    <ClCompile Include="src\DXEngine\Sound\PCM.cpp" />
+    <ClCompile Include="src\DXEngine\Sound\SoundEffect.cpp" />
+    <ClCompile Include="src\DXEngine\Sound\WaveDecoder.cpp" />
+    <ClCompile Include="src\DXEngine\Sprite\Sprite.cpp" />
+    <ClCompile Include="src\DXEngine\Texture\Texture.cpp" />
+    <ClCompile Include="src\DXEngine\VertexBuffer\VertexBuffer.cpp" />
+    <ClCompile Include="src\DXEngine\Vertex\Vertex.cpp" />
+    <ClCompile Include="src\Engine\Device\Device.cpp" />
+    <ClCompile Include="src\Engine\Device\DeviceFactory\DeviceFactory.cpp" />
     <ClCompile Include="src\Engine\Engine.cpp" />
-    <ClCompile Include="src\Fbx\Fbx.cpp" />
-    <ClCompile Include="src\FPS\FPS.cpp" />
-    <ClCompile Include="src\GameMain\GameMain.cpp" />
-    <ClCompile Include="src\Input\Input.cpp" />
-    <ClCompile Include="src\Input\KeyBoard\KeyBoard.cpp" />
-    <ClCompile Include="src\Material\Material.cpp" />
-    <ClCompile Include="src\Math\Math.cpp" />
-    <ClCompile Include="src\Mesh\Mesh.cpp" />
-    <ClCompile Include="src\Particle\Particle.cpp" />
-    <ClCompile Include="src\Physics\Physics.cpp" />
-    <ClCompile Include="src\polygon\polygon.cpp" />
-    <ClCompile Include="src\PrimitiveData\PrimitiveData.cpp" />
-    <ClCompile Include="src\RigidBody\RigidBody.cpp" />
-    <ClCompile Include="src\Sample\Sample.cpp" />
-    <ClCompile Include="src\Screen\Screen.cpp" />
-    <ClCompile Include="src\Shader\GeometryShader\GeometryShader.cpp" />
-    <ClCompile Include="src\Shader\PixelShader\PixelShader.cpp" />
-    <ClCompile Include="src\Shader\Shader.cpp" />
-    <ClCompile Include="src\Shader\VertexShader\VertexShader.cpp" />
-    <ClCompile Include="src\Sprite\Sprite.cpp" />
-    <ClCompile Include="src\System\System.cpp" />
-    <ClCompile Include="src\Texture\Texture.cpp" />
-    <ClCompile Include="src\VertexBuffer\VertexBuffer.cpp" />
-    <ClCompile Include="src\Vertex\Vertex.cpp" />
-    <ClCompile Include="src\Wave\Wave.cpp" />
-    <ClCompile Include="src\Window\Window.cpp" />
+    <ClCompile Include="src\GameSrc\Map\Map.cpp" />
+    <ClCompile Include="src\GameSrc\Move\MovePlayer.cpp" />
+    <ClCompile Include="src\GameSystem\ComPtr\ComPtr.cpp" />
+    <ClCompile Include="src\GameSystem\DirectInput\DirectInput.cpp" />
+    <ClCompile Include="src\GameSystem\DirectInput\DirectKey\DirectKey.cpp" />
+    <ClCompile Include="src\GameSystem\DirectInput\DirectMouse\DirectMouse.cpp" />
+    <ClCompile Include="src\GameSystem\DirectInput\DirectPad\DirectJoyStick\DirectJoyStick.cpp" />
+    <ClCompile Include="src\GameSystem\DirectInput\DirectPad\DirectPad.cpp" />
+    <ClCompile Include="src\GameSystem\ECS\Component\Component.cpp" />
+    <ClCompile Include="src\GameSystem\ECS\EntityManager\EntityManager.cpp" />
+    <ClCompile Include="src\GameSystem\ECS\Entity\Entity.cpp" />
+    <ClCompile Include="src\GameSystem\Fbx\Fbx.cpp" />
+    <ClCompile Include="src\GameSystem\FPS\FPS.cpp" />
+    <ClCompile Include="src\GameSystem\GameController\GameController.cpp" />
+    <ClCompile Include="src\GameSystem\GameMain\GameMain.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\Collision\Collision.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicBox\DynamicBox.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicCapsule\DynamicCapsule.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicCylinder\DynamicCylinder.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicShape.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\DynamicShape\DynamicSphere\DynamicSphere.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\PhysicsData\PhysicsData.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\Physics\Physics.cpp" />
+    <ClCompile Include="src\GameSystem\ODE\RigidBody\RigidBody.cpp" />
+    <ClCompile Include="src\GameSystem\Particle\Particle.cpp" />
+    <ClCompile Include="src\GameSystem\Sample\Sample.cpp" />
+    <ClCompile Include="src\GameSystem\Screen\Screen.cpp" />
+    <ClCompile Include="src\GameSystem\System\System.cpp" />
+    <ClCompile Include="src\GameSystem\WindowsInput\WindowsInput.cpp" />
+    <ClCompile Include="src\GameSystem\Window\Window.cpp" />
+    <ClCompile Include="src\GameSystem\XInput\XInput.cpp" />
+    <ClCompile Include="src\GLEngine\GLDevice\GLDevice.cpp" />
+    <ClCompile Include="src\GUISystem\GUISystem.cpp" />
+    <ClCompile Include="src\GUISystem\imgui.cpp" />
+    <ClCompile Include="src\GUISystem\imguiDx11\imgui_impl_dx11.cpp" />
+    <ClCompile Include="src\GUISystem\imguiWin32\imgui_impl_win32.cpp" />
+    <ClCompile Include="src\GUISystem\imgui_demo.cpp" />
+    <ClCompile Include="src\GUISystem\imgui_draw.cpp" />
+    <ClCompile Include="src\Interface\Input\Input2.cpp" />
     <ClCompile Include="src\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Audio\Audio.h" />
-    <ClInclude Include="src\Camera\Camera.h" />
-    <ClInclude Include="src\Collision\Collision.h" />
-    <ClInclude Include="src\ComPtr\ComPtr.h" />
-    <ClInclude Include="src\Console\Console.hpp" />
-    <ClInclude Include="src\debug.hpp" />
-    <ClInclude Include="src\DeviceFactory\DeviceFactory.h" />
-    <ClInclude Include="src\Device\Device.h" />
-    <ClInclude Include="src\Device\DXDevice\DXDevice.h" />
-    <ClInclude Include="src\Device\GLDevice\GLDevice.h" />
-    <ClInclude Include="src\Engine\DXEngine\DXEngine.h" />
+    <ClInclude Include="src\Bullet\BulletDebugDraw.h" />
+    <ClInclude Include="src\Bullet\BulletWorld.h" />
+    <ClInclude Include="src\Bullet\CollisionObject.h" />
+    <ClInclude Include="src\Component\AnimationData\AnimationData.h" />
+    <ClInclude Include="src\Component\Assset\AssetList\AssetList.h" />
+    <ClInclude Include="src\Component\Assset\AssetManager\AssetManager.h" />
+    <ClInclude Include="src\Component\Assset\LoadAsset\LoadAsset.h" />
+    <ClInclude Include="src\Component\Camera\Camera.h" />
+    <ClInclude Include="src\Component\Camera\CameraData.h" />
+    <ClInclude Include="src\Component\Collision\AABB\AABB.h" />
+    <ClInclude Include="src\Component\Collision\BoxCollider\BoxCollider.h" />
+    <ClInclude Include="src\Component\Collision\Capsule2D\Capsule2D.h" />
+    <ClInclude Include="src\Component\Collision\Capsule3D\Capsule3D.h" />
+    <ClInclude Include="src\Component\Collision\CapsuleCollider\CapsuleCollider.h" />
+    <ClInclude Include="src\Component\Collision\Circle2D\Circle2D.h" />
+    <ClInclude Include="src\Component\Collision\CollisionData\CollisionCheck.hpp" />
+    <ClInclude Include="src\Component\Collision\CollisionData\CollisionData.h" />
+    <ClInclude Include="src\Component\Collision\Line2D\Line2D.h" />
+    <ClInclude Include="src\Component\Collision\Line3D\Line3D.h" />
+    <ClInclude Include="src\Component\Collision\Plane\Plane.h" />
+    <ClInclude Include="src\Component\Collision\Point2D\Point2D.h" />
+    <ClInclude Include="src\Component\Collision\Point3D\Point3D.h" />
+    <ClInclude Include="src\Component\Collision\Ray\Ray.h" />
+    <ClInclude Include="src\Component\Collision\Segment2D\Segment2D.h" />
+    <ClInclude Include="src\Component\Collision\Segment3D\Segment3D.h" />
+    <ClInclude Include="src\Component\Collision\SphereCollider\SphereCollider.h" />
+    <ClInclude Include="src\Component\Collision\Sphere\Sphere.h" />
+    <ClInclude Include="src\Component\Collision\Triangle2D\Triangle2D.h" />
+    <ClInclude Include="src\Component\ConstantBuffer\ConstantBuffer.h" />
+    <ClInclude Include="src\Component\Light\Light.h" />
+    <ClInclude Include="src\Component\Light\LightData.h" />
+    <ClInclude Include="src\Component\Material\Material.h" />
+    <ClInclude Include="src\Component\Material\MaterialData.h" />
+    <ClInclude Include="src\Component\Material\Shader.h" />
+    <ClInclude Include="src\Component\ModelRender\ModelData.h" />
+    <ClInclude Include="src\Component\ModelRender\ModelRender.h" />
+    <ClInclude Include="src\Component\Move\MoveCamera.h" />
+    <ClInclude Include="src\Component\ParticleSystem\ParticleData.h" />
+    <ClInclude Include="src\Component\ParticleSystem\ParticleSystem.h" />
+    <ClInclude Include="src\Component\SpriteAnimation\SpriteAnimation.h" />
+    <ClInclude Include="src\Component\SpriteAnimation\SpriteAnimData.h" />
+    <ClInclude Include="src\Component\SpriteRender\SpriteRender.h" />
+    <ClInclude Include="src\Component\Transform\Transform.h" />
+    <ClInclude Include="src\DXEngine\DXDevice\DXDevice.h" />
+    <ClInclude Include="src\DXEngine\DXEngine\DXEngine.h" />
+    <ClInclude Include="src\DXEngine\Font\Font.h" />
+    <ClInclude Include="src\DXEngine\Input\Input.h" />
+    <ClInclude Include="src\DXEngine\Input\KeyBoard\KeyBoard.h" />
+    <ClInclude Include="src\DXEngine\Material\Materials.h" />
+    <ClInclude Include="src\DXEngine\Math\Math.h" />
+    <ClInclude Include="src\DXEngine\Mesh\Mesh.h" />
+    <ClInclude Include="src\DXEngine\Model\Model.h" />
+    <ClInclude Include="src\DXEngine\PointLight\PointLight.h" />
+    <ClInclude Include="src\DXEngine\PrimitiveData\PrimitiveData.h" />
+    <ClInclude Include="src\DXEngine\Shader\GeometryShader\GeometryShader.h" />
+    <ClInclude Include="src\DXEngine\Shader\PixelShader\PixelShader.h" />
+    <ClInclude Include="src\DXEngine\Shader\VertexShader\VertexShader.h" />
+    <ClInclude Include="src\DXEngine\Sound\Audio.h" />
+    <ClInclude Include="src\DXEngine\Sound\AudioSource.h" />
+    <ClInclude Include="src\DXEngine\Sound\OggDecoder.h" />
+    <ClInclude Include="src\DXEngine\Sound\PCM.h" />
+    <ClInclude Include="src\DXEngine\Sound\SoundEffect.h" />
+    <ClInclude Include="src\DXEngine\Sound\WaveDecoder.h" />
+    <ClInclude Include="src\DXEngine\Sprite\Sprite.h" />
+    <ClInclude Include="src\DXEngine\Texture\Texture.h" />
+    <ClInclude Include="src\DXEngine\VertexBuffer\VertexBuffer.h" />
+    <ClInclude Include="src\DXEngine\Vertex\Vertex.h" />
+    <ClInclude Include="src\Engine\Device\Device.h" />
+    <ClInclude Include="src\Engine\Device\DeviceFactory\DeviceFactory.h" />
     <ClInclude Include="src\Engine\Engine.h" />
-    <ClInclude Include="src\Fbx\Fbx.h" />
-    <ClInclude Include="src\FPS\FPS.h" />
-    <ClInclude Include="src\GameMain\GameMain.h" />
-    <ClInclude Include="src\Input\Input.h" />
-    <ClInclude Include="src\Input\KeyBoard\KeyBoard.h" />
-    <ClInclude Include="src\Material\Material.h" />
-    <ClInclude Include="src\Math\Math.h" />
-    <ClInclude Include="src\Mesh\Mesh.h" />
-    <ClInclude Include="src\Particle\Particle.h" />
-    <ClInclude Include="src\Physics\Physics.h" />
-    <ClInclude Include="src\polygon\polygon.h" />
-    <ClInclude Include="src\PrimitiveData\PrimitiveData.h" />
-    <ClInclude Include="src\RigidBody\RigidBody.h" />
-    <ClInclude Include="src\Sample\Sample.h" />
-    <ClInclude Include="src\Screen\Screen.h" />
-    <ClInclude Include="src\Shader\GeometryShader\GeometryShader.h" />
-    <ClInclude Include="src\Shader\PixelShader\PixelShader.h" />
-    <ClInclude Include="src\Shader\Shader.h" />
-    <ClInclude Include="src\Shader\VertexShader\VertexShader.h" />
-    <ClInclude Include="src\Sprite\Sprite.h" />
-    <ClInclude Include="src\System\System.h" />
-    <ClInclude Include="src\Texture\Texture.h" />
+    <ClInclude Include="src\GameSrc\Map\Map.h" />
+    <ClInclude Include="src\GameSrc\Move\MovePlayer.h" />
+    <ClInclude Include="src\GameSystem\ComPtr\ComPtr.h" />
+    <ClInclude Include="src\GameSystem\Console\Console.hpp" />
+    <ClInclude Include="src\GameSystem\DirectInput\DirectInput.h" />
+    <ClInclude Include="src\GameSystem\DirectInput\DirectKey\DirectKey.h" />
+    <ClInclude Include="src\GameSystem\DirectInput\DirectMouse\DirectMouse.h" />
+    <ClInclude Include="src\GameSystem\DirectInput\DirectPad\DirectJoyStick\DirectJoyStick.h" />
+    <ClInclude Include="src\GameSystem\DirectInput\DirectPad\DirectPad.h" />
+    <ClInclude Include="src\GameSystem\ECS\Component\Component.h" />
+    <ClInclude Include="src\GameSystem\ECS\EntityManager\EntityManager.h" />
+    <ClInclude Include="src\GameSystem\ECS\Entity\Entity.h" />
+    <ClInclude Include="src\GameSystem\Fbx\Fbx.h" />
+    <ClInclude Include="src\GameSystem\FPS\FPS.h" />
+    <ClInclude Include="src\GameSystem\GameController\GameController.h" />
+    <ClInclude Include="src\GameSystem\GameMain\GameMain.h" />
+    <ClInclude Include="src\GameSystem\ODE\Collision\Collision.h" />
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicBox\DynamicBox.h" />
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicCapsule\DynamicCapsule.h" />
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicCylinder\DynamicCylinder.h" />
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicShape.h" />
+    <ClInclude Include="src\GameSystem\ODE\DynamicShape\DynamicSphere\DynamicSphere.h" />
+    <ClInclude Include="src\GameSystem\ODE\PhysicsData\PhysicsData.h" />
+    <ClInclude Include="src\GameSystem\ODE\Physics\Physics.h" />
+    <ClInclude Include="src\GameSystem\ODE\RigidBody\RigidBody.h" />
+    <ClInclude Include="src\GameSystem\Particle\Particle.h" />
+    <ClInclude Include="src\GameSystem\Sample\Sample.h" />
+    <ClInclude Include="src\GameSystem\Screen\Screen.h" />
+    <ClInclude Include="src\GameSystem\System\System.h" />
+    <ClInclude Include="src\GameSystem\WindowsInput\WindowsInput.h" />
+    <ClInclude Include="src\GameSystem\Window\Window.h" />
+    <ClInclude Include="src\GameSystem\XInput\XInput.h" />
+    <ClInclude Include="src\GLEngine\GLDevice\GLDevice.h" />
+    <ClInclude Include="src\GUISystem\GUISystem.h" />
+    <ClInclude Include="src\GUISystem\imconfig.h" />
+    <ClInclude Include="src\GUISystem\imgui.h" />
+    <ClInclude Include="src\GUISystem\imguiDx11\imgui_impl_dx11.h" />
+    <ClInclude Include="src\GUISystem\imguiWin32\imgui_impl_win32.h" />
+    <ClInclude Include="src\GUISystem\imgui_internal.h" />
+    <ClInclude Include="src\GUISystem\stb_rect_pack.h" />
+    <ClInclude Include="src\GUISystem\stb_textedit.h" />
+    <ClInclude Include="src\GUISystem\stb_truetype.h" />
+    <ClInclude Include="src\Interface\Input\Input2.h" />
+    <ClInclude Include="src\Utility\Counter.hpp" />
+    <ClInclude Include="src\Utility\debug.hpp" />
     <ClInclude Include="src\Utility\Utility.hpp" />
-    <ClInclude Include="src\VertexBuffer\VertexBuffer.h" />
-    <ClInclude Include="src\Vertex\Vertex.h" />
-    <ClInclude Include="src\Wave\Wave.h" />
-    <ClInclude Include="src\Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="data\shaderData\diffuseShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VS_main</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS_main</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VS_main</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="data\shaderData\DirectionalLight.hlsl">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VS_main</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VS_main</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS_main</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="data\shaderData\material.hlsl">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VS_main</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS_main</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VS_main</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="data\shaderData\mesh.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VS_main</EntryPointName>
+      <FileType>Document</FileType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VS_main</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS_main</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="data\shaderData\PixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-    </FxCompile>
-    <None Include="data\shaderData\textureShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PS_main</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="data\shaderData\textureShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VS_main</EntryPointName>
       <FileType>Document</FileType>
-    </None>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VS_main</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS_main</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="data\shaderData\PointLightPixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="data\shaderData\PointLightVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="data\shaderData\VertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="src\natvis\imgui.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\natvis\README.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

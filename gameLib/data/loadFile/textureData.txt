@@ -1,0 +1,5 @@
+//1: 番号
+//2: ファイルのパス
+0,./data/image/texture.png
+1,./data/image/star.png
+2,./data/image/UFO_D.png

@@ -1,7 +1,7 @@
 #pragma once
-#include "../../src/Device/Device.h"
-#include "../../src/Device/DXDevice/DXDevice.h"
-#include "../../src/Device/GLDevice/GLDevice.h"
+#include "../../src/Engine/Device/Device.h"
+#include "../../src/DXEngine/DXDevice/DXDevice.h"
+#include "../../src/GLEngine/GLDevice/GLDevice.h"
 
 #include <string>
 

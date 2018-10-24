@@ -39,7 +39,6 @@ VS_Output	VS_main(VS_Input input)
 //!@brief	ピクセルシェーダ
 float4		PS_main(VS_Output input) : SV_Target
 {
-	//return float4(1,1,0,1);
 	return tex.Sample(defaultSampler,input.textureUV);
 }
 

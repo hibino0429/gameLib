@@ -48,4 +48,21 @@ namespace Utility
 			pointer = nullptr;
 		}
 	}
+
+	//------------------------------------------------------------------------------
+	//!@brief		nullptrチェック
+	//!@param[in]	pointer ポインタ
+	//!@return	true: nullptrである  false: nullptrでない
+	//!
+	//!@brief		CheckNull(pointer)
+	//------------------------------------------------------------------------------
+	template<typename Type>
+	bool	CheckNull(Type*& pointer)
+	{
+		if (pointer == nullptr)
+		{
+			return true;
+		}
+		return false;
+	}
 }

@@ -1,0 +1,4 @@
+//1: 使用するシェーダの番号
+//2: 使用するシェーダのファイルパス
+0,./data/shaderData/diffuseShader
+1,./data/shaderData/mesh

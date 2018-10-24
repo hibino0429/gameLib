@@ -1,0 +1,6 @@
+//1:”Ô†
+//2:ƒ‚ƒfƒ‹‚ÌƒpƒX
+0,./data/model/ufo.fbx
+1,./data/model/ball.fbx
+2,./data/model/cube.fbx
+3,./data/model/cone.fbx
